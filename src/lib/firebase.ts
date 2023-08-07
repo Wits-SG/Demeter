@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { env } from '$env/dynamic/private';
+import { browserSessionPersistence, getAuth, setPersistence } from 'firebase/auth';
 
 const firebase_config = {
 	apiKey: env.FB_API_KEY,
@@ -10,4 +11,6 @@ const firebase_config = {
 	appId: env.FB_APP_ID
 };
 
-const app = initializeApp(firebase_config);
+const fb_app = initializeApp(firebase_config, 'WEB_CLIENT');
+export const fb_auth = getAuth(fb_app);
+setPersistence(fb_auth, browserSessionPersistence);

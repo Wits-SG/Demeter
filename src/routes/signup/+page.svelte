@@ -3,7 +3,7 @@
 	let password_first: String = '';
 	let password_second: String = '';
 
-	let join_enabled: bool = false;
+	let join_enabled: boolean = false;
 
 	$: {
 		join_enabled = !(password_first == password_second && password_first != '' && email != '');
@@ -24,13 +24,13 @@
 		<label for="password-1">Enter your password</label>
 		<input name="password-1" type="password" bind:value={password_first} />
 
-		<label for="password-1">Retype your password</label>
-		<input name="password-1" type="password" bind:value={password_second} />
+		<label for="password-2">Retype your password</label>
+		<input name="password-2" type="password" bind:value={password_second} />
 	</div>
 
 	<button
 		class="p-5 bg-emerald-500 rounded-md w-1/5 h-12 text-center text-white text-md flex justify-center items-center hover:bg-emerald-600 disabled:bg-emerald-200"
 		disabled={join_enabled}
 		on:click={join_on_press}>Join</button>
-	<a href="/login">Already have an account?</a>
+	<a class="-" href="/login">Already have an account?</a>
 </div>
