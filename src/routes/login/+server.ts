@@ -2,9 +2,19 @@ import { fb_auth } from '$lib/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import type { RequestEvent } from './$types';
 
-export const POST = async (event: RequestEvent) => {
-	const { email, password } = await event.request.json();
-	const signin_result = await signInWithEmailAndPassword(fb_auth, email, password);
+import { error, json } from '@sveltejs/kit';
 
-	// Do things here
+export const POST = async (event: RequestEvent): Promise<Response> => {
+	const { email, password } = await event.request.json();
+
+	try {
+		const signin_result = await signInWithEmailAndPassword(fb_auth, email, password);
+
+		// Hook into turso here
+		return json({
+			user_id: signin_result.user.email
+		});
+	} catch (res_error) {
+		throw error(400, { message: `Failed to login with error ${res_error.message}` });
+	}
 };
