@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { slide, fade } from 'svelte/transition';
-	import { quartOut } from 'svelte/easing';
 	import { goto } from '$app/navigation';
 
 	let email: string;
 	let password: string;
+
+	let incorrect_credentials: boolean = false;
+	let unknown_error: boolean = false;
 
 	const login_press = async () => {
 		console.log('credentials ', email, password);
@@ -27,11 +28,11 @@
 				if (user_id == email) {
 					goto('/');
 				}
-			} else {
-				//TODO: Magic
+			} else if (login_res.status == 400) {
+				incorrect_credentials = true;
 			}
 		} catch (login_err) {
-			console.log('failed');
+			unknown_error = true;
 		}
 	};
 </script>
@@ -58,6 +59,15 @@
 				bind:value={password}
 				name="password" />
 		</span>
+
+		{#if incorrect_credentials}
+			<span class="text-md bg-red-200 text-red-600 p-2 rounded-md"
+				><p>Incorrect username or password. Please try again.</p></span>
+		{/if}
+		{#if unknown_error}
+			<span class="text-md bg-red-200 text-red-600 p-2 rounded-md"
+				><p>Something went wrong. Please try again later.</p></span>
+		{/if}
 
 		<div class="flex flex-col justify-center items-center gap-5">
 			<a
