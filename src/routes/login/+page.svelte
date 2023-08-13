@@ -34,24 +34,53 @@
 	};
 </script>
 
-<div class="w-screen h-screen bg-zinc-100 flex flex-col justify-center items-center gap-10">
-	<h1 class="text-5xl font-serif no-underline">Welcome</h1>
+<div class="bg w-screen h-screen flex flex-row justify-start items-center">
+	<div
+		class="bg-zinc-100 dark:bg-zinc-800 w-1/3 h-screen -skew-x-6 -translate-x-20 border-r-8 border-emerald-500 flex flex-col justify-center items-center">
+		<div class="skew-x-6 translate-x-8 flex flex-col justify-center items-center gap-10">
+			<h1 class="font-serif text-7xl">Welcome</h1>
 
-	<div class="flex flex-col gap-3">
-		<label for="email">Email</label>
-		<input name="email" type="email" bind:value={email} />
+			<span class="flex flex-col justify-center items-start">
+				<label for="email">Email Address:</label>
+				<input
+					class="p-1 w-64 text-black rounded-md focuse:outline-none focus:outline-2 focus:outline-emerald-500"
+					type="email"
+					bind:value={email}
+					name="email" />
+			</span>
 
-		<label for="password">Password</label>
-		<input name="password" type="password" bind:value={password} />
+			<span class="flex flex-col justify-center items-start">
+				<label for="password">Password:</label>
+				<input
+					class="p-1 w-64 text-black rounded-md focuse:outline-none focus:outline-2 focus:outline-emerald-500"
+					type="password"
+					bind:value={password}
+					name="password" />
+			</span>
+
+			<div class="flex flex-col justify-center items-center gap-5">
+				<a
+					class="text-emerald-700 dark:text-emerald-300 underline hover:text-emerald-900 dark:hover:text-emerald-100"
+					href="/forgot">
+					forgot password?
+				</a>
+				<button
+					class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
+					on:click={login_press}>
+					Login
+				</button>
+				<a
+					class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600 text-center flex justify-center items-center"
+					href="/signup">
+					Join
+				</a>
+			</div>
+		</div>
 	</div>
-
-	<section class="flex flex-col gap-1 w-1/5">
-		<button
-			on:click={login_press}
-			class="p-5 bg-emerald-500 rounded-md w-full h-12 text-center text-white text-md flex justify-center items-center hover:bg-emerald-600"
-			>Login</button>
-		<a
-			class="p-5 bg-emerald-500 rounded-md w-full h-12 text-center text-white text-md flex justify-center items-center hover:bg-emerald-600"
-			href="/welcome">Sign Up</a>
-	</section>
 </div>
+
+<style>
+	.bg {
+		background-image: url($lib/assets/images/login-background.jpg);
+	}
+</style>
