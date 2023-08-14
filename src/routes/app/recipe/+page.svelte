@@ -39,8 +39,19 @@
 	<div class="green-bar bg-emerald-500 flex items-center justify-start" />
 
 	<div class="flex flex-row justify start items-start gap-0">
-		<section class="flex flex-col items-center w-1/2">
+		<section class="flex flex-col items-center w-1/2 gap-5">
 			<img alt="" src={picture} height="500" width="400" />
+
+			<section class="grid grid-cols-2 gap-1">
+				<button
+					class="p-10 bg-emerald-500 rounded-full text-center text-white text-md flex justify-center items-center hover:bg-emerald-600">
+					Save
+				</button>
+				<button
+					class="p-10 bg-emerald-500 rounded-full text-center text-white text-md flex justify-center items-center hover:bg-emerald-600">
+					Comments
+				</button>
+			</section>
 		</section>
 
 		<div class="flex flex-col items-start gap-10 w-1/2">
@@ -50,7 +61,7 @@
 				<p class="text-lg">{recipeDescription}</p>
 
 				<!-- *****Using padding need to change***** -->
-				<section class="border-double border-4 border-zinc-800 rounded-lg gap-10 p-4">
+				<section class="border-double border-4 border-zinc-800 rounded-lg gap-10 p-2">
 					<div class="grid grid-cols-3 gap-40">
 						<div class="flex flex-col items-center">
 							<Icon name="users-group-outline" class="h-14 w-14" />
