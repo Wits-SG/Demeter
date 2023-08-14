@@ -39,18 +39,18 @@
 	<div class="green-bar bg-emerald-500 flex items-center justify-start" />
 
 	<div class="flex flex-row justify start items-start gap-0">
-		<section class="flex flex-col items-center w-1/2 gap-5">
+		<section class="flex flex-col items-center w-1/2 gap-6">
 			<img alt="" src={picture} height="500" width="400" />
 
-			<section class="grid grid-cols-2 gap-1">
-				<button
-					class="p-10 bg-emerald-500 rounded-full text-center text-white text-md flex justify-center items-center hover:bg-emerald-600">
-					Save
-				</button>
-				<button
-					class="p-10 bg-emerald-500 rounded-full text-center text-white text-md flex justify-center items-center hover:bg-emerald-600">
-					Comments
-				</button>
+			<section class="grid grid-cols-2 items-center gap-20">
+				<div class="flex flex-col items-center">
+					<Icon name="message-caption-outline" , class="h-14 w-14 hover:bg-zinc-300" />
+					<h3>Write a review</h3>
+				</div>
+				<div class="flex flex-col items-center">
+					<Icon name="heart-outline" , class="h-14 w-14 hover:bg-zinc-300" />
+					<h3>Save this recipe</h3>
+				</div>
 			</section>
 		</section>
 
