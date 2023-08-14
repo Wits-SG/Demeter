@@ -98,7 +98,8 @@
 				<h3 class="text-3xl font-serif underline">Instructions</h3>
 				<ol class="list-decimal list-inside text-lg">
 					{#each instructions as instruction}
-						<li class="box-content shadow-md shadow-emerald-500 p-4 border-4 mb-6">
+						<li
+							class="box-content shadow-md shadow-emerald-500 hover:bg-zinc-300 p-4 border-4 mb-6">
 							{instruction}
 						</li>
 					{/each}
