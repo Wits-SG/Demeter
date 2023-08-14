@@ -43,13 +43,19 @@
 			<img alt="" src={picture} height="500" width="400" />
 
 			<section class="grid grid-cols-2 items-center gap-20">
-				<div class="flex flex-col items-center">
-					<Icon name="message-caption-outline" , class="h-14 w-14 hover:bg-zinc-300" />
-					<h3>Write a review</h3>
+				<div class="flex flex-col items-center gap-2">
+					<Icon name="message-caption-outline" , class="h-14 w-14" />
+					<button
+						class="p-5 bg-emerald-500 rounded-md w-full h-12 text-center text-white text-md flex justify-center items-center hover:bg-emerald-600">
+						Write a review
+					</button>
 				</div>
-				<div class="flex flex-col items-center">
-					<Icon name="heart-outline" , class="h-14 w-14 hover:bg-zinc-300" />
-					<h3>Save this recipe</h3>
+				<div class="flex flex-col items-center gap-2">
+					<Icon name="heart-outline" , class="h-14 w-14" />
+					<button
+						class="p-5 bg-emerald-500 rounded-md w-full h-12 text-center text-white text-md flex justify-center items-center hover:bg-emerald-600">
+						Save this recipe
+					</button>
 				</div>
 			</section>
 		</section>
