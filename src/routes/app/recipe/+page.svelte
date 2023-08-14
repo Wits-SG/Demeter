@@ -46,14 +46,14 @@
 				<div class="flex flex-col items-center gap-2">
 					<Icon name="message-caption-outline" , class="h-14 w-14" />
 					<button
-						class="p-5 bg-emerald-500 rounded-md w-full h-12 text-center text-white text-md flex justify-center items-center hover:bg-emerald-600">
+						class="p-5 bg-emerald-500 rounded-full w-full h-12 text-center text-white text-md flex justify-center items-center hover:bg-emerald-600">
 						Write a review
 					</button>
 				</div>
 				<div class="flex flex-col items-center gap-2">
 					<Icon name="heart-outline" , class="h-14 w-14" />
 					<button
-						class="p-5 bg-emerald-500 rounded-md w-full h-12 text-center text-white text-md flex justify-center items-center hover:bg-emerald-600">
+						class="p-5 bg-emerald-500 rounded-full w-full h-12 text-center text-white text-md flex justify-center items-center hover:bg-emerald-600">
 						Save this recipe
 					</button>
 				</div>
