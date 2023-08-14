@@ -3,7 +3,7 @@
 </script>
 
 <main class="grid grid-rows-1 w-full h-full">
-	<div class="flex flex-row justify-around">
+	<div class="flex flex-row justify-evenly">
 		<TopBar />
 	</div>
 </main>
