@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+
 	let email: string;
 	let password_first: string = '';
 	let password_second: string = '';
@@ -7,6 +9,29 @@
 	let passwords_invalid: boolean = false;
 	$: passwords_match = password_first != '' && password_second != password_first;
 	$: passwords_invalid = password_first.length < 8;
+
+	let unknown_error = false;
+
+	const signup_press = async () => {
+		try {
+			const signup_res = await fetch('/signup', {
+				method: 'POST',
+				body: JSON.stringify({
+					email: email,
+					password: password_first
+				}),
+				headers: {
+					'content-type': 'application/json'
+				}
+			});
+
+			if (signup_res.ok) {
+				goto('/');
+			}
+		} catch (singup_err: any) {
+			unknown_error = true;
+		}
+	};
 </script>
 
 <div
@@ -54,6 +79,10 @@
 				</ol>
 			</div>
 		{/if}
+		{#if unknown_error}
+			<span class="text-md bg-red-200 text-red-600 p-2 rounded-md"
+				><p>Something went wrong. Please try again later.</p></span>
+		{/if}
 
 		<div class="flex flex-col justify-center items-center gap-5">
 			<a
@@ -63,6 +92,7 @@
 			</a>
 			<button
 				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600 disabled:opacity-50"
+				on:click={signup_press}
 				disabled={passwords_match && passwords_invalid}>Sign Up</button>
 		</div>
 	</div>
