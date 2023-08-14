@@ -3,18 +3,15 @@
 	let password_first: string = '';
 	let password_second: string = '';
 
-	const password_regexp = new RegExp(
-		`/^(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z])(?=\D*\d)(?=[^!#%]*[!#%])[A-Za-z0-9!#%]{8,32}$/gm`
-	);
 	let passwords_match: boolean = false;
-	let passwords_valid: boolean = false;
+	let passwords_invalid: boolean = false;
 	$: passwords_match = password_first != '' && password_second != password_first;
-	$: passwords_valid = password_regexp.test(password_first);
+	$: passwords_invalid = password_first.length < 8;
 </script>
 
 <div
-	class="bg-zinc-100 dark:bg-zinc-800 w-2/3 h-screen -skew-x-6 -translate-x-20 border-r-8 border-emerald-500 flex flex-col justify-center items-center">
-	<div class="skew-x-6 translate-x-8 flex flex-col justify-center items-center gap-5">
+	class="bg-zinc-100 dark:bg-zinc-800 w-2/3 h-full min-w-fit -skew-x-6 -translate-x-20 border-r-8 border-emerald-500 flex flex-col justify-center items-center">
+	<div class="skew-x-6 translate-x-8 flex flex-col justify-center items-center gap-5 min-w-full">
 		<h1 class="font-serif text-7xl">Sign Up</h1>
 
 		<span class="flex flex-col justify-center items-start">
@@ -49,15 +46,11 @@
 				<p>Passwords don't match</p>
 			</span>
 		{/if}
-		{#if passwords_valid}
+		{#if passwords_invalid}
 			<div class="text-md bg-yellow-200 text-yellow-800 p-2 rounded-md">
 				<p>Passwords must meet the following requirements:</p>
-				<ol>
-					<li>Must include at least 1 lowercase letter</li>
-					<li>Must include at least 1 uppercase letter</li>
-					<li>Must include at least 1 number</li>
-					<li>Must include at least 1 special character</li>
-					<li>Must be 8 to 32 characters long</li>
+				<ol class="list-disc list-inside">
+					<li>Must be more than 8 characters long</li>
 				</ol>
 			</div>
 		{/if}
@@ -70,7 +63,7 @@
 			</a>
 			<button
 				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600 disabled:opacity-50"
-				disabled={passwords_match && passwords_valid}>Sign Up</button>
+				disabled={passwords_match && passwords_invalid}>Sign Up</button>
 		</div>
 	</div>
 </div>
