@@ -1,5 +1,6 @@
 <script lang="ts">
 	import picture from '$lib/assests/pictures/penne-alla-vodka.jpg';
+	import picture2 from '$lib/assests/pictures/pavs.jpg';
 	import logo from '$lib/assests/pictures/logo.png';
 	import { Icon } from 'flowbite-svelte-icons';
 
@@ -49,8 +50,11 @@
 	<div class="green-bar bg-emerald-500 flex items-center justify-start" />
 
 	<div class="flex flex-row justify start items-start gap-0">
-		<section class="flex flex-col items-center w-1/2 gap-6">
-			<img alt="" src={picture} height="500" width="400" />
+		<section class="flex flex-col items-center w-1/2 gap-5">
+			<section class="container md:mx-auto w-2/3">
+				<img alt="" src={picture2} class="object-cover" />
+			</section>
+			<!-- <img alt="" src={picture} height="500" width="400" /> -->
 
 			<section class="grid grid-cols-2 items-center gap-20">
 				<div class="flex flex-col items-center gap-2">
@@ -79,20 +83,20 @@
 
 				<!-- *****Using padding need to change***** -->
 				<section class="border-double border-4 border-zinc-800 rounded-lg gap-10 p-2">
-					<div class="grid grid-cols-3 gap-40">
+					<div class="grid grid-cols-3 items-center justify-center gap-40">
 						<div class="flex flex-col items-center justify-center">
 							<Icon name="users-group-outline" class="h-14 w-14" />
 							<p class="">
 								{servingSize} Person
 							</p>
 						</div>
-						<div class="flex flex-col items-center">
+						<div class="flex flex-col items-center justify center">
 							<Icon name="clock-outline" class="h-14 w-14" />
 							<p class="">
-								~{cookingTime} Minutes
+								~{cookingTime} Mins
 							</p>
 						</div>
-						<div class="flex flex-col items-center">
+						<div class="flex flex-col items-center justify center">
 							<Icon name="arrow-up-down-outline" class="h-14 w-14" />
 							<p class="">
 								{skillLevel}
