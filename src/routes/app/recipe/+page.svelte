@@ -46,15 +46,12 @@
 	}
 </script>
 
-<div class="w-full h-full bg-zinc-100 flex flex-col justify center gap-20">
-	<div class="green-bar bg-emerald-500 flex items-center justify-start" />
-
+<div class="w-full h-full bg-zinc-100 flex flex-col justify center items-center gap-20">
 	<div class="flex flex-row justify start items-start gap-0">
 		<section class="flex flex-col items-center w-1/2 gap-5">
 			<section class="container md:mx-auto w-2/3">
 				<img alt="" src={picture2} class="object-cover" />
 			</section>
-			<!-- <img alt="" src={picture} height="500" width="400" /> -->
 
 			<section class="grid grid-cols-2 items-center gap-20">
 				<div class="flex flex-col items-center gap-2">
@@ -120,7 +117,7 @@
 				<ol class="list-decimal list-inside text-lg">
 					{#each instructions as instruction}
 						<li
-							class="box-content shadow-md shadow-emerald-500 hover:bg-zinc-300 p-4 border-4 mb-6">
+							class="box-content shadow-lg shadow-emerald-500 hover:bg-zinc-300 p-4 border-4 mb-6">
 							{instruction}
 						</li>
 					{/each}
@@ -131,8 +128,4 @@
 </div>
 
 <style>
-	.green-bar {
-		height: 140px;
-		width: 100%;
-	}
 </style>
