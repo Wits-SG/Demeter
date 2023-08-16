@@ -39,7 +39,7 @@
 
 	function toggleSavedState() {
 		if (savedState === 'Save this recipe') {
-			savedState = 'saved';
+			savedState = 'Saved!';
 		} else {
 			savedState = 'Save this recipe';
 		}
@@ -118,7 +118,7 @@
 				<ol class="list-decimal list-inside text-lg">
 					{#each instructions as instruction}
 						<li
-							class="box-content shadow-lg shadow-emerald-500 hover:bg-zinc-300 p-4 border-4 mb-6">
+							class="box-content shadow-lg shadow-emerald-500 hover:bg-zinc-500 p-3 border-4 mb-6">
 							{instruction}
 						</li>
 					{/each}
