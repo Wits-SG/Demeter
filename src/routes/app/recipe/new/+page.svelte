@@ -26,47 +26,29 @@
 		<section class="flex flex-col items-center w-1/4 gap-5">
 			<!--this section displays the space for time, serves, skill and ingredients-->
 
-			<label for="skill"> Skill Level </label>
-			<div class="inline-block relative w-64">
-				<select
-					class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-					<option>Beginner</option>
-					<option>Intermediate</option>
-					<option>Advanced</option>
+			<div class="mb-2">
+				<label for="skill">Skill</label>
+				<select id="skill" name="skill" class="w-full border rounded p-1">
+					<option value="beginner">Beginner</option>
+					<option value="intermediate">Intermediate</option>
+					<option value="advanced">Advanced</option>
 				</select>
-				<div
-					class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-					<svg
-						class="fill-current h-4 w-4"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 20 20"
-						><path
-							d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-				</div>
 			</div>
 
-			<label for="serves"> Serves </label>
-			<div class="inline-block relative w-64">
-				<select
-					class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-					<option>1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-					<option>5</option>
-					<option>6</option>
-					<option>7</option>
-					<option>8</option>
+			<div class="mb-2">
+				<label for="serves">Serves</label>
+				<select id="serves" name="serves" class="w-full border rounded p-1">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
 				</select>
-				<div
-					class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-					<svg
-						class="fill-current h-4 w-4"
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 20 20"
-						><path
-							d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-				</div>
 			</div>
 
 			<label for="ingredients"> Ingredients </label>
