@@ -14,7 +14,7 @@ export const POST = async (event: RequestEvent): Promise<Response> => {
 		return json({
 			user_id: signin_result.user.email
 		});
-	} catch (res_error) {
+	} catch (res_error: any) {
 		throw error(400, { message: `Failed to login with error ${res_error.message}` });
 	}
 };

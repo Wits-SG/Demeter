@@ -8,8 +8,6 @@
 	let unknown_error: boolean = false;
 
 	const login_press = async () => {
-		console.log('credentials ', email, password);
-
 		try {
 			const login_res = await fetch('/login', {
 				method: 'POST',
@@ -31,7 +29,7 @@
 			} else if (login_res.status == 400) {
 				incorrect_credentials = true;
 			}
-		} catch (login_err) {
+		} catch (login_err: any) {
 			unknown_error = true;
 		}
 	};
