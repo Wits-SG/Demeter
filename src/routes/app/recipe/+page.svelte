@@ -79,29 +79,27 @@
 				<p class="text-lg">{recipeDescription}</p>
 
 				<!-- *****Using padding need to change***** -->
-				<section
-					class="border-double border-4 border-zinc-800 dark:border-zinc-100 rounded-lg gap-10 p-2">
-					<div class="grid grid-cols-3 items-center justify-center gap-40">
-						<div class="flex flex-col items-center justify-center">
-							<Icon name="users-group-outline" class="h-14 w-14" />
-							<p class="">
-								{servingSize} Person
-							</p>
-						</div>
-						<div class="flex flex-col items-center justify center">
-							<Icon name="clock-outline" class="h-14 w-14" />
-							<p class="">
-								~{cookingTime} Mins
-							</p>
-						</div>
-						<div class="flex flex-col items-center justify center">
-							<Icon name="arrow-up-down-outline" class="h-14 w-14" />
-							<p class="">
-								{skillLevel}
-							</p>
-						</div>
+
+				<div class="grid grid-cols-3 items-center justify-center gap-40">
+					<div class="flex flex-col items-center justify-center gap-5">
+						<Icon name="users-group-outline" class="h-14 w-14" />
+						<p class="">
+							{servingSize} Person
+						</p>
 					</div>
-				</section>
+					<div class="flex flex-col items-center justify center gap-5">
+						<Icon name="clock-outline" class="h-14 w-14" />
+						<p class="">
+							~{cookingTime} Mins
+						</p>
+					</div>
+					<div class="flex flex-col items-center justify center gap-5">
+						<Icon name="arrow-up-down-outline" class="h-14 w-14" />
+						<p class="">
+							{skillLevel}
+						</p>
+					</div>
+				</div>
 			</section>
 
 			<section class="flex flex-col items-center gap-10 w-3/4">
