@@ -33,6 +33,16 @@
 		'Finish the Dish: Stir in the grated Parmesan cheese, letting it melt into the sauce and thicken it further. Season with salt and pepper to taste.',
 		'Serve: Divide the Penne alla Vodka among serving plates. Garnish with chopped fresh basil or parsley to add a burst of color and freshness.'
 	];
+
+	let savedState = 'Save this recipe';
+
+	function toggleSavedState() {
+		if (savedState === 'Save this recipe') {
+			savedState = 'saved';
+		} else {
+			savedState = 'Save this recipe';
+		}
+	}
 </script>
 
 <div class="w-full h-full bg-zinc-100 flex flex-col justify center gap-20">
@@ -44,17 +54,18 @@
 
 			<section class="grid grid-cols-2 items-center gap-20">
 				<div class="flex flex-col items-center gap-2">
-					<Icon name="message-caption-outline" , class="h-14 w-14" />
+					<Icon name="message-caption-outline" class="h-14 w-14" />
 					<button
 						class="p-5 bg-emerald-500 rounded-full w-full h-12 text-center text-white text-md flex justify-center items-center hover:bg-emerald-600">
 						Write a review
 					</button>
 				</div>
 				<div class="flex flex-col items-center gap-2">
-					<Icon name="heart-outline" , class="h-14 w-14" />
+					<Icon name="heart-outline" class="h-14 w-14" />
 					<button
+						on:click={toggleSavedState}
 						class="p-5 bg-emerald-500 rounded-full w-full h-12 text-center text-white text-md flex justify-center items-center hover:bg-emerald-600">
-						Save this recipe
+						{savedState}
 					</button>
 				</div>
 			</section>
@@ -69,7 +80,7 @@
 				<!-- *****Using padding need to change***** -->
 				<section class="border-double border-4 border-zinc-800 rounded-lg gap-10 p-2">
 					<div class="grid grid-cols-3 gap-40">
-						<div class="flex flex-col items-center">
+						<div class="flex flex-col items-center justify-center">
 							<Icon name="users-group-outline" class="h-14 w-14" />
 							<p class="">
 								{servingSize} Person
