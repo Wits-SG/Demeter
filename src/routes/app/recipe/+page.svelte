@@ -1,7 +1,7 @@
 <script lang="ts">
-	import picture from '$lib/assests/pictures/penne-alla-vodka.jpg';
+	import picture from '$lib/assets/images/penne-alla-vodka.jpg';
 	import picture2 from '$lib/assests/pictures/pavs.jpg';
-	import logo from '$lib/assests/pictures/logo.png';
+	import logo from '$lib/assets/images/logo.png';
 	import { Icon } from 'flowbite-svelte-icons';
 
 	let recipeName = 'Penne Alla Vodka';
