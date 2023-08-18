@@ -4,7 +4,7 @@
 </script>
 
 <div
-	class="bg-zinc-100 dark:bg-zinc-800 w-full h-20 px-10 py-2 border-b-2 border-emerald-500 flex flex-row justify-between items-center">
+	class="bg-zinc-100 dark:bg-zinc-800 w-full h-full px-10 py-2 border-b-2 border-emerald-500 flex flex-row justify-between items-center">
 	<img src={ZincLogoLight} class="h-auto w-16" alt="logo" />
 
 	<input
