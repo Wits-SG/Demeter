@@ -13,6 +13,6 @@
 	<!--Page routing buttons and avatar will go here-->
 
 	{#if open}
-		<button> Home </button>
+		<a class="btn" href="/Feed">Feed</a>
 	{/if}
 </div>
