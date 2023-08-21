@@ -1,10 +1,18 @@
 import type { PageServerLoad } from './$types';
+import { turso_client } from '$lib/turso';
 
-export const load = (async () => {
+export const load = (async ({ params }) => {
+	const db_res = await turso_client.execute({
+		sql: 'select recipes.*, instructions.* from recipes join instructions on recipes.recipe_id = instructions.recipe_id where recipes.recipe_id = ? limit 1',
+		args: [params.recipe_id]
+	});
+
+	console.log(db_res.rows);
+
 	return {
 		recipe: {
-			name: 'Penne Alla Vodka',
-			description: `Penne alla Vodka is a classic Italian-American pasta dish known for its creamy tomato-based sauce with a touch of vodka. This indulgent recipe combines the richness of a velvety sauce with the bite of penne pasta, creating a comforting and flavorful dish that's perfect for a cozy dinner.`,
+			name: db_res.rows[0]['name'],
+			description: db_res.rows[0]['description'],
 			servingSize: 4,
 			cookingTime: 30,
 			skillLevel: 'Intermediate',
