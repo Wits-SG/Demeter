@@ -1,44 +1,19 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-
 	import { Icon } from 'flowbite-svelte-icons';
+	import { GoogleAuthProvider } from 'firebase/auth';
+
+	const googleProvider = new GoogleAuthProvider();
 
 	let email: string;
 	let password: string;
 
-	let incorrect_credentials: boolean = false;
-	let unknown_error: boolean = false;
+	let incorrectCredentials: boolean = false;
+	let unknownError: boolean = false;
 
-	const emailLoginPress = async () => {
-		try {
-			const login_res = await fetch('/login', {
-				method: 'POST',
-				body: JSON.stringify({
-					email: email,
-					password: password
-				}),
-				headers: {
-					'content-type': 'application/json'
-				}
-			});
+	const emailLoginPress = async () => {};
 
-			if (login_res.ok) {
-				const { user_id } = await login_res.json();
-
-				if (user_id == email) {
-					goto('/');
-				}
-			} else if (login_res.status == 400) {
-				incorrect_credentials = true;
-			}
-		} catch (login_err: any) {
-			unknown_error = true;
-		}
-	};
-
-	const googleLoginPress = async () => {
-		console.log('Sign in with google');
-	};
+	const googleLoginPress = async () => {};
 </script>
 
 <div
@@ -64,11 +39,11 @@
 				name="password" />
 		</span>
 
-		{#if incorrect_credentials}
+		{#if incorrectCredentials}
 			<span class="text-md bg-red-200 text-red-600 p-2 rounded-md"
 				><p>Incorrect username or password. Please try again.</p></span>
 		{/if}
-		{#if unknown_error}
+		{#if unknownError}
 			<span class="text-md bg-red-200 text-red-600 p-2 rounded-md"
 				><p>Something went wrong. Please try again later.</p></span>
 		{/if}
