@@ -37,6 +37,7 @@ export const load = (async ({ params }) => {
 	}
 
 	console.log(ingredients);
+	console.log(instructions);
 
 	return {
 		recipe: {
