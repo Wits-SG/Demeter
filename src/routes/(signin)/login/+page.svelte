@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
+	import { Icon } from 'flowbite-svelte-icons';
+
 	let email: string;
 	let password: string;
 
 	let incorrect_credentials: boolean = false;
 	let unknown_error: boolean = false;
 
-	const login_press = async () => {
+	const emailLoginPress = async () => {
 		try {
 			const login_res = await fetch('/login', {
 				method: 'POST',
@@ -32,6 +34,10 @@
 		} catch (login_err: any) {
 			unknown_error = true;
 		}
+	};
+
+	const googleLoginPress = async () => {
+		console.log('Sign in with google');
 	};
 </script>
 
@@ -73,11 +79,23 @@
 				href="/forgot">
 				forgot password?
 			</a>
-			<button
-				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
-				on:click={login_press}>
-				Login
-			</button>
+
+			<section class="flex flex-col justify-center items-center w-full gap-3">
+				<button
+					class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
+					on:click={emailLoginPress}>
+					Login
+				</button>
+				<button
+					class="flex flex-row justify-center items-center w-72 h-8 rounded-md
+                        border-emerald-500 border-2 bg-zinc-100
+                        dark:bg-zinc-800 text-black dark:text-white hover:bg-emerald-50
+                        dark:hover:bg-emerald-800 gap-2"
+					on:click={googleLoginPress}>
+					<Icon name="google-solid" class="h-5 w-5 text-zinc-600 dark:text-zinc-200" />
+					Sign in with Google
+				</button>
+			</section>
 			<a
 				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600 text-center flex justify-center items-center"
 				href="/signup">
