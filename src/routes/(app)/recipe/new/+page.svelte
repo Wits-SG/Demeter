@@ -6,6 +6,17 @@
 
 	let picture: File;
 
+	let avatar: any, fileinput: any;
+
+	const onFileSelected = (e: any) => {
+		let image = e.target.files[0];
+		let reader = new FileReader();
+		reader.readAsDataURL(image);
+		reader.onload = (e) => {
+			avatar = e.target?.result;
+		};
+	};
+
 	let servingSize: number;
 	let cookingTime: number;
 	let skillLevel;
@@ -51,17 +62,20 @@
 				maxlength="1024"
 				placeholder="Give a short description of your recipe" />
 
-			<div class="block min-h-[350px] min-w-[350px] bg-emerald-300">insert picture</div>
-			<label for="picture">Select image:</label>
-			<input bind:value={picture} type="file" id="picture" name="picture" accept="image/*" />
+			<label class="text-lg font-bold" for="picture"> Select image: </label>
+			<img class="w-[350px] h-[350px]" src={avatar} alt="None found" />
+			<input
+				type="file"
+				id="picture"
+				name="picture"
+				accept="image/*"
+				on:change={(e) => onFileSelected(e)} />
 
 			<!--this section displays the space for time, serves, skill and ingredients-->
 
-			<div class="mb-2">
-				<label class="text-lg font-bold" for="skillLevel">
-					Skill Level:
-					<Icon name="arrow-up-down-outline" class="h-5 w-5" />
-				</label>
+			<div class="mb-2 flex flex-row justify-center items-center">
+				<label class="text-lg font-bold" for="skillLevel"> Skill Level: </label>
+				<Icon name="arrow-up-down-outline" class="h-5 w-5" />
 				<select
 					id="skillLevel"
 					name="skillLevel"
@@ -72,11 +86,9 @@
 				</select>
 			</div>
 
-			<div>
-				<label class="text-lg font-bold" for="servingSize">
-					<Icon name="users-group-outline" class="h-5 w-5" />
-					Serves
-				</label>
+			<div class="mb-2 flex flex-row justify-center items-center gap-5">
+				<label class="text-lg font-bold" for="servingSize"> Serves </label>
+				<Icon name="users-group-outline" class="h-5 w-5" />
 				<input
 					bind:value={servingSize}
 					class="p-1 w-fit text-black rounded-md focuse:outline-none focus:outline-2 focus:outline-emerald-500"
@@ -86,11 +98,9 @@
 					max="48" />
 			</div>
 
-			<span class="flex flex-col justify-center items-start">
-				<label class="text-lg font-bold" for="cookingTime">
-					<Icon name="clock-outline" class="h-5 w-5" />
-					Time (in minutes)
-				</label>
+			<span class="mb-2 flex flex-row justify-center items-center">
+				<label class="text-lg font-bold" for="cookingTime"> Time (in minutes) </label>
+				<Icon name="clock-outline" class="h-5 w-5" />
 				<input
 					bind:value={cookingTime}
 					class="p-1 w-fit text-black rounded-md focuse:outline-none focus:outline-2 focus:outline-emerald-500"
@@ -141,16 +151,17 @@
 			</button>
 
 			<h2 class="text-lg font-bold">Instructions</h2>
-			{#if instructionList.length != 0}
-				{#each instructionList as instruction}
-					<li
-						class="box-content shadow-lg shadow-emerald-500 hover:bg-zinc-500 p-3 border-4 mb-6">
-						{instruction}
-					</li>
-				{/each}
-			{:else}
-				<p>No instructions yet</p>
-			{/if}
+			<ul class="list-disc list-inside">
+				{#if instructionList.length != 0}
+					{#each instructionList as instruction}
+						<li class="mb-2">
+							{instruction}
+						</li>
+					{/each}
+				{:else}
+					<p>No Ingredients yet</p>
+				{/if}
+			</ul>
 		</section>
 	</div>
 </div>
