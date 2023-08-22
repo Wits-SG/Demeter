@@ -10,6 +10,7 @@
 	const passwordResetPress = async () => {
 		try {
 			const resetRes = await sendPasswordResetEmail(fb_auth, email);
+			goto('/login');
 		} catch (exception: any) {
 			unknownError = true;
 		}
@@ -19,6 +20,8 @@
 <div
 	class="bg-zinc-100 dark:bg-zinc-800 w-1/3 h-screen -skew-x-6 -translate-x-20 border-r-8 border-emerald-500 flex flex-col justify-center items-center">
 	<div class="skew-x-6 translate-x-8 flex flex-col justify-center items-center gap-10">
+		<h1 class="font-serif text-4xl">Forgot Password?</h1>
+
 		{#if unknownError}
 			<span class="text-md bg-red-200 text-red-600 p-2 rounded-md"
 				><p>Something went wrong. Please try again later.</p></span>
@@ -36,7 +39,13 @@
 		<button
 			class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
 			on:click={passwordResetPress}>
-			Send password reset
+			Reset Password
 		</button>
+
+		<a
+			class="text-emerald-700 dark:text-emerald-300 underline hover:text-emerald-900 dark:hover:text-emerald-100"
+			href="/login">
+			Go back to login
+		</a>
 	</div>
 </div>
