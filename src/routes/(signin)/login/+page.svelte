@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { Icon } from 'flowbite-svelte-icons';
-	import { GoogleAuthProvider } from 'firebase/auth';
+	import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+	import { fb_auth } from '$lib/firebase';
 
 	const googleProvider = new GoogleAuthProvider();
 
@@ -11,9 +12,32 @@
 	let incorrectCredentials: boolean = false;
 	let unknownError: boolean = false;
 
-	const emailLoginPress = async () => {};
+	const emailLoginPress = async () => {
+		try {
+			const loginRes = await signInWithEmailAndPassword(fb_auth, email, password);
 
-	const googleLoginPress = async () => {};
+			// client info goes here, so probably communicating with turso also goes here
+
+			goto('/');
+		} catch (exception: any) {
+			incorrectCredentials =
+				exception.code == 400 &&
+				(exception.message == 'INVALID_PASSWORD' || exception.message == 'INVALID_EMAIL');
+			unknownError =
+				exception.code != 400 ||
+				exception.message != 'INVALID_PASSWORD' ||
+				exception.message != 'INVALID_EMAIL';
+		}
+	};
+
+	const googleLoginPress = async () => {
+		try {
+			const loginRes = await signInWithPopup(fb_auth, googleProvider);
+			goto('/');
+		} catch (exception: any) {
+			unknownError = true;
+		}
+	};
 </script>
 
 <div
