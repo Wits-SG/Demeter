@@ -15,6 +15,6 @@
 	</button>
 	<!--Page routing buttons and avatar will go here-->
 	{#if open}
-		<a class="btn m-2" href="/Feed">Feed</a>
+		<!--Page routing buttons and avatar will go here-->
 	{/if}
 </div>

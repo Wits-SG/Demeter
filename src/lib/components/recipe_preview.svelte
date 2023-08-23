@@ -22,7 +22,6 @@
 	let dishDescription = 'NONE';
 
 	onMount(async () => {
-		//fetch data using recipeID here;
 		recipePreviewData = await getPreviewData();
 		dishTitle = recipePreviewData.recipe.name;
 		dishDescription = recipePreviewData.recipe.description;
