@@ -19,7 +19,7 @@
 	<div class="flex flex-row justify start items-start gap-0">
 		<section class="flex flex-col items-center w-1/2 gap-5">
 			<section class="container md:mx-auto w-2/3">
-				<img alt="" src={picture2} class="object-cover" />
+				<img alt="" src={data.recipe.imageUrl} class="object-cover" />
 			</section>
 
 			<section class="grid grid-cols-2 items-center gap-20">
