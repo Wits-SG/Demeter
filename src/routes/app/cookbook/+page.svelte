@@ -6,6 +6,7 @@
 				class="rounded-md border-2 w-32 h-32 border-emerald-700 text-4xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300"
 				>+</button>
 			<button
+				onclick="window.location.href='http://localhost:5173/app/cookbook/1';"
 				class="rounded-md border-2 w-32 h-32 border-emerald-700 text-xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300"
 				>RECIPE BOOK</button>
 		</div>
@@ -17,7 +18,7 @@
 			<h1 class="text-3xl">MENUS</h1>
 			<div class="mt-10 ml-10 space-x-10 flex flex-row align-center">
 				<button
-					class="rounded-md border-2 w-32 h-32 border-emerald-700 text-4xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300"
+					class="rounded-md border-2 w-32 h-32 border-emerald-700 text-4xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300 text-center"
 					>+</button>
 				<button
 					class="rounded-md border-2 w-32 h-32 border-emerald-700 text-xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300"
