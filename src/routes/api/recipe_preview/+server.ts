@@ -2,7 +2,7 @@ import { turso_client } from '$lib/turso';
 import { json } from '@sveltejs/kit';
 
 export const GET = async ({ url }) => {
-	const recipeID = Number(url.searchParams.get('recipe_id'));
+	const recipeID = url.searchParams.get('recipe_id');
 
 	try {
 		const recipe_res = await turso_client.execute({

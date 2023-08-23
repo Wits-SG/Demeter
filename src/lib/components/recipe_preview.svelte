@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	export let recipeID: Number;
+
+	export let recipeID: string;
 	let recipePreviewData: any;
 
 	const getPreviewData = async () => {
@@ -29,18 +30,18 @@
 	});
 </script>
 
-<a href="/recipe/{recipeID}">
+<a href="/recipe/{recipeID}" class="w-full">
 	<div
-		class="w-1/5 h-2/5 rounded-md shadow-md shadow-zinc-600 dark:shadow-zinc-300 overflow-hidden md:w-1/5 md:h-auto">
+		class="w-fit h-full rounded-md shadow-md shadow-zinc-600 dark:shadow-zinc-300 overflow-hidden md:w-1/5 md:h-auto">
 		<div class="md:flex md:flex-col">
 			<img
-				class="h-28 w-full md:h-48 md:w-full object-cover md:object-cover"
+				class="h-3/5 w-full md:h-48 md:w-full object-cover md:object-cover"
 				src={dishImageURL}
 				alt="Dish" />
-			<div class="p-4">
+			<div class="p-4 h-2/5">
 				<div class="mb-2 uppercase text-sm text-zinc-800 dark:text-zinc-100 font-semibold">
 					{dishTitle}
-					<p>{recipeID}</p>
+					<!--<p>{recipeID}</p>-->
 				</div>
 				<p class="line-clamp-3 mt-2 text-zinc-500 dark:text-zinc-300 text-sm">
 					{dishDescription}
