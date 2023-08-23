@@ -8,6 +8,7 @@ import {
 	PUBLIC_FB_APP_ID
 } from '$env/static/public';
 import { browserSessionPersistence, getAuth, setPersistence } from 'firebase/auth';
+import { getStorage } from 'firebase/storage';
 
 const firebase_config = {
 	apiKey: PUBLIC_FB_API_KEY,
@@ -20,4 +21,5 @@ const firebase_config = {
 
 const fb_app = initializeApp(firebase_config, 'WEB_CLIENT');
 export const fb_auth = getAuth(fb_app);
+export const fb_storage = getStorage(fb_app);
 setPersistence(fb_auth, browserSessionPersistence);
