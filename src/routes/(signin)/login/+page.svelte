@@ -1,36 +1,41 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { Icon } from 'flowbite-svelte-icons';
+	import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+	import { fb_auth } from '$lib/firebase';
+
+	const googleProvider = new GoogleAuthProvider();
 
 	let email: string;
 	let password: string;
 
-	let incorrect_credentials: boolean = false;
-	let unknown_error: boolean = false;
+	let incorrectCredentials: boolean = false;
+	let unknownError: boolean = false;
 
-	const login_press = async () => {
+	const emailLoginPress = async () => {
 		try {
-			const login_res = await fetch('/login', {
-				method: 'POST',
-				body: JSON.stringify({
-					email: email,
-					password: password
-				}),
-				headers: {
-					'content-type': 'application/json'
-				}
-			});
+			const loginRes = await signInWithEmailAndPassword(fb_auth, email, password);
 
-			if (login_res.ok) {
-				const { user_id } = await login_res.json();
+			// client info goes here, so probably communicating with turso also goes here
 
-				if (user_id == email) {
-					goto('/');
-				}
-			} else if (login_res.status == 400) {
-				incorrect_credentials = true;
-			}
-		} catch (login_err: any) {
-			unknown_error = true;
+			goto('/');
+		} catch (exception: any) {
+			incorrectCredentials =
+				exception.code == 400 &&
+				(exception.message == 'INVALID_PASSWORD' || exception.message == 'INVALID_EMAIL');
+			unknownError =
+				exception.code != 400 ||
+				exception.message != 'INVALID_PASSWORD' ||
+				exception.message != 'INVALID_EMAIL';
+		}
+	};
+
+	const googleLoginPress = async () => {
+		try {
+			const loginRes = await signInWithPopup(fb_auth, googleProvider);
+			goto('/');
+		} catch (exception: any) {
+			unknownError = true;
 		}
 	};
 </script>
@@ -58,11 +63,11 @@
 				name="password" />
 		</span>
 
-		{#if incorrect_credentials}
+		{#if incorrectCredentials}
 			<span class="text-md bg-red-200 text-red-600 p-2 rounded-md"
 				><p>Incorrect username or password. Please try again.</p></span>
 		{/if}
-		{#if unknown_error}
+		{#if unknownError}
 			<span class="text-md bg-red-200 text-red-600 p-2 rounded-md"
 				><p>Something went wrong. Please try again later.</p></span>
 		{/if}
@@ -73,11 +78,23 @@
 				href="/forgot">
 				forgot password?
 			</a>
-			<button
-				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
-				on:click={login_press}>
-				Login
-			</button>
+
+			<section class="flex flex-col justify-center items-center w-full gap-3">
+				<button
+					class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
+					on:click={emailLoginPress}>
+					Login
+				</button>
+				<button
+					class="flex flex-row justify-center items-center w-72 h-8 rounded-md
+                        border-emerald-500 border-2 bg-zinc-100
+                        dark:bg-zinc-800 text-black dark:text-white hover:bg-emerald-50
+                        dark:hover:bg-emerald-800 gap-2"
+					on:click={googleLoginPress}>
+					<Icon name="google-solid" class="h-5 w-5 text-zinc-600 dark:text-zinc-200" />
+					Sign in with Google
+				</button>
+			</section>
 			<a
 				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600 text-center flex justify-center items-center"
 				href="/signup">
