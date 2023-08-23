@@ -2,6 +2,9 @@
 	import { Icon } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
 	import { json } from '@sveltejs/kit';
+	import { v4 as uuidv4 } from 'uuid';
+	import { fb_storage } from '$lib/firebase';
+	import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 	export let data: PageData;
 
@@ -9,15 +12,15 @@
 	let description: string;
 
 	let picture: File;
-
-	let avatar: any, fileinput: any;
+	let pictureLocalUrl: any;
 
 	const onFileSelected = (e: any) => {
-		let image = e.target.files[0];
+		picture = e.target.files[0];
+		console.log(picture instanceof File);
 		let reader = new FileReader();
-		reader.readAsDataURL(image);
+		reader.readAsDataURL(picture);
 		reader.onload = (e) => {
-			avatar = e.target?.result;
+			pictureLocalUrl = e.target?.result;
 		};
 	};
 
@@ -44,19 +47,26 @@
 	}
 
 	async function saveRecipe() {
+		const recipeId = uuidv4();
+		const recipeImageRef = ref(fb_storage, `images/recipe/${recipeId}.jpeg`);
+
+		await uploadBytes(recipeImageRef, picture);
+
+		const imageUrl = await getDownloadURL(recipeImageRef);
+
 		await fetch('/recipe/new', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
+				id: recipeId,
 				name: recipeName,
 				description: description,
 				servingSize: servingSize,
 				skillLevel: skillLevel,
 				cookingTime: cookingTime,
-				imageUrl:
-					'https://www.zastavki.com/pictures/originals/2013/Animals___Cats_Red_Cat_on_an_orange_background_044688_.jpg',
+				imageUrl: imageUrl,
 				instructions: instructionList,
 				ingredients: ingredientsList
 			})
@@ -89,7 +99,7 @@
 				placeholder="Give a short description of your recipe" />
 
 			<label class="text-lg font-bold" for="picture"> Select image: </label>
-			<img class="w-fit h-fit" src={avatar} alt="None found" />
+			<img class="w-fit h-fit" src={pictureLocalUrl} alt="None found" />
 			<input
 				type="file"
 				id="picture"
