@@ -1,11 +1,10 @@
 import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 import { turso_client } from '$lib/turso';
-import { v4 as uuidv4 } from 'uuid';
 
 export const POST = async (event: RequestEvent) => {
 	const recipe: Recipe = await event.request.json();
-	recipe.id = uuidv4();
+	//recipe.id = uuidv4();
 
 	const recipeInsertResult = await turso_client.execute({
 		sql: 'INSERT INTO recipes VALUES(?, ?, ?, ?, ?, ?, ?)',
@@ -33,4 +32,6 @@ export const POST = async (event: RequestEvent) => {
 			args: [ingredient, recipe.id]
 		});
 	}
+
+	return new Response('Successful');
 };
