@@ -1,5 +1,4 @@
 <script lang="ts">
-	import picture2 from '$lib/assets/images/pavs.jpg';
 	import { Icon } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
 
