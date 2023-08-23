@@ -7,4 +7,5 @@ type Recipe = {
 	skillLevel: string;
 	instructions: Array<string>;
 	ingredients: Array<string>;
+	imageUrl: string;
 };

@@ -45,7 +45,7 @@ export const load = (async ({ params }) => {
 			description: recipe_res.rows[0]['description'],
 			servingSize: recipe_res.rows[0]['serving_size'],
 			cookingTime: recipe_res.rows[0]['cooking_time'],
-			imageUrl: recipe_res.row[0]['image_url'],
+			imageUrl: recipe_res.rows[0]['image_url'],
 			skillLevel: skill_level_res.rows[0]['name'],
 			instructions: instructions,
 			ingredients: ingredients
