@@ -10,7 +10,7 @@
 		elements: { content, item, trigger, root },
 		helpers: { isSelected }
 	} = createAccordion({
-		defaultValue: 'Description',
+		defaultValue: ['Description'],
 		multiple: true
 	});
 	import { createSeparator, type CreateSeparatorProps } from '@melt-ui/svelte';
@@ -101,11 +101,23 @@
 							{#if $isSelected(id)}
 								<div
 									class="content
-                            overflow-hidden bg-neutral-100 text-2xl text-neutral-600"
+                            overflow-hidden bg-neutral-100 text-md text-neutral-600"
 									use:melt={$content(id)}
 									transition:slide>
 									<div class="px-5 py-4">
-										{description}
+										{#if title == 'INGREDIENTS'}
+											<div>
+												<ul class="list-disc list-inside text-lg">
+													{#each description as descriptions}
+														<li class="box-content w-2/3 center">
+															{descriptions}
+														</li>
+													{/each}
+												</ul>
+											</div>
+										{:else}
+											{description}
+										{/if}
 									</div>
 								</div>
 							{/if}
