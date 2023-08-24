@@ -1,3 +1,10 @@
+<script lang="ts">
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+</script>
+
+<!-- onclick="window.location.href='http://localhost:5173/app/cookbook/1';" -->
 <div class="mt-20 flex flex-col mx-20 h-screen w-screen">
 	<div class="flex flex-col">
 		<h1 class="text-3xl">COOKBOOKS</h1>
@@ -5,10 +12,13 @@
 			<button
 				class="rounded-md border-2 w-32 h-32 border-emerald-700 text-4xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300"
 				>+</button>
-			<button
-				onclick="window.location.href='http://localhost:5173/app/cookbook/1';"
-				class="rounded-md border-2 w-32 h-32 border-emerald-700 text-xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300"
-				>RECIPE BOOK</button>
+			<div class="flex flex-row items-center">
+				<!-- {#each data.cookbook.id as ids}
+					<button onclick="window.location.href='http://localhost:5173/app/cookbook/{ids}';"class="rounded-md border-2 w-32 h-32 border-emerald-700 text-4xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300">
+						{data.cookbook.name}
+					</button>
+					{/each} -->
+			</div>
 		</div>
 	</div>
 	<hr class="h-1 my-4 md:my-10 bg-emerald-700 dark:bg-emerald-300 border-0" />
@@ -22,7 +32,7 @@
 					>+</button>
 				<button
 					class="rounded-md border-2 w-32 h-32 border-emerald-700 text-xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300"
-					>Saturday Menu</button>
+					>{data.cookbook.name}}</button>
 			</div>
 		</div>
 	</div>
