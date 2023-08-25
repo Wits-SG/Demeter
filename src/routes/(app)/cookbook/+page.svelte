@@ -5,7 +5,7 @@
 	$: console.log(data);
 </script>
 
-<!-- onclick="window.location.href='http://localhost:5173/app/cookbook/1';" -->
+<!-- onclick="window.location.href='http://localhost:5173/cookbook/1';" -->
 <div class="mt-20 flex flex-col mx-20 h-screen w-screen">
 	<div class="flex flex-col">
 		<h1 class="text-3xl">COOKBOOKS</h1>
@@ -19,7 +19,7 @@
 						{data.cookbook.name}
 					</button> -->
 
-					<a class="flex justify-center items-center" href="/app/cookbook/{cookbook.id}"
+					<a class="flex justify-center items-center" href="/cookbook/{cookbook.id}"
 						>{cookbook.name}</a>
 				{/each}
 			</div>

@@ -70,7 +70,7 @@
 
 <!-- Contains the recipe name, ingredients, description, time and serving size -->
 <div class="flex flex-row h-full w-full flex-wrap">
-	<div class="flex flex-col h-full w-1/2">
+	<div class="flex flex-col h-2/3 w-1/2">
 		<div class="grid grid-cols-3 w-full h-1/5 items-center">
 			<!-- This will contain the picture and the name of the recipe -->
 			<div class="container md:mx-auto w-2/3">
@@ -78,8 +78,9 @@
 			</div>
 			<h1 class="text-5xl font-serif col-span-2">{recipeName}</h1>
 		</div>
+
 		<div class="flex flex-col h-4/5 w-full">
-			<div class="flex flex-col h-4/5 w-full justify-center">
+			<div class="flex flex-col h-4/5 w-full justify-center gap-5">
 				<!-- this will contain the description and the ingredients -->
 				<div class="w-4/5 mx-auto max-w-full rounded-xl bg-white shadow-lg {root}">
 					{#each items as { id, title, description }, i}
