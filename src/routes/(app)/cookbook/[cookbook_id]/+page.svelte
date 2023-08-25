@@ -6,18 +6,20 @@
 </script>
 
 <div class="flex flex-row h-full w-full justify-center gap-20">
-	<div class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 w-1/6 text-center">
-		<h2 class="text-xl font-semibold text-emerald-700 mt-5">INDEX</h2>
-		<div class="flex flex-col">
+	<!-- div for index box  -->
+	<div class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 w-1/6 text-center gap-10">
+		<h2 class="text-3xl font-semibold text-emerald-700 mt-5">INDEX</h2>
+		<div class="flex flex-col gap-5">
 			{#each data.recipes as recipe}
-				<a class="flex justify-center items-center" href="/cookbook/">{recipe.name}</a>
+				<a class="justify-center items-center text-2xl" href="/cookbook/">{recipe.name}</a>
 			{/each}
 		</div>
 	</div>
-
+	<!-- div for the small recipe box -->
 	<div
-		class=" mt-24 flex flex-col border-4 border-emerald-700 h-5/6 overflow-scroll w-2/3 text-center items-stretch">
-		<div class="mt-10 self-center flex flex-col border-2 border-emerald-700 h-fit w-11/12">
+		class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 overflow-scroll w-2/3 text-center items-stretch">
+		<div
+			class="mt-10 self-center flex flex-col border-2 border-emerald-700 h-5/6 w-11/12 overflow-hidden">
 			<SmallRecipe />
 		</div>
 		<div class="mt-10 flex flex-row space-x-96 h-1/9 w-11/12 justify-between">

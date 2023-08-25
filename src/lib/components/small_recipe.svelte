@@ -69,8 +69,8 @@
 </script>
 
 <!-- Contains the recipe name, ingredients, description, time and serving size -->
-<div class="flex flex-row h-full w-full flex-wrap">
-	<div class="flex flex-col h-2/3 w-1/2">
+<div class="flex flex-row h-full w-full">
+	<div class="flex flex-col w-1/2">
 		<div class="grid grid-cols-3 w-full h-1/5 items-center">
 			<!-- This will contain the picture and the name of the recipe -->
 			<div class="container md:mx-auto w-2/3">
@@ -79,8 +79,8 @@
 			<h1 class="text-5xl font-serif col-span-2">{recipeName}</h1>
 		</div>
 
-		<div class="flex flex-col h-4/5 w-full">
-			<div class="flex flex-col h-4/5 w-full justify-center gap-5">
+		<div class="flex flex-col h-4/5 w-full overflow-hidden">
+			<div class="flex flex-col h-4/5 w-full justify-center gap-5 overflow-hidden">
 				<!-- this will contain the description and the ingredients -->
 				<div class="w-4/5 mx-auto max-w-full rounded-xl bg-white shadow-lg {root}">
 					{#each items as { id, title, description }, i}
@@ -145,19 +145,20 @@
 	</div>
 
 	<!-- This contains the instructions for the recipe -->
-	<div class="flex flex-col w-1/2 h-full flex-wrap items-center">
+	<div class="flex flex-col w-1/2 h-full flex-wrap items-center justify-center">
 		<div use:melt={$vertical} class="h-full w-[3px] bg-emerald-700" />
-		<div class="flex flex-col flex-wrap">
+		<div class="flex flex-col flex-wrap justify-center">
 			<h1 class="mt-5 text-3xl font-serif text-center">INSTRUCTIONS</h1>
-
-			<ol class="list-decimal list-inside text-md">
-				{#each instructions as instruction}
-					<li
-						class="ml-5 mt-2 box-content w-4/5 center shadow-lg shadow-emerald-500 hover:bg-zinc-500 p-3 border-4 mb-6">
-						{instruction}
-					</li>
-				{/each}
-			</ol>
+			<div class="flex flex-col h-5/6 overflow-scroll">
+				<ol class="list-decimal list-inside text-md">
+					{#each instructions as instruction}
+						<li
+							class="ml-5 mt-2 box-content w-4/5 shadow-lg shadow-emerald-500 hover:bg-zinc-500 p-3 border-4 mb-2">
+							{instruction}
+						</li>
+					{/each}
+				</ol>
+			</div>
 		</div>
 	</div>
 </div>
