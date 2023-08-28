@@ -2,6 +2,8 @@
 	import { Icon } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
 	import { createSeparator, melt, type CreateSeparatorProps } from '@melt-ui/svelte';
+	import { createAccordion } from '@melt-ui/svelte';
+	import { slide } from 'svelte/transition';
 
 	export let data: PageData;
 
@@ -28,6 +30,27 @@
 		orientation: 'horizontal',
 		decorative: true
 	});
+
+	const {
+		elements: { content, item, trigger, root },
+		helpers: { isSelected }
+	} = createAccordion({
+		defaultValue: ['Ingredients'],
+		multiple: true
+	});
+
+	const items = [
+		{
+			id: 'ingredients',
+			title: 'INGREDIENTS',
+			description: data.recipe.ingredients
+		},
+		{
+			id: 'instructions',
+			title: 'INSTRUCTIONS',
+			description: data.recipe.instructions
+		}
+	];
 </script>
 
 <div
@@ -94,13 +117,67 @@
 			</section> -->
 		</section>
 
-		<div class="flex flex-col items-start gap-10 w-1/2 h-full">
-			<section class="flex flex-col items-center gap-10 w-3/4">
+		<div class="flex flex-col items-start gap-10 w-1/2">
+			<section class="flex flex-col items-center gap-10 w-4/5">
 				<h3 class="text-3xl font-serif underline">Description</h3>
 				<p class="text-lg">{data.recipe.description}</p>
 			</section>
 
-			<section class="flex flex-col items-center w-4/5 h-1/5 gap-5">
+			<section class="flex flex-col h-2/3 w-4/5 justify-center items-center overflow-hidden">
+				<div class="w-4/5 gap-5">
+					{#each items as { id, title }, i}
+						<div
+							use:melt={$item(id)}
+							class="overflow-hidden transition-colors first:rounded-t-xl last:rounded-b-xl">
+							<h2 class="flex">
+								<button
+									use:melt={$trigger(id)}
+									class="flex flex-1 cursor-pointer items-center justify-center
+										bg-teal-600 px-5 py-5 text-lg leading-none
+										text-white transition-colors hover:bg-emerald-300 focus:!ring-0
+										focus-visible:text-magnum-800
+										i !== 0 && 'border-t border-t-neutral-300">
+									{title}
+								</button>
+							</h2>
+							{#if $isSelected(id)}
+								<div
+									class="content overflow-hidden bg-neutral-100 text-md text-neutral-600"
+									use:melt={$content(id)}
+									transition:slide>
+									<div class="px-5 py-4">
+										{#if title == 'INSTRUCTIONS'}
+											<div>
+												<ol class="list-decimal list-inside text-lg">
+													{#each data.recipe.instructions as instruction}
+														<li
+															class="box-content hover:bg-zinc-300 dark:hover:bg-zinc-700 p-3 border-4 mb-6">
+															{instruction}
+														</li>
+													{/each}
+												</ol>
+											</div>
+										{:else}
+											<ul class="list-none list-inside text-lg">
+												{#each data.recipe.ingredients as ingredient}
+													<li
+														class="flex flex-row justify-start items-center mb-2 gap-4">
+														<Icon
+															name="check-circle-outline"
+															class="h-4 w-4 text-teal-400" />{ingredient}
+													</li>
+												{/each}
+											</ul>
+										{/if}
+									</div>
+								</div>
+							{/if}
+						</div>
+					{/each}
+				</div>
+			</section>
+
+			<!-- <section class="flex flex-col items-center w-4/5 h-1/5 gap-5">
 				<h3 class="text-3xl font-serif underline">Ingredients</h3>
 				<ul class="list-none list-inside text-lg overflow-y-scroll">
 					{#each data.recipe.ingredients as ingredient}
@@ -123,7 +200,7 @@
 						</li>
 					{/each}
 				</ol>
-			</section>
+			</section> -->
 		</div>
 	</div>
 </div>
