@@ -30,12 +30,13 @@
 	});
 </script>
 
+<!--md:w-1/5 md:h-auto-->
 <a href="/recipe/{recipeID}" class="w-full">
 	<div
-		class="w-fit h-full rounded-md shadow-md shadow-zinc-600 dark:shadow-zinc-300 overflow-hidden md:w-1/5 md:h-auto">
+		class="w-full h-full rounded-md shadow-md shadow-zinc-600 dark:shadow-zinc-300 overflow-hidden md:w-full md:h-full">
 		<div class="md:flex md:flex-col">
 			<img
-				class="h-3/5 w-full md:h-48 md:w-full object-cover md:object-cover"
+				class="h-full w-full md:h-full md:w-full object-cover"
 				src={dishImageURL}
 				alt="Dish" />
 			<div class="p-4 h-2/5">
