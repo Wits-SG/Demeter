@@ -44,7 +44,7 @@
 
 			<section class="grid grid-cols-3 items-center justify-center gap-20">
 				<div class="flex flex-col items-center justify-center gap-2">
-					<Icon name="users-group-outline" class="h-9 w-9" />
+					<Icon name="users-group-outline" class="h-7 w-7" />
 					<p class="">
 						{#if data.recipe.servingSize > 1}
 							{data.recipe.servingSize} People
@@ -54,7 +54,7 @@
 					</p>
 				</div>
 				<div class="flex flex-col items-center justify center gap-2">
-					<Icon name="clock-outline" class="h-9 w-9" />
+					<Icon name="clock-outline" class="h-7 w-7" />
 					<p class="">
 						~ {#if data.recipe.cookingTime < 60}
 							{data.recipe.cookingTime} Mins
@@ -64,7 +64,7 @@
 					</p>
 				</div>
 				<div class="flex flex-col items-center justify center gap-2">
-					<Icon name="arrow-up-down-outline" class="h-9 w-9" />
+					<Icon name="arrow-up-down-outline" class="h-7 w-7" />
 					<p class="">
 						{data.recipe.skillLevel}
 					</p>
@@ -100,7 +100,7 @@
 				<p class="text-lg">{data.recipe.description}</p>
 			</section>
 
-			<section class="flex flex-col items-center gap-10 w-3/4 h-1/3">
+			<section class="flex flex-col items-center w-4/5 h-1/5 gap-5">
 				<h3 class="text-3xl font-serif underline">Ingredients</h3>
 				<ul class="list-none list-inside text-lg overflow-y-scroll">
 					{#each data.recipe.ingredients as ingredient}
@@ -113,12 +113,12 @@
 				</ul>
 			</section>
 
-			<section class="flex flex-col items-center gap-10 w-4/5 h-1/3">
+			<section class="flex flex-col items-center w-4/5 h-1/4 gap-5">
 				<h3 class="text-3xl font-serif underline">Instructions</h3>
 				<ol class="list-decimal list-inside text-lg overflow-y-scroll">
 					{#each data.recipe.instructions as instruction}
 						<li
-							class="box-content shadow-lg shadow-emerald-500 hover:bg-zinc-500 p-3 border-4 mb-6">
+							class="box-content hover:bg-zinc-300 dark:hover:bg-zinc-700 p-3 border-4 mb-6">
 							{instruction}
 						</li>
 					{/each}
