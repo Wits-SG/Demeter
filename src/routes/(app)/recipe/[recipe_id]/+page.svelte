@@ -129,11 +129,10 @@
 							<h2 class="flex">
 								<button
 									use:melt={$trigger(id)}
-									class="flex flex-1 cursor-pointer items-center justify-center
-										bg-teal-600 px-7 py-7 text-lg leading-none
+									class="flex flex-1 cursor-pointer items-center justify-center bg-teal-600 px-7 py-7 text-lg leading-none
 										text-white transition-colors hover:bg-emerald-300 focus:!ring-0
 										focus-visible:text-magnum-800
-										i !== 0 && 'border-t border-t-neutral-300">
+										i !== 0 && 'border-t-solid border-t-zinc-800">
 									{title}
 								</button>
 							</h2>
