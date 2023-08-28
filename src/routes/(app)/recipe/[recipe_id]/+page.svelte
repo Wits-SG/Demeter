@@ -100,7 +100,7 @@
 				<p class="text-lg">{data.recipe.description}</p>
 			</section>
 
-			<section class="flex flex-col items-center gap-10 w-3/4">
+			<section class="flex flex-col items-center gap-10 w-3/4 h-1/3">
 				<h3 class="text-3xl font-serif underline">Ingredients</h3>
 				<ul class="list-none list-inside text-lg overflow-y-scroll">
 					{#each data.recipe.ingredients as ingredient}
@@ -113,7 +113,7 @@
 				</ul>
 			</section>
 
-			<section class="flex flex-col items-center gap-10 w-4/5">
+			<section class="flex flex-col items-center gap-10 w-4/5 h-1/3">
 				<h3 class="text-3xl font-serif underline">Instructions</h3>
 				<ol class="list-decimal list-inside text-lg overflow-y-scroll">
 					{#each data.recipe.instructions as instruction}
