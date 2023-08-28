@@ -117,14 +117,14 @@
 			</section> -->
 		</section>
 
-		<div class="flex flex-col items-start gap-10 w-1/2">
+		<div class="flex flex-col items-start gap-20 w-1/2">
 			<section class="flex flex-col items-center gap-10 w-4/5">
 				<h3 class="text-3xl font-serif underline">Description</h3>
 				<p class="text-lg">{data.recipe.description}</p>
 			</section>
 
-			<section class="flex flex-col h-2/3 w-4/5 justify-center items-center overflow-hidden">
-				<div class="w-4/5 gap-5">
+			<section class="flex flex-col h-2/3 w-5/6 justify-center items-center overflow-hidden">
+				<div class="w-5/6">
 					{#each items as { id, title }, i}
 						<div
 							use:melt={$item(id)}
@@ -148,10 +148,11 @@
 									<div class="px-5 py-4">
 										{#if title == 'INSTRUCTIONS'}
 											<div>
-												<ol class="list-decimal list-inside text-lg">
+												<ol
+													class="list-decimal list-inside text-lg overflow-y-scroll">
 													{#each data.recipe.instructions as instruction}
 														<li
-															class="box-content hover:bg-zinc-300 dark:hover:bg-zinc-700 p-3 border-4 mb-6">
+															class="box-content hover:bg-zinc-300 dark:hover:bg-zinc-200 p-3 border-4 mb-6">
 															{instruction}
 														</li>
 													{/each}
