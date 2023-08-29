@@ -58,7 +58,7 @@
 	<div class="flex flex-row justify start items-start gap-1">
 		<section class="flex flex-col items-center justify-center w-1/2 gap-10">
 			<section class="container md:mx-auto w-2/3">
-				<img alt="" src={data.recipe.imageUrl} class="object-cover" />
+				<img alt="" src={data.recipe.imageUrl} class="object-cover rounded-xl" />
 			</section>
 
 			<section class="grid grid-cols-3 items-center justify-center gap-20">
@@ -116,7 +116,7 @@
 		<div class="flex flex-col items-start gap-20 w-1/2">
 			<section class="flex flex-col items-center gap-10 w-4/5">
 				<h1 class="text-6xl font-serif sticky top-0">{data.recipe.name}</h1>
-				<h3 class="text-3xl font-serif underline">Description</h3>
+				<h3 class="text-3xl font-serif no-underline">Description</h3>
 				<p class="text-lg">{data.recipe.description}</p>
 			</section>
 
