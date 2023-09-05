@@ -24,8 +24,7 @@ export const load = (async ({ params }) => {
 			description: row['description'],
 			servingSize: row['serving_size'],
 			cookingTime: row['cooking_time'],
-			imageUrl: row['image_url'],
-			skillLevel: row['name']
+			imageUrl: row['image_url']
 		} as Recipe);
 	}
 	console.log('Recipes', recipes);

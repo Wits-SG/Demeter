@@ -6,6 +6,8 @@
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
 
+	export let recipeID: string = '';
+
 	const {
 		elements: { content, item, trigger, root },
 		helpers: { isSelected }

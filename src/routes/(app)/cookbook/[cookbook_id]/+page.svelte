@@ -3,6 +3,8 @@
 
 	import type { PageData } from './$types';
 	export let data: PageData;
+
+	let currentRecipeID: string = '';
 </script>
 
 <div class="flex flex-row h-full w-full justify-center gap-20">
@@ -11,7 +13,7 @@
 		<h2 class="text-3xl font-semibold text-emerald-700 mt-5">INDEX</h2>
 		<div class="flex flex-col gap-5">
 			{#each data.recipes as recipe}
-				<a class="justify-center items-center text-2xl" href="/cookbook/">{recipe.name}</a>
+				<button on:click={() => (currentRecipeID = recipe.id)}>{recipe.name}</button>
 			{/each}
 		</div>
 	</div>
@@ -20,7 +22,7 @@
 		class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 overflow-scroll w-2/3 text-center items-stretch">
 		<div
 			class="mt-10 self-center flex flex-col border-2 border-emerald-700 h-5/6 w-11/12 overflow-hidden">
-			<SmallRecipe />
+			<SmallRecipe recipeID={currentRecipeID} />
 		</div>
 		<div class="mt-10 flex flex-row space-x-96 h-1/9 w-11/12 justify-between">
 			<button
