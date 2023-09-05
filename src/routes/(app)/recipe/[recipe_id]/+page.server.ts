@@ -36,8 +36,8 @@ export const load = (async ({ params }) => {
 		ingredients.push(row['name']);
 	}
 
-	console.log(ingredients);
-	console.log(instructions);
+	//console.log(ingredients);
+	//console.log(instructions);
 
 	return {
 		recipe: {

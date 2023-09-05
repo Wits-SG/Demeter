@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	$: console.log(data);
+	//$: console.log(data);
 </script>
 
 <!-- onclick="window.location.href='http://localhost:5173/cookbook/1';" -->

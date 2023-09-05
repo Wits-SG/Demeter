@@ -20,7 +20,7 @@ export const load = (async ({ params }) => {
 	// 	args: [params.cookbook_id]
 	// });
 
-	console.log(cookbooks);
+	//console.log(cookbooks);
 
 	return {
 		cookbooks: cookbooks

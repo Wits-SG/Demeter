@@ -3,8 +3,31 @@
 
 	import type { PageData } from './$types';
 	export let data: PageData;
+	console.log(data);
 
-	let currentRecipeID: string = '';
+	let currentRecipeID: string = data.recipes[0].id;
+	let currentRecipeIndex: number = 0;
+	$: console.log(currentRecipeID);
+
+	function prevPress() {
+		currentRecipeIndex -= 1;
+		if (currentRecipeIndex < 0) {
+			currentRecipeID = data.recipes[lastIndex].id;
+			currentRecipeIndex = lastIndex;
+		} else {
+			currentRecipeID = data.recipes[currentRecipeIndex].id;
+		}
+	}
+	let lastIndex = data.recipes.length - 1;
+	function nextPress(): void {
+		currentRecipeIndex += 1;
+		if (currentRecipeIndex > lastIndex) {
+			currentRecipeID = data.recipes[0].id;
+			currentRecipeIndex = 0;
+		} else {
+			currentRecipeID = data.recipes[currentRecipeIndex].id;
+		}
+	}
 </script>
 
 <div class="flex flex-row h-full w-full justify-center gap-20">
@@ -12,8 +35,13 @@
 	<div class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 w-1/6 text-center gap-10">
 		<h2 class="text-3xl font-semibold text-emerald-700 mt-5">INDEX</h2>
 		<div class="flex flex-col gap-5">
-			{#each data.recipes as recipe}
-				<button on:click={() => (currentRecipeID = recipe.id)}>{recipe.name}</button>
+			{#each data.recipes as recipe, index}
+				<button
+					class="border-4"
+					on:click={() => {
+						currentRecipeID = recipe.id;
+						currentRecipeIndex = index;
+					}}>{recipe.name}</button>
 			{/each}
 		</div>
 	</div>
@@ -26,9 +54,11 @@
 		</div>
 		<div class="mt-10 flex flex-row space-x-96 h-1/9 w-11/12 justify-between">
 			<button
+				on:click={prevPress}
 				class="ml-20 rounded-md border-2 w-20 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold"
 				>Prev</button>
 			<button
+				on:click={nextPress}
 				class="mr-2 rounded-md border-2 w-20 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold"
 				>Next</button>
 		</div>

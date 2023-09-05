@@ -16,7 +16,7 @@
 
 	const onFileSelected = (e: any) => {
 		picture = e.target.files[0];
-		console.log(picture instanceof File);
+		//console.log(picture instanceof File);
 		let reader = new FileReader();
 		reader.readAsDataURL(picture);
 		reader.onload = (e) => {

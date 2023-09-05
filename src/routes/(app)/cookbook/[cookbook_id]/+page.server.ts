@@ -20,14 +20,10 @@ export const load = (async ({ params }) => {
 	for (let row of recipe_name.rows) {
 		recipes.push({
 			id: row['recipe_id'],
-			name: row['name'],
-			description: row['description'],
-			servingSize: row['serving_size'],
-			cookingTime: row['cooking_time'],
-			imageUrl: row['image_url']
+			name: row['name']
 		} as Recipe);
 	}
-	console.log('Recipes', recipes);
+	//console.log('Recipes', recipes);
 
 	return {
 		recipes: recipes

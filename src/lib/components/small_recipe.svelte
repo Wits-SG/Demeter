@@ -5,8 +5,44 @@
 	import { Icon } from 'flowbite-svelte-icons';
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
-
+	import { onMount } from 'svelte';
 	export let recipeID: string = '';
+
+	let smallRecipeData: any;
+
+	const getSmallRecipeData = async () => {
+		try {
+			const smallRecipe_res = await fetch(`/api/small_recipe?recipe_id=${recipeID}`, {
+				method: 'GET'
+			});
+
+			const recipe_data: JSON = await smallRecipe_res.json();
+			//console.log(recipe_data);
+			return recipe_data;
+		} catch (recipePreview_err: any) {
+			console.log('error occured in fetch');
+		}
+	};
+	let recipeTitle = 'NONE';
+	let recipeImageURL = 'NONE';
+	let Description = 'NONE';
+	let recipeCookingTime = 'NONE';
+	let recipeServingSize = 'NONE';
+	let recipeIngredients = 'NONE';
+	let recipeInstructions = 'NONE';
+	$: recipeID && refreshRecipe();
+
+	const refreshRecipe = async () => {
+		smallRecipeData = await getSmallRecipeData();
+		recipeTitle = smallRecipeData.recipe.name;
+		Description = smallRecipeData.recipe.description;
+		recipeImageURL = smallRecipeData.recipe.imageURL;
+		recipeCookingTime = smallRecipeData.recipe.cookingTime;
+		recipeServingSize = smallRecipeData.recipe.servingSize;
+		recipeIngredients = smallRecipeData.recipe.ingredients;
+		recipeInstructions = smallRecipeData.recipe.instructions;
+	};
+	$: console.log(Description);
 
 	const {
 		elements: { content, item, trigger, root },
@@ -25,47 +61,17 @@
 		orientation
 	});
 
-	let recipeName = 'Penne Alla Vodka';
-	let recipeDescription =
-		"Penne alla Vodka is a classic Italian-American pasta dish known for its creamy tomato-based sauce with a touch of vodka. This indulgent recipe combines the richness of a velvety sauce with the bite of penne pasta, creating a comforting and flavorful dish that's perfect for a cozy dinner.";
-	let servingSize = 4;
-	let cookingTime = 30;
-	let skillLevel = 'Intermediate';
-
-	let ingredients = [
-		'16 oz (450g) penne pasta',
-		'2 tablespoons olive oil',
-		'1 small onion, finely chopped',
-		'3 cloves garlic, minced',
-		'1/2 teaspoon red pepper flakes (adjust to taste)',
-		'1 cup tomato puree or crushed tomatoes',
-		'1/4 cup vodka',
-		'1/2 cup heavy cream',
-		'1/4 cup grated Parmesan cheese',
-		'Salt and pepper, to taste',
-		'Fresh basil or parsley, chopped (for garnish)'
-	];
-
-	let instructions = [
-		'Cook the Pasta: Bring a large pot of salted water to a boil. Add the penne pasta and cook according to the package instructions until al dente. Drain the pasta and set aside.',
-		'Prepare the Sauce: In a large skillet, heat the olive oil over medium heat. Add the chopped onion and sauté until it becomes translucent, about 3-4 minutes. Stir in the minced garlic and red pepper flakes, cooking for another 1 minute until fragrant.',
-		'Add Tomatoes and Vodka: Pour in the tomato puree or crushed tomatoes, and stir well to combine with the onion and garlic mixture. Let the sauce simmer for about 5 minutes, allowing the flavors to meld. Add the vodka to the sauce and let it cook for an additional 3-4 minutes, allowing the alcohol to evaporate.',
-		'Create the Creamy Base: Reduce the heat to low and slowly pour in the heavy cream, stirring constantly to combine. Allow the sauce to gently simmer for about 5-7 minutes until it thickens slightly.',
-		'Combine Pasta and Sauce: Add the cooked penne pasta to the skillet with the sauce. Toss the pasta to coat it evenly with the creamy vodka sauce.',
-		'Finish the Dish: Stir in the grated Parmesan cheese, letting it melt into the sauce and thicken it further. Season with salt and pepper to taste.',
-		'Serve: Divide the Penne alla Vodka among serving plates. Garnish with chopped fresh basil or parsley to add a burst of color and freshness.'
-	];
-
-	const items = [
+	let items: any;
+	$: items = [
 		{
 			id: 'description',
 			title: 'DESCRIPTION',
-			description: recipeDescription
+			description: Description
 		},
 		{
 			id: 'ingredients',
 			title: 'INGREDIENTS',
-			description: ingredients
+			description: recipeIngredients
 		}
 	];
 </script>
@@ -76,9 +82,9 @@
 		<div class="grid grid-cols-3 w-full h-1/5 items-center">
 			<!-- This will contain the picture and the name of the recipe -->
 			<div class="container md:mx-auto w-2/3">
-				<img alt="" src={picture2} class="object-cover" />
+				<img alt="" src={recipeImageURL} class="object-cover" />
 			</div>
-			<h1 class="text-5xl font-serif col-span-2">{recipeName}</h1>
+			<h1 class="text-5xl font-serif col-span-2">{recipeTitle}</h1>
 		</div>
 
 		<div class="flex flex-col h-4/5 w-full overflow-hidden">
@@ -112,7 +118,7 @@
 											<div>
 												<ul class="list-disc text-md">
 													{#each description as descriptions}
-														<li class="box-content w-2/3 center">
+														<li class="box-content">
 															{descriptions}
 														</li>
 													{/each}
@@ -133,13 +139,13 @@
 				<div class="flex flex-row items-center justify-center gap-5">
 					<Icon name="users-group-outline" class="h-10 w-10" />
 					<p class="">
-						{servingSize} Person
+						{recipeServingSize} Person
 					</p>
 				</div>
 				<div class="flex flex-row items-center justify center gap-5">
 					<Icon name="clock-outline" class="h-10 w-10" />
 					<p class="">
-						~{cookingTime} Mins
+						~{recipeCookingTime} Mins
 					</p>
 				</div>
 			</div>
@@ -149,18 +155,18 @@
 	<!-- This contains the instructions for the recipe -->
 	<div class="flex flex-col w-1/2 h-full flex-wrap items-center justify-center">
 		<div use:melt={$vertical} class="h-full w-[3px] bg-emerald-700" />
-		<div class="flex flex-col flex-wrap justify-center">
-			<h1 class="mt-5 text-3xl font-serif text-center">INSTRUCTIONS</h1>
-			<div class="flex flex-col h-5/6 overflow-scroll">
-				<ol class="list-decimal list-inside text-md">
-					{#each instructions as instruction}
-						<li
-							class="ml-5 mt-2 box-content w-4/5 shadow-lg shadow-emerald-500 hover:bg-zinc-500 p-3 border-4 mb-2">
-							{instruction}
-						</li>
-					{/each}
-				</ol>
-			</div>
+		<h1 class="text-3xl font-serif text-center">INSTRUCTIONS</h1>
+		<!-- <div class="flex flex-col flex-wrap justify-between"> -->
+		<div class="flex flex-col overflow-scroll">
+			<ol class="list-decimal list-inside text-md">
+				{#each recipeInstructions as instruction}
+					<li
+						class="ml-5 mt-2 box-content shadow-lg shadow-emerald-500 hover:bg-zinc-500 p-3 border-2 mb-2">
+						{instruction}
+					</li>
+				{/each}
+			</ol>
 		</div>
+		<!-- </div> -->
 	</div>
 </div>

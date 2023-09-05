@@ -11,7 +11,7 @@
 			});
 
 			const recipe_data: JSON = await recipePreview_res.json();
-			console.log(recipe_data);
+			//console.log(recipe_data);
 			return recipe_data;
 		} catch (recipePreview_err: any) {
 			console.log('error occured in fetch');
