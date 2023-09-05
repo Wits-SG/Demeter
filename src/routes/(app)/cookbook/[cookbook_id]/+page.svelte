@@ -3,7 +3,6 @@
 
 	import type { PageData } from './$types';
 	export let data: PageData;
-	console.log(data);
 
 	let currentRecipeID: string = data.recipes[0].id;
 	let currentRecipeIndex: number = 0;
@@ -43,6 +42,7 @@
 						currentRecipeIndex = index;
 					}}>{recipe.name}</button>
 			{/each}
+			<a href="/cookbook/">Back</a>
 		</div>
 	</div>
 	<!-- div for the small recipe box -->

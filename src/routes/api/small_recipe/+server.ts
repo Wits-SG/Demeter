@@ -28,7 +28,7 @@ export const GET = async ({ url }) => {
 		for (let row of instructions_res.rows) {
 			instructions.push(row['name']);
 		}
-		console.log(instructions);
+
 		return json({
 			recipe: {
 				name: recipe_res.rows[0]['name'],
