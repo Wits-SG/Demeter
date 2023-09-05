@@ -96,13 +96,6 @@
 
 			<!-- <section class="grid grid-cols-2 items-center gap-20">
 				<div class="flex flex-col items-center gap-2">
-					<Icon name="message-caption-outline" class="h-14 w-14" />
-					<button
-						class="p-5 bg-emerald-500 rounded-full w-full h-12 text-center text-md flex justify-center items-center hover:bg-emerald-600">
-						Write a review
-					</button>
-				</div>
-				<div class="flex flex-col items-center gap-2">
 					<Icon name="heart-outline" class="h-14 w-14" />
 					<button
 						on:click={toggleSavedState}
@@ -172,31 +165,6 @@
 					{/each}
 				</div>
 			</section>
-
-			<!-- <section class="flex flex-col items-center w-4/5 h-1/5 gap-5">
-				<h3 class="text-3xl font-serif underline">Ingredients</h3>
-				<ul class="list-none list-inside text-lg overflow-y-scroll">
-					{#each data.recipe.ingredients as ingredient}
-						<li class="flex flex-row justify-start items-center mb-2 gap-4">
-							<Icon
-								name="check-circle-outline"
-								class="h-4 w-4 text-teal-400" />{ingredient}
-						</li>
-					{/each}
-				</ul>
-			</section>
-
-			<section class="flex flex-col items-center w-4/5 h-1/4 gap-5">
-				<h3 class="text-3xl font-serif underline">Instructions</h3>
-				<ol class="list-decimal list-inside text-lg overflow-y-scroll">
-					{#each data.recipe.instructions as instruction}
-						<li
-							class="box-content hover:bg-zinc-300 dark:hover:bg-zinc-700 p-3 border-4 mb-6">
-							{instruction}
-						</li>
-					{/each}
-				</ol>
-			</section> -->
 		</div>
 	</div>
 </div>
