@@ -56,6 +56,16 @@
 		inputInstruction = '';
 	}
 
+	let editingInstruction: number | null = null;
+
+	function editInstruction(index: number) {
+		editingInstruction = index;
+	}
+
+	function deleteInstruction(index: number) {
+		instructionList = instructionList.filter((_, i) => i !== index);
+	}
+
 	async function saveRecipe() {
 		const recipeId = uuidv4();
 		const recipeImageRef = ref(fb_storage, `images/recipe/${recipeId}.jpeg`);
@@ -86,7 +96,7 @@
 
 <div class="w-full h-full flex flex-col gap-12 p-2">
 	<h1 class="flex justify-center font-bold" style="font-size:45px;">Create your own Recipe</h1>
-	<div class="flex flex-row gap-10">
+	<div class="flex flex-row gap-5">
 		<!-- this is the start of the first column, which includes the title, description, photo-->
 		<section class="flex flex-col items-center w-1/3 gap-5">
 			<label class="text-lg font-bold" for="recipeName"> Recipe Title </label>
@@ -229,11 +239,51 @@
 			</button>
 
 			<label for="instruction" class="text-lg font-bold"> Instructions </label>
+
+			<ol class="list-decimal list-inside">
+				{#if instructionList.length != 0}
+					{#each instructionList as instruction, index}
+						<li
+							class="box-content text-zinc-950 bg-gray-50 hover:bg-blue-50 dark:hover:bg-zinc-400 dark:bg-zinc-800 dark:text-zinc-100 p-2 border-2 mb-2 border-teal-500 rounded-lg">
+							{instruction}
+							<button
+								class="ml-2 text-emerald-500 align-left"
+								on:click={() => editInstruction(index)}>
+								<Icon name="edit-outline" class="h-5 w-5" />
+							</button>
+
+							<button
+								class="ml-2 text-emerald-500 align-left"
+								on:click={() => deleteInstruction(index)}>
+								<Icon name="trash-bin-outline" class="h-5 w-5" />
+							</button>
+						</li>
+					{/each}
+				{:else}
+					<p>No Ingredients yet</p>
+				{/if}
+			</ol>
+
+			{#if editingInstruction !== null}
+				<textarea
+					bind:value={instructionList[editingInstruction]}
+					on:keydown={(event) => {
+						if (event.key === 'Enter' || event.keyCode === 13) {
+							event.preventDefault();
+							editingInstruction = null;
+						}
+					}}
+					class="p-1 w-full text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
+					placeholder="Edit instruction"
+					rows="3"
+					maxlength="1024" />
+			{/if}
+
 			<textarea
 				bind:value={inputInstruction}
 				class="block w-full h-fit rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
 				id="instructions"
-				rows="4"
+				rows="3"
 				maxlength="1024"
 				placeholder="type a step of your instruction and click add to start the next" />
 			<button
@@ -241,19 +291,6 @@
 				on:click={addInstructions}>
 				Add instruction
 			</button>
-
-			<h2 class="text-lg font-bold">Instructions List</h2>
-			<ul class="list-disc list-inside">
-				{#if instructionList.length != 0}
-					{#each instructionList as instruction}
-						<li class="mb-2">
-							{instruction}
-						</li>
-					{/each}
-				{:else}
-					<p>No Ingredients yet</p>
-				{/if}
-			</ul>
 		</section>
 	</div>
 </div>
