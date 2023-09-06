@@ -113,7 +113,7 @@
 
 		<div class="flex flex-col items-start gap-20 w-1/2">
 			<section class="flex flex-col items-center gap-10 w-4/5">
-				<h1 class="text-6xl font-serif sticky top-0">{data.recipe.name}</h1>
+				<h1 class="text-6xl font-serif">{data.recipe.name}</h1>
 				<h3 class="text-3xl font-serif no-underline">Description</h3>
 				<p class="text-lg">{data.recipe.description}</p>
 			</section>

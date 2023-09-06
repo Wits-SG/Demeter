@@ -56,6 +56,7 @@
 							})
 						});
 					}}
+					use:melt={$close}
 					class="inline-flex h-8 items-center justify-center rounded-sm
                     bg-zinc-100 px-4 font-medium leading-none text-zinc-600">
 					Save

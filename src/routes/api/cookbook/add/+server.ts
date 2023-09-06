@@ -26,5 +26,9 @@ export const GET = async () => {
 export const POST = async (event: RequestEvent) => {
 	const addedRecipe: { recipeId: string; cookbookId: string } = await event.request.json();
 
+	const insertAddedRecipe = await turso_client.execute({
+		sql: 'insert into cookbook_recipes values(?, ?)',
+		args: [addedRecipe.cookbookId, addedRecipe.recipeId]
+	});
 	return new Response('Successful');
 };
