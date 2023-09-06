@@ -8,10 +8,7 @@
 		iconName: string;
 	}
 
-	const Cookbooks: Array<Cookbook> = [
-		{ name: 'Cookbook 1', iconName: 'book-outline' },
-		{ name: 'Cookbook 2', iconName: 'book-outline' }
-	];
+	const Cookbooks: Array<Cookbook> = [{ name: 'Cookbook 1', iconName: 'book-outline' }];
 
 	let currentCookbook: Cookbook = Cookbooks[0];
 
@@ -19,6 +16,29 @@
 		elements: { trigger, menu, item },
 		states: { open }
 	} = createDropdownMenu({ forceVisible: true });
+
+	export let recipeID: string = '';
+	let cookbookData: any;
+
+	const getCookbookData = async () => {
+		try {
+			const cookbook_res = await fetch(`/api/dropdown?recipe=${recipeID}`, { method: 'GET' });
+
+			const cookbook_data: JSON = await cookbook_res.json();
+			return cookbook_data;
+		} catch (error) {
+			console.log('error occured in fetch');
+		}
+	};
+
+	let cookbookName = 'None';
+	$: recipeID && refreshRecipe();
+
+	const refreshRecipe = async () => {
+		cookbookData = await getCookbookData();
+		cookbookName = cookbookData.cookbooks.name;
+	};
+	console.log(cookbookName);
 </script>
 
 <button
