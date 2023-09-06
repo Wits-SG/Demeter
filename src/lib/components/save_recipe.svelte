@@ -14,6 +14,8 @@
 	} = createDialog({
 		forceVisible: true
 	});
+
+	let recipeExistsInCookbook = false;
 </script>
 
 <button
@@ -45,7 +47,8 @@
 				</button>
 				<button
 					on:click={async () => {
-						await fetch('/api/cookbook/add', {
+						// Check if the recipe already exists in the selected cookbook
+						const response = await fetch('/api/cookbook/check', {
 							method: 'POST',
 							headers: {
 								'Content-Type': 'application/json'
@@ -55,10 +58,33 @@
 								cookbookId: selectedCookbook.cookbook_id
 							})
 						});
+
+						if (response.ok) {
+							const data = await response.json();
+							if (data.exists) {
+								// Recipe already exists in the cookbook, show an alert
+								alert('Recipe already exists in this cookbook.');
+							} else {
+								// Recipe doesn't exist, proceed to save it
+								await fetch('/api/cookbook/add', {
+									method: 'POST',
+									headers: {
+										'Content-Type': 'application/json'
+									},
+									body: JSON.stringify({
+										recipeId: recipeID,
+										cookbookId: selectedCookbook.cookbook_id
+									})
+								});
+							}
+						} else {
+							// Handle the API error as needed
+							console.error('API error:', response.statusText);
+						}
 					}}
 					use:melt={$close}
 					class="inline-flex h-8 items-center justify-center rounded-sm
-                    bg-teal-600 px-4 font-medium leading-none text-zinc-50 hover:bg-emerald-600">
+					bg-teal-600 px-4 font-medium leading-none text-zinc-50 hover:bg-emerald-600">
 					Save
 				</button>
 			</div>
