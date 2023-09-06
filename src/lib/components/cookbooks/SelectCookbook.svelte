@@ -25,10 +25,10 @@
 
 <button
 	use:melt={$trigger}
-	class="h-8 w-64 min-w-fit rounded-lg bg-zinc-200 flex justify-center items-center gap-5 text-lg p-2">
-	<Icon name="book-outline" class="h-6 w-6 text-zinc-900" />
+	class="h-8 w-64 min-w-fit rounded-lg bg-zinc-200 flex justify-center items-center gap-5 text-lg p-2 hover:bg-zinc-400">
+	<Icon name="book-outline" class="h-5 w-5 text-green-700" />
 	<p class="text-zinc-900">{selectedCookbook.name}</p>
-	<Icon name="angle-down-outline" class="h-6 w-6 text-zinc-900" />
+	<Icon name="angle-down-outline" class="h-4 w-4 text-zinc-900" />
 </button>
 
 {#if $open}
@@ -42,7 +42,9 @@
 				use:melt={$item}
 				on:click={() => {
 					selectedCookbook = cookbook;
-				}}><Icon name="book-outline" class="h-6 w-6" /> {cookbook.name}</button>
+				}}
+				><Icon name="book-outline" class=" text-green-700 h-5 w-5" />
+				{cookbook.name}</button>
 		{/each}
 	</div>
 {/if}
