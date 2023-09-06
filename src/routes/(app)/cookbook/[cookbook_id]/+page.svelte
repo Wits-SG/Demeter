@@ -47,7 +47,10 @@
 	</div>
 	<!-- div for the small recipe box -->
 	<div
-		class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 overflow-scroll w-2/3 text-center items-stretch">
+		class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 overflow-scroll w-2/3 text-center justify-center items-end">
+		<button
+			class="rounded-md border-2 w-40 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold justify-items-end gap-1"
+			>Delete Recipe</button>
 		<div
 			class="mt-10 self-center flex flex-col border-2 border-emerald-700 h-5/6 w-11/12 overflow-hidden">
 			<SmallRecipe recipeID={currentRecipeID} />
