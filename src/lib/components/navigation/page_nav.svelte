@@ -25,8 +25,11 @@
 
 <button
 	use:melt={$trigger}
-	class="h-8 w-64 min-w-fit rounded-lg bg-zinc-200 flex justify-center items-center gap-4 text-lg"
-	>{currentNavPage.name}</button>
+	class="h-8 w-64 min-w-fit rounded-lg bg-zinc-200 flex justify-between items-center gap-5 text-lg p-2">
+	<Icon name={currentNavPage.iconName} class="h-6 w-6" />
+	<p>{currentNavPage.name}</p>
+	<Icon name="angle-down-outline" class="h-6 w-6" />
+</button>
 {#if $open}
 	<div
 		class="bg-zinc-200 h-fit w-64 dark:text-black p-2 flex flex-col justify-center items-start rounded-lg gap-3"
