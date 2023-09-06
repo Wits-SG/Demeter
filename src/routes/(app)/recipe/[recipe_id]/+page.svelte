@@ -4,6 +4,7 @@
 	import { createSeparator, melt, type CreateSeparatorProps } from '@melt-ui/svelte';
 	import { createAccordion } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
+	import SaveRecipe from '$lib/components/save_recipe.svelte';
 
 	export let data: PageData;
 
@@ -104,6 +105,10 @@
 					</button>
 				</div>
 			</section> -->
+
+			<div>
+				<SaveRecipe />
+			</div>
 		</section>
 
 		<div class="flex flex-col items-start gap-20 w-1/2">
