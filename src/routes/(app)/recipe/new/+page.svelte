@@ -47,6 +47,10 @@
 		editingIngredient = index;
 	}
 
+	function deleteIngredient(index: number) {
+		ingredientsList = ingredientsList.filter((_, i) => i !== index);
+	}
+
 	function addInstructions() {
 		instructionList = [...instructionList, inputInstruction];
 		inputInstruction = '';
@@ -80,9 +84,9 @@
 	}
 </script>
 
-<div class="w-full h-full bg-zinc-100 flex flex-col gap-12">
+<div class="w-full h-full flex flex-col gap-12 p-2">
 	<h1 class="flex justify-center font-bold" style="font-size:45px;">Create your own Recipe</h1>
-	<div class="flex flex-row gap-20">
+	<div class="flex flex-row gap-10">
 		<!-- this is the start of the first column, which includes the title, description, photo-->
 		<section class="flex flex-col items-center w-1/3 gap-5">
 			<label class="text-lg font-bold" for="recipeName"> Recipe Title </label>
@@ -161,28 +165,6 @@
 				Post
 			</button>
 
-			<h2 class="text-lg font-bold">Ingredients</h2>
-			<p>
-				Type your ingredient in the box below. Click the "Add Ingredient" button to add it
-				to your list of ingreidents
-			</p>
-			<input
-				bind:value={inputIngredient}
-				on:keydown={(event) => {
-					if (event.key === 'Enter' || event.keyCode === 13) {
-						event.preventDefault();
-						addIngredients();
-					}
-				}}
-				class="p-1 w-fit text-black rounded-md focuse:outline-none focus:outline-2 focus:outline-emerald-500"
-				type="text"
-				placeholder="Insert an ingredient" />
-			<button
-				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
-				on:click={addIngredients}>
-				Add ingredients
-			</button>
-
 			<h2 class="text-lg font-bold">Ingredients List</h2>
 			<ul class="list-disc list-inside">
 				{#if ingredientsList.length != 0}
@@ -193,6 +175,12 @@
 								class="ml-2 text-emerald-500 align-left"
 								on:click={() => editIngredient(index)}>
 								<Icon name="edit-outline" class="h-5 w-5" />
+							</button>
+
+							<button
+								class="ml-2 text-emerald-500 align-left"
+								on:click={() => deleteIngredient(index)}>
+								<Icon name="trash-bin-outline" class="h-5 w-5" />
 							</button>
 						</li>
 					{/each}
@@ -214,6 +202,23 @@
 					type="text"
 					placeholder="Edit ingredient" />
 			{/if}
+
+			<input
+				bind:value={inputIngredient}
+				on:keydown={(event) => {
+					if (event.key === 'Enter' || event.keyCode === 13) {
+						event.preventDefault();
+						addIngredients();
+					}
+				}}
+				class="p-1 w-fit text-black rounded-md focuse:outline-none focus:outline-2 focus:outline-emerald-500"
+				type="text"
+				placeholder="Insert an ingredient" />
+			<button
+				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
+				on:click={addIngredients}>
+				Add ingredients
+			</button>
 		</section>
 
 		<section class="flex flex-col items-center w-1/3 gap-5">
