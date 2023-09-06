@@ -41,6 +41,12 @@
 		inputIngredient = '';
 	}
 
+	let editingIngredient: number | null = null;
+
+	function editIngredient(index: number) {
+		editingIngredient = index;
+	}
+
 	function addInstructions() {
 		instructionList = [...instructionList, inputInstruction];
 		inputInstruction = '';
@@ -74,16 +80,16 @@
 	}
 </script>
 
-<div class="w-full h-full bg-zinc-100 flex flex-col justify-center gap-20">
+<div class="w-full h-full bg-zinc-100 flex flex-col gap-12">
 	<h1 class="flex justify-center font-bold" style="font-size:45px;">Create your own Recipe</h1>
-	<div class="flex flex-row items-center justify-start gap-10">
+	<div class="flex flex-row gap-20">
 		<!-- this is the start of the first column, which includes the title, description, photo-->
-		<section class="flex flex-col items-center w-1/2 gap-5">
+		<section class="flex flex-col items-center w-1/3 gap-5">
 			<label class="text-lg font-bold" for="recipeName"> Recipe Title </label>
 
 			<input
 				bind:value={recipeName}
-				class="p-1 w-full text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
+				class="p-1 w-full text-black rounded-md focus:outline-2 focus:outline-emerald-500"
 				maxlength="64"
 				type="text"
 				placeholder="Type the heading of your recipe" />
@@ -95,7 +101,7 @@
 				class="block w-full h-fit rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
 				id="decription"
 				rows="3"
-				maxlength="1024"
+				maxlength="512"
 				placeholder="Give a short description of your recipe" />
 
 			<label class="text-lg font-bold" for="picture"> Select image: </label>
@@ -109,9 +115,9 @@
 
 			<!--this section displays the space for time, serves, skill and ingredients-->
 
-			<div class="mb-2 flex flex-row justify-center items-center">
-				<label class="text-lg font-bold" for="skillLevel"> Skill Level</label>
+			<div class="mb-2 flex flex-row items-center gap-3">
 				<Icon name="arrow-up-down-outline" class="h-5 w-5" />
+				<label class="text-lg font-bold" for="skillLevel"> Skill Level:</label>
 				<select
 					id="skillLevel"
 					name="skillLevel"
@@ -123,9 +129,9 @@
 				</select>
 			</div>
 
-			<div class="mb-2 flex flex-row justify-center items-center gap-5">
-				<label class="text-lg font-bold" for="servingSize"> Serves</label>
+			<div class="mb-2 flex flex-row justify-center items-center gap-3">
 				<Icon name="users-group-outline" class="h-5 w-5" />
+				<label class="text-lg font-bold" for="servingSize"> Serves:</label>
 				<input
 					bind:value={servingSize}
 					class="p-1 w-fit text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
@@ -135,9 +141,9 @@
 					max="48" />
 			</div>
 
-			<span class="mb-2 flex flex-row justify-center items-center">
-				<label class="text-lg font-bold" for="cookingTime"> Time</label>
+			<span class="mb-2 flex flex-row justify-center items-center gap-3">
 				<Icon name="clock-outline" class="h-5 w-5" />
+				<label class="text-lg font-bold" for="cookingTime"> Time:</label>
 				<input
 					bind:value={cookingTime}
 					class="p-1 w-fit text-black rounded-md focuse:outline-none focus:outline-2 focus:outline-emerald-500"
@@ -149,7 +155,12 @@
 			</span>
 		</section>
 
-		<section class="flex flex-col items-center w-1/2 gap-5">
+		<section class="flex flex-col items-center w-1/3 gap-5">
+			<button
+				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600">
+				Post
+			</button>
+
 			<h2 class="text-lg font-bold">Ingredients</h2>
 			<p>
 				Type your ingredient in the box below. Click the "Add Ingredient" button to add it
@@ -157,6 +168,12 @@
 			</p>
 			<input
 				bind:value={inputIngredient}
+				on:keydown={(event) => {
+					if (event.key === 'Enter' || event.keyCode === 13) {
+						event.preventDefault();
+						addIngredients();
+					}
+				}}
 				class="p-1 w-fit text-black rounded-md focuse:outline-none focus:outline-2 focus:outline-emerald-500"
 				type="text"
 				placeholder="Insert an ingredient" />
@@ -169,15 +186,42 @@
 			<h2 class="text-lg font-bold">Ingredients List</h2>
 			<ul class="list-disc list-inside">
 				{#if ingredientsList.length != 0}
-					{#each ingredientsList as ingredient}
+					{#each ingredientsList as ingredient, index}
 						<li class="mb-2">
 							{ingredient}
+							<button
+								class="ml-2 text-emerald-500 align-left"
+								on:click={() => editIngredient(index)}>
+								<Icon name="edit-outline" class="h-5 w-5" />
+							</button>
 						</li>
 					{/each}
 				{:else}
 					<p>No Ingredients yet</p>
 				{/if}
 			</ul>
+
+			{#if editingIngredient !== null}
+				<input
+					bind:value={ingredientsList[editingIngredient]}
+					on:keydown={(event) => {
+						if (event.key === 'Enter' || event.keyCode === 13) {
+							event.preventDefault();
+							editingIngredient = null;
+						}
+					}}
+					class="p-1 w-fit text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
+					type="text"
+					placeholder="Edit ingredient" />
+			{/if}
+		</section>
+
+		<section class="flex flex-col items-center w-1/3 gap-5">
+			<button
+				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
+				on:click={saveRecipe}>
+				Save
+			</button>
 
 			<label for="instruction" class="text-lg font-bold"> Instructions </label>
 			<textarea
@@ -205,12 +249,6 @@
 					<p>No Ingredients yet</p>
 				{/if}
 			</ul>
-
-			<button
-				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
-				on:click={saveRecipe}>
-				Save
-			</button>
 		</section>
 	</div>
 </div>
