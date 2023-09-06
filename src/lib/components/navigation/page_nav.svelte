@@ -13,7 +13,7 @@
 	const navPages: Array<NavPage> = [
 		{ name: 'Home', href: '/', iconName: 'home-outline' },
 		{ name: 'Explore', href: '/', iconName: 'papper-plane-outline' },
-		{ name: 'Cookbook', href: '/', iconName: 'book-outline' }
+		{ name: 'Cookbook', href: '/cookbook', iconName: 'book-outline' }
 	];
 	let currentNavPage: NavPage = navPages[0];
 
