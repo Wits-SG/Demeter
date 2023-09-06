@@ -20,7 +20,7 @@ export const load = (async ({ params }) => {
 		args: [params.recipe_id]
 	});
 
-	//Ingredients
+	// Ingredients
 	const ingredients_res = await turso_client.execute({
 		sql: 'select ingredients.* from recipes join ingredients on recipes.recipe_id = ingredients.recipe_id where recipes.recipe_id = ?',
 		args: [params.recipe_id]
@@ -36,8 +36,8 @@ export const load = (async ({ params }) => {
 		ingredients.push(row['name']);
 	}
 
-	console.log(ingredients);
-	console.log(instructions);
+	//console.log(ingredients);
+	//console.log(instructions);
 
 	return {
 		recipe: {
