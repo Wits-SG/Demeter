@@ -66,36 +66,68 @@
 		instructionList = instructionList.filter((_, i) => i !== index);
 	}
 
-	async function saveRecipe() {
-		const recipeId = uuidv4();
-		const recipeImageRef = ref(fb_storage, `images/recipe/${recipeId}.jpeg`);
+	let errorMessage: string = '';
+	let hasError: boolean = false;
 
-		await uploadBytes(recipeImageRef, picture);
+	function validateForm(): boolean {
+		if (
+			!recipeName ||
+			!description ||
+			!picture ||
+			!servingSize ||
+			!cookingTime ||
+			ingredientsList.length === 0 ||
+			instructionList.length === 0
+		) {
+			errorMessage = 'Please fill in all required fields.';
+			hasError = true;
+			return false;
+		}
 
-		const imageUrl = await getDownloadURL(recipeImageRef);
+		hasError = false;
+		errorMessage = '';
+		return true;
+	}
 
-		await fetch('/recipe/new', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				id: recipeId,
-				name: recipeName,
-				description: description,
-				servingSize: servingSize,
-				skillLevel: skillLevel,
-				cookingTime: cookingTime,
-				imageUrl: imageUrl,
-				instructions: instructionList,
-				ingredients: ingredientsList
-			})
-		});
+	async function postRecipe() {
+		if (validateForm()) {
+			const recipeId = uuidv4();
+			const recipeImageRef = ref(fb_storage, `images/recipe/${recipeId}.jpeg`);
+
+			await uploadBytes(recipeImageRef, picture);
+
+			const imageUrl = await getDownloadURL(recipeImageRef);
+
+			await fetch('/recipe/new', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					id: recipeId,
+					name: recipeName,
+					description: description,
+					servingSize: servingSize,
+					skillLevel: skillLevel,
+					cookingTime: cookingTime,
+					imageUrl: imageUrl,
+					instructions: instructionList,
+					ingredients: ingredientsList
+				})
+			});
+		} else {
+			// Display the error message
+			errorMessage = 'Please fill in all required fields.';
+			hasError = true;
+		}
 	}
 </script>
 
-<div class="w-full h-full flex flex-col gap-12 p-2">
+<div class="w-full h-full flex flex-col gap-12 p-6">
 	<h1 class="flex justify-center font-bold" style="font-size:45px;">Create your own Recipe</h1>
+	{#if hasError}
+		<p class="text-red-500 flex justify-center">{errorMessage}</p>
+	{/if}
 	<div class="flex flex-row gap-5">
 		<!-- this is the start of the first column, which includes the title, description, photo-->
 		<section class="flex flex-col items-center w-1/3 gap-5">
@@ -170,11 +202,6 @@
 		</section>
 
 		<section class="flex flex-col items-center w-1/3 gap-5">
-			<button
-				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600">
-				Post
-			</button>
-
 			<h2 class="text-lg font-bold">Ingredients List</h2>
 			<ul class="list-disc list-inside">
 				{#if ingredientsList.length != 0}
@@ -234,11 +261,24 @@
 		<section class="flex flex-col items-center w-1/3 gap-5">
 			<button
 				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
-				on:click={saveRecipe}>
-				Save
+				on:click={postRecipe}>
+				Post
 			</button>
 
 			<label for="instruction" class="text-lg font-bold"> Instructions </label>
+
+			<textarea
+				bind:value={inputInstruction}
+				class="block w-full h-fit rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
+				id="instructions"
+				rows="3"
+				maxlength="1024"
+				placeholder="type a step of your instruction and click add to start the next" />
+			<button
+				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
+				on:click={addInstructions}>
+				Add instruction
+			</button>
 
 			<ol class="list-decimal list-inside">
 				{#if instructionList.length != 0}
@@ -278,19 +318,6 @@
 					rows="3"
 					maxlength="1024" />
 			{/if}
-
-			<textarea
-				bind:value={inputInstruction}
-				class="block w-full h-fit rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
-				id="instructions"
-				rows="3"
-				maxlength="1024"
-				placeholder="type a step of your instruction and click add to start the next" />
-			<button
-				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
-				on:click={addInstructions}>
-				Add instruction
-			</button>
 		</section>
 	</div>
 </div>
