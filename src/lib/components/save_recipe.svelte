@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { createDialog, melt } from '@melt-ui/svelte';
-	import Dropdown from './dropdown.svelte';
+	import SelectCookbook from './cookbooks/SelectCookbook.svelte';
+
+	export let recipeID: string = '';
+	let selectedCookbook: { name: string; cookbook_id: string } = {
+		name: '',
+		cookbook_id: ''
+	};
 
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
@@ -29,7 +35,7 @@
 			<p use:melt={$description} class="mb-5 mt-2 leading-normal text-zinc-600">
 				Choose the appropriate Cookbook that you would like to save this recipe in.
 			</p>
-			<Dropdown />
+			<SelectCookbook bind:selectedCookbook />
 			<div class="mt-6 flex justify-end gap-4">
 				<button
 					use:melt={$close}
@@ -38,7 +44,18 @@
 					Cancel
 				</button>
 				<button
-					use:melt={$close}
+					on:click={async () => {
+						await fetch('/api/cookbook/add', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({
+								recipeId: recipeID,
+								cookbookId: selectedCookbook.cookbook_id
+							})
+						});
+					}}
 					class="inline-flex h-8 items-center justify-center rounded-sm
                     bg-zinc-100 px-4 font-medium leading-none text-zinc-600">
 					Save

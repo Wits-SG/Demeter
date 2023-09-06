@@ -41,6 +41,7 @@ export const load = (async ({ params }) => {
 
 	return {
 		recipe: {
+			id: params.recipe_id,
 			name: recipe_res.rows[0]['name'],
 			description: recipe_res.rows[0]['description'],
 			servingSize: recipe_res.rows[0]['serving_size'],

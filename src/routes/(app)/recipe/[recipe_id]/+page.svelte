@@ -107,7 +107,7 @@
 			</section> -->
 
 			<div>
-				<SaveRecipe />
+				<SaveRecipe recipeID={data.recipe.id} />
 			</div>
 		</section>
 
