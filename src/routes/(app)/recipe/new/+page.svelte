@@ -135,7 +135,7 @@
 
 			<input
 				bind:value={recipeName}
-				class="p-1 w-full text-black rounded-md focus:outline-2 focus:outline-emerald-500"
+				class="p-1 w-full text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
 				maxlength="64"
 				type="text"
 				placeholder="Type the heading of your recipe" />
@@ -144,7 +144,7 @@
 
 			<textarea
 				bind:value={description}
-				class="block w-full h-fit rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
+				class="block w-full h-fit dark:text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
 				id="decription"
 				rows="3"
 				maxlength="512"
@@ -187,18 +187,18 @@
 					max="48" />
 			</div>
 
-			<span class="mb-2 flex flex-row justify-center items-center gap-3">
+			<div class="mb-2 flex flex-row justify-center items-center gap-3">
 				<Icon name="clock-outline" class="h-5 w-5" />
 				<label class="text-lg font-bold" for="cookingTime"> Time:</label>
 				<input
 					bind:value={cookingTime}
-					class="p-1 w-fit text-black rounded-md focuse:outline-none focus:outline-2 focus:outline-emerald-500"
+					class="p-1 w-fit text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
 					type="number"
 					name="cookingTime"
 					step="15"
 					min="15"
 					placeholder="time in minutes" />
-			</span>
+			</div>
 		</section>
 
 		<section class="flex flex-col items-center w-1/3 gap-5">
@@ -206,7 +206,9 @@
 			<ul class="list-disc list-inside">
 				{#if ingredientsList.length != 0}
 					{#each ingredientsList as ingredient, index}
-						<li class="mb-2">
+						<li
+							style="max-width:350px; overflow:hidden; white-space:pre-wrap; word-wrap:break-word;"
+							class="mb-2">
 							{ingredient}
 							<button
 								class="ml-2 text-emerald-500 align-left"
@@ -248,7 +250,7 @@
 						addIngredients();
 					}
 				}}
-				class="p-1 w-fit text-black rounded-md focuse:outline-none focus:outline-2 focus:outline-emerald-500"
+				class="p-1 w-fit text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
 				type="text"
 				placeholder="Insert an ingredient" />
 			<button
@@ -269,7 +271,7 @@
 
 			<textarea
 				bind:value={inputInstruction}
-				class="block w-full h-fit rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
+				class="block w-full h-fit dark:text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
 				id="instructions"
 				rows="3"
 				maxlength="1024"
@@ -284,7 +286,8 @@
 				{#if instructionList.length != 0}
 					{#each instructionList as instruction, index}
 						<li
-							class="box-content text-zinc-950 bg-gray-50 hover:bg-blue-50 dark:hover:bg-zinc-400 dark:bg-zinc-800 dark:text-zinc-100 p-2 border-2 mb-2 border-teal-500 rounded-lg">
+							style="max-width:425px; overflow:hidden; white-space:pre-wrap; word-wrap:break-word;"
+							class="box-content text-zinc-950 bg-gray-50 dark:bg-zinc-800 dark:text-zinc-100 p-2 border-2 mb-2 border-teal-500 rounded-lg">
 							{instruction}
 							<button
 								class="ml-2 text-emerald-500 align-left"
@@ -313,7 +316,7 @@
 							editingInstruction = null;
 						}
 					}}
-					class="p-1 w-full text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
+					class="p-1 w-full dark:text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
 					placeholder="Edit instruction"
 					rows="3"
 					maxlength="1024" />
