@@ -8,7 +8,10 @@
 		iconName: string;
 	}
 
-	const Cookbooks: Array<Cookbook> = [{ name: 'Cookbook 1', iconName: 'book-outline' }];
+	const Cookbooks: Array<Cookbook> = [
+		{ name: 'Cookbook 1', iconName: 'book-outline' },
+		{ name: 'Cookbook 2', iconName: 'book-outline' }
+	];
 
 	let currentCookbook: Cookbook = Cookbooks[0];
 
@@ -22,7 +25,7 @@
 
 	const getCookbookData = async () => {
 		try {
-			const cookbook_res = await fetch(`/api/dropdown?recipe=${recipeID}`, { method: 'GET' });
+			const cookbook_res = await fetch(`/api/dropdown?`, { method: 'GET' });
 
 			const cookbook_data: JSON = await cookbook_res.json();
 			return cookbook_data;
@@ -31,14 +34,13 @@
 		}
 	};
 
-	let cookbookName = 'None';
+	let cookbookNames = 'None';
 	$: recipeID && refreshRecipe();
 
 	const refreshRecipe = async () => {
 		cookbookData = await getCookbookData();
-		cookbookName = cookbookData.cookbooks.name;
+		cookbookNames = cookbookData.cookbooks.name;
 	};
-	console.log(cookbookName);
 </script>
 
 <button
