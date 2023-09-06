@@ -1,39 +1,6 @@
 <script lang="ts">
 	import { createDialog, melt } from '@melt-ui/svelte';
-	import { createCombobox, type ComboboxFilterFunction } from '@melt-ui/svelte';
-
-	interface Cookbook {
-		title: string;
-		disabled: boolean;
-	}
-
-	let cookbooks: Cookbook[] = [
-		{
-			title: 'Cookbook 1',
-			disabled: false
-		},
-		{
-			title: 'Cookbook 2',
-			disabled: false
-		},
-		{
-			title: 'Cookbook 3',
-			disabled: false
-		}
-	];
-
-	//     const filterFunction: ComboboxFilterFunction<Cookbook> = ({
-	//     itemValue,
-	//     input,
-	//   }) => {
-	//     // Example string normalization function. Replace as needed.
-	//     const normalize = (str: string) => str.normalize().toLowerCase();
-	//     const normalizedInput = normalize(input);
-	//     return (
-	//       normalizedInput === '' ||
-	//       normalize(itemValue.title).includes(normalizedInput)
-	//     );
-	//   };
+	import Dropdown from './dropdown.svelte';
 
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
@@ -62,7 +29,7 @@
 			<p use:melt={$description} class="mb-5 mt-2 leading-normal text-zinc-600">
 				Choose the appropriate Cookbook that you would like to save this recipe in.
 			</p>
-
+			<Dropdown />
 			<div class="mt-6 flex justify-end gap-4">
 				<button
 					use:melt={$close}
