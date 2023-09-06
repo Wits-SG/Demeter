@@ -10,8 +10,10 @@
 		<nav
 			class="h-full w-full flex flex-row items-center gap-2 justify-between rounded-b-md bg-zinc-500 px-5 backdrop-blur-md backdrop-opacity-5 dark:text-black">
 			<section class="h-full w-full flex flex-row justify-start items-center gap-5">
-				<div
-					class="h-2/3 w-20 rounded-lg bg-emerald-500 flex justify-center items-center" />
+				<a
+					href="/"
+					class="h-2/3 w-20 rounded-lg bg-emerald-500 flex justify-center items-center"
+					><Icon name="atom-outline" class="text-white w-12 h-12" /></a>
 				<PageNav />
 				<AddNav />
 			</section>
@@ -23,8 +25,9 @@
 					class="h-8 w-64 min-w-fit rounded-lg bg-zinc-200 flex justify-center items-center p-1 outline-none focus:outline-2 focus:outline-emerald-500"
 					type="search"
 					placeholder="search" />
-				<div
-					class="h-16 w-16 rounded-full bg-emerald-700 flex justify-center items-center" />
+				<div class="h-16 w-16 rounded-full bg-emerald-700 flex justify-center items-center">
+					<Icon name="user-outline" class="text-white w-10 h-10" />
+				</div>
 			</section>
 		</nav>
 	</div>
