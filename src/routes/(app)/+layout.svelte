@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Icon } from 'flowbite-svelte-icons';
 	import PageNav from '$lib/components/navigation/page_nav.svelte';
+	import AddNav from '$lib/components/navigation/add_nav.svelte';
 </script>
 
 <main class="grid grid-cols-1 grid-rows-[90px_1fr] h-full w-full overflow-x-hidden">
@@ -12,8 +13,7 @@
 				<div
 					class="h-2/3 w-20 rounded-lg bg-emerald-500 flex justify-center items-center" />
 				<PageNav />
-				<button class="p-1 h-fit w-fit bg-zinc-200 rounded-lg"
-					><Icon name="plus-outline" class="h-6 w-6 " /></button>
+				<AddNav />
 			</section>
 
 			<section class="h-full w-full flex flex-row justify-end items-center gap-5">
