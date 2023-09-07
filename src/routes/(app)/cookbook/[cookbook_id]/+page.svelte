@@ -6,7 +6,6 @@
 
 	let currentRecipeID: string = data.recipes[0].id;
 	let currentRecipeIndex: number = 0;
-	$: console.log(currentRecipeID);
 
 	function prevPress() {
 		currentRecipeIndex -= 1;
@@ -25,6 +24,34 @@
 			currentRecipeIndex = 0;
 		} else {
 			currentRecipeID = data.recipes[currentRecipeIndex].id;
+		}
+	}
+
+	let cookbookName: string = data.cookbook_info.name;
+
+	let cookbookID: string = data.cookbook_info.id;
+	console.log(cookbookName);
+	console.log(cookbookID);
+
+	async function deleteRecipe() {
+		try {
+			const response = await fetch('/cookbook/cookbok_id', {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ recipeId: currentRecipeID, cookbook_id: cookbookID })
+			});
+
+			if (response.ok) {
+				// Recipe deleted successfully
+				// You can add additional logic here if needed
+			} else {
+				const errorMessage = await response.text();
+				console.error(`Error deleting recipe: ${errorMessage}`);
+			}
+		} catch (error) {
+			console.error('An error occurred while deleting the recipe:', error);
 		}
 	}
 </script>
@@ -49,6 +76,7 @@
 	<div
 		class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 overflow-scroll w-2/3 text-center justify-center items-end">
 		<button
+			on:click={deleteRecipe}
 			class="rounded-md border-2 w-40 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold justify-items-end gap-1"
 			>Delete Recipe</button>
 		<div

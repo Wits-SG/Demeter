@@ -42,7 +42,6 @@
 		recipeIngredients = smallRecipeData.recipe.ingredients;
 		recipeInstructions = smallRecipeData.recipe.instructions;
 	};
-	$: console.log(Description);
 
 	const {
 		elements: { content, item, trigger, root },

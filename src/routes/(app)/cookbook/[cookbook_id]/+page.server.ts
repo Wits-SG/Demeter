@@ -16,6 +16,12 @@ export const load = (async ({ params }) => {
 		args: [params.cookbook_id]
 	});
 
+	const cookbookRes = await turso_client.execute({
+		sql: 'select name from cookbooks where cookbook_id = ?',
+		args: [params.cookbook_id]
+	});
+	console.log(cookbookRes.rows[0]);
+
 	const recipes: Array<Recipe> = [];
 	for (let row of recipe_name.rows) {
 		recipes.push({
@@ -26,6 +32,11 @@ export const load = (async ({ params }) => {
 	//console.log('Recipes', recipes);
 
 	return {
+		cookbook_info: {
+			id: params.cookbook_id,
+			name: cookbookRes.rows[0]['name']
+		},
+
 		recipes: recipes
 	};
 }) satisfies PageServerLoad;
