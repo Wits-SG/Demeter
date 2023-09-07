@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { invalidate, invalidateAll } from '$app/navigation';
 	import SmallRecipe from '$lib/components/small_recipe.svelte';
 
 	import type { PageData } from './$types';
@@ -46,6 +47,7 @@
 			if (response.ok) {
 				// Recipe deleted successfully
 				// You can add additional logic here if needed
+				invalidateAll();
 			} else {
 				const errorMessage = await response.text();
 				console.error(`Error deleting recipe: ${errorMessage}`);
@@ -77,8 +79,8 @@
 		class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 overflow-scroll w-2/3 text-center justify-center items-end">
 		<button
 			on:click={deleteRecipe}
-			class="rounded-md border-2 w-40 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold justify-items-end gap-1"
-			>Delete Recipe</button>
+			class="rounded-md border-2 w-80 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold justify-items-end gap-1"
+			>Remove recipe from cookbook</button>
 		<div
 			class="mt-10 self-center flex flex-col border-2 border-emerald-700 h-5/6 w-11/12 overflow-hidden">
 			<SmallRecipe recipeID={currentRecipeID} />
