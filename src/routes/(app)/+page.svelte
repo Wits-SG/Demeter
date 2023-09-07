@@ -22,8 +22,6 @@
 			gridIconName = 'grid-solid';
 		}
 	};
-	//bind:masonryHeight={height}
-	//bind:masonryWidth={width}
 </script>
 
 <div class="py-4 px-10 flex flex-row content-center items-center justify-end gap-4">
