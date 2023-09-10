@@ -3,7 +3,7 @@ import { turso_client } from '$lib/turso';
 
 export const load = (async () => {
 	const recipesResult = await turso_client.execute(
-		'SELECT recipe_id FROM recipes ORDER BY RANDOM()'
+		'SELECT recipe_id FROM recipes ORDER BY RANDOM() LIMIT 20'
 	);
 
 	let recipesList: Array<string> = [];
