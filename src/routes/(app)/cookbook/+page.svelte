@@ -4,9 +4,9 @@
 
 	export let data: PageData;
 	$: console.log(data);
+	let userID: string = 'SmOouPpFdJViJaRq933q3iCt0Ho2';
 </script>
 
-<!-- onclick="window.location.href='http://localhost:5173/cookbook/1';" -->
 <div class="mt-20 flex flex-col mx-20 h-screen w-screen">
 	<div class="flex flex-col">
 		<h1 class="text-3xl">COOKBOOKS</h1>
@@ -16,10 +16,6 @@
 				><CreateCookbook /></button>
 			<div class="flex flex-row items-center gap-20 text-center">
 				{#each data.cookbooks as cookbook}
-					<!-- <button onclick="window.location.href='http://localhost:5173/app/cookbook/{ids}';"class="rounded-md border-2 w-32 h-32 border-emerald-700 text-4xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300">
-						{data.cookbook.name}
-					</button> -->
-
 					<a class="flex justify-center items-center" href="/cookbook/{cookbook.id}"
 						>{cookbook.name}</a>
 				{/each}

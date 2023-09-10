@@ -6,31 +6,46 @@
 	import { createAccordion, melt } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	export let recipeID: string = '';
 
+	export let recipeID: string = '';
+	export let cookbook_id: string = '';
 	let smallRecipeData: any;
 
 	const getSmallRecipeData = async () => {
 		try {
-			const smallRecipe_res = await fetch(`/api/small_recipe?recipe_id=${recipeID}`, {
-				method: 'GET'
+			const response = await fetch('/cookbook/cookbook_id', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					cookbookId: cookbook_id
+				})
 			});
+			console.log(response);
+			if (response.ok) {
+				const smallRecipe_res = await fetch(`/api/small_recipe?recipe_id=${recipeID}`, {
+					method: 'GET'
+				});
 
-			const recipe_data: JSON = await smallRecipe_res.json();
-			//console.log(recipe_data);
-			return recipe_data;
+				const recipe_data: JSON = await smallRecipe_res.json();
+				console.log(recipe_data);
+				return recipe_data;
+			}
 		} catch (recipePreview_err: any) {
 			console.log('error occured in fetch');
 		}
 	};
-	let recipeTitle = 'NONE';
-	let recipeImageURL = 'NONE';
-	let Description = 'NONE';
-	let recipeCookingTime = 'NONE';
-	let recipeServingSize = 'NONE';
-	let recipeIngredients = 'NONE';
-	let recipeInstructions = 'NONE';
+	let recipeTitle = '';
+	let recipeImageURL = '';
+	let Description = '';
+	let recipeCookingTime = '';
+	let recipeServingSize = '';
+	let recipeIngredients = '';
+	let recipeInstructions = '';
 	$: recipeID && refreshRecipe();
+
+	let recipeExists = false;
 
 	const refreshRecipe = async () => {
 		smallRecipeData = await getSmallRecipeData();

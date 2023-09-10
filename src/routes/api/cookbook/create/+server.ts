@@ -7,7 +7,7 @@ export const POST = async (event: RequestEvent) => {
 	const addCookbook: { cookbookID: string; name: string } = await event.request.json();
 
 	const insertCookbook = await turso_client.execute({
-		sql: 'INSERT INTO cookbooks (cookbook_id, name) values(?,?)',
+		sql: 'INSERT INTO cookbooks (cookbook_id, name, user_id) values(?,?, ?)',
 		args: [addCookbook.cookbookID, addCookbook.name]
 	});
 

@@ -7,9 +7,10 @@
 
 	let currentRecipeID: string = data.recipes[0].id;
 	let currentRecipeIndex: number = 0;
+	let userID: string = 'SmOouPpFdJViJaRq933q3iCt0Ho2';
 
 	function prevPress() {
-		currentRecipeIndex -= 1;
+		if (data.recipes) currentRecipeIndex -= 1;
 		if (currentRecipeIndex < 0) {
 			currentRecipeID = data.recipes[lastIndex].id;
 			currentRecipeIndex = lastIndex;
@@ -30,7 +31,7 @@
 
 	let cookbookName: string = data.cookbook_info.name;
 
-	let cookbookID: string = data.cookbook_info.id;
+	let cookbookID: string = data.cookbook_info.id; //issue
 	console.log(cookbookName);
 	console.log(cookbookID);
 
@@ -93,6 +94,7 @@
 						currentRecipeIndex = index;
 					}}>{recipe.name}</button>
 			{/each}
+
 			<a href="/cookbook/">Back</a>
 			<button on:click={deleteCookbook}>Delete</button>
 		</div>
@@ -106,7 +108,7 @@
 			>Remove recipe from cookbook</button>
 		<div
 			class="mt-10 self-center flex flex-col border-2 border-emerald-700 h-5/6 w-11/12 overflow-hidden">
-			<SmallRecipe recipeID={currentRecipeID} />
+			<SmallRecipe recipeID={currentRecipeID} cookbook_id={cookbookID} />
 		</div>
 		<div class="mt-10 flex flex-row space-x-96 h-1/9 w-11/12 justify-between">
 			<button
