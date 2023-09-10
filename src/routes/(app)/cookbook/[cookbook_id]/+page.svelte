@@ -27,6 +27,12 @@
 			currentRecipeID = data.recipes[currentRecipeIndex].id;
 		}
 	}
+
+	const deleteCookbook = async () => {
+		const smallRecipe_res = await fetch(`/api/cookbook/delete?cookbook_id=`, {
+			method: 'DELETE'
+		});
+	};
 </script>
 
 <div class="flex flex-row h-full w-full justify-center gap-20">
@@ -36,13 +42,13 @@
 		<div class="flex flex-col gap-5">
 			{#each data.recipes as recipe, index}
 				<button
-					class="border-4"
 					on:click={() => {
 						currentRecipeID = recipe.id;
 						currentRecipeIndex = index;
 					}}>{recipe.name}</button>
 			{/each}
 			<a href="/cookbook/">Back</a>
+			<button on:click={deleteCookbook}>Delete</button>
 		</div>
 	</div>
 	<!-- div for the small recipe box -->

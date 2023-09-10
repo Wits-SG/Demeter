@@ -14,14 +14,7 @@ export const load = (async ({ params }) => {
 		} as Cookbook);
 	}
 
-	//Cookbook Name
-	// const cookbookName_res = await turso_client.execute({
-	// 	sql: 'select * from cookbooks where cookbook_name = ?',
-	// 	args: [params.cookbook_id]
-	// });
-
-	//console.log(cookbooks);
-
+	console.log(cookbooks);
 	return {
 		cookbooks: cookbooks
 	};

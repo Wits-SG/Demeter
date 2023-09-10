@@ -1,8 +1,9 @@
 <script lang="ts">
+	import CreateCookbook from '$lib/components/cookbooks/createCookbook.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	//$: console.log(data);
+	$: console.log(data);
 </script>
 
 <!-- onclick="window.location.href='http://localhost:5173/cookbook/1';" -->
@@ -12,8 +13,8 @@
 		<div class="mt-10 ml-10 space-x-10 flex flex-row align-center">
 			<button
 				class="rounded-md border-2 w-32 h-32 border-emerald-700 text-4xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300"
-				>+</button>
-			<div class="flex flex-row items-center">
+				><CreateCookbook /></button>
+			<div class="flex flex-row items-center gap-20 text-center">
 				{#each data.cookbooks as cookbook}
 					<!-- <button onclick="window.location.href='http://localhost:5173/app/cookbook/{ids}';"class="rounded-md border-2 w-32 h-32 border-emerald-700 text-4xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300">
 						{data.cookbook.name}
@@ -34,11 +35,6 @@
 				<button
 					class="rounded-md border-2 w-32 h-32 border-emerald-700 text-4xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300 text-center"
 					>+</button>
-				<!-- {#each cookbooks as cb}
-					<button
-						class="rounded-md border-2 w-32 h-32 border-emerald-700 text-xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300"
-						>{data.cookbook.name}</button>
-				{/each} -->
 			</div>
 		</div>
 	</div>
