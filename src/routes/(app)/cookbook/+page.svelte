@@ -4,7 +4,6 @@
 
 	export let data: PageData;
 	$: console.log(data);
-	let userID: string = 'SmOouPpFdJViJaRq933q3iCt0Ho2';
 </script>
 
 <div class="mt-20 flex flex-col mx-20 h-screen w-screen">

@@ -4,8 +4,9 @@
 
 	import type { PageData } from './$types';
 	export let data: PageData;
-
-	let currentRecipeID: string = data.recipes[0].id;
+	console.log(data.recipes);
+	let noRecipe = data.recipes.length == 0;
+	let currentRecipeID: string = noRecipe ? '' : data.recipes[0].id;
 	let currentRecipeIndex: number = 0;
 	let userID: string = 'SmOouPpFdJViJaRq933q3iCt0Ho2';
 
@@ -31,7 +32,7 @@
 
 	let cookbookName: string = data.cookbook_info.name;
 
-	let cookbookID: string = data.cookbook_info.id; //issue
+	let cookbookID: string = data.cookbook_info.id;
 	console.log(cookbookName);
 	console.log(cookbookID);
 
@@ -101,24 +102,28 @@
 	</div>
 	<!-- div for the small recipe box -->
 	<div
-		class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 overflow-scroll w-2/3 text-center justify-center items-end">
-		<button
-			on:click={deleteRecipe}
-			class="rounded-md border-2 w-80 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold justify-items-end gap-1"
-			>Remove recipe from cookbook</button>
+		class="mt-24 flex flex-col border-4 border-emerald-700 h-3/4 overflow-scroll w-4/5 text-center justify-center place-items-center">
+		<div class="flex flex-row w-full justify-end mb-5 mr-5">
+			<button
+				on:click={deleteRecipe}
+				class="rounded-md border-2 w-80 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold gap-1"
+				>Remove recipe from cookbook</button>
+		</div>
 		<div
-			class="mt-10 self-center flex flex-col border-2 border-emerald-700 h-5/6 w-11/12 overflow-hidden">
+			class="self-center flex flex-col border-2 border-emerald-700 h-5/6 w-11/12 overflow-hidden place-content-evenly">
 			<SmallRecipe recipeID={currentRecipeID} cookbook_id={cookbookID} />
 		</div>
-		<div class="mt-10 flex flex-row space-x-96 h-1/9 w-11/12 justify-between">
-			<button
-				on:click={prevPress}
-				class="ml-20 rounded-md border-2 w-20 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold"
-				>Prev</button>
-			<button
-				on:click={nextPress}
-				class="mr-2 rounded-md border-2 w-20 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold"
-				>Next</button>
+		<div class="flex flex-row h-1/9 w-11/12 gap-x-96 place-content-between">
+			{#if !noRecipe}
+				<button
+					on:click={prevPress}
+					class="mt-5 rounded-md border-2 w-20 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold"
+					>Prev</button>
+				<button
+					on:click={nextPress}
+					class=" mt-5 rounded-md border-2 w-20 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold"
+					>Next</button>
+			{/if}
 		</div>
 	</div>
 </div>

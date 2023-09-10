@@ -13,25 +13,13 @@
 
 	const getSmallRecipeData = async () => {
 		try {
-			const response = await fetch('/cookbook/cookbook_id', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					cookbookId: cookbook_id
-				})
+			const smallRecipe_res = await fetch(`/api/small_recipe?recipe_id=${recipeID}`, {
+				method: 'GET'
 			});
-			console.log(response);
-			if (response.ok) {
-				const smallRecipe_res = await fetch(`/api/small_recipe?recipe_id=${recipeID}`, {
-					method: 'GET'
-				});
 
-				const recipe_data: JSON = await smallRecipe_res.json();
-				console.log(recipe_data);
-				return recipe_data;
-			}
+			const recipe_data: JSON = await smallRecipe_res.json();
+			console.log(recipe_data);
+			return recipe_data;
 		} catch (recipePreview_err: any) {
 			console.log('error occured in fetch');
 		}
@@ -101,8 +89,8 @@
 			<h1 class="text-5xl font-serif col-span-2">{recipeTitle}</h1>
 		</div>
 
-		<div class="flex flex-col h-4/5 w-full overflow-hidden">
-			<div class="flex flex-col h-4/5 w-full justify-center gap-5 overflow-hidden">
+		<div class="flex flex-col h-4/5 w-full overflow-scroll">
+			<div class="flex flex-col h-4/5 w-full justify-center gap-5 overflow-scroll">
 				<!-- this will contain the description and the ingredients -->
 				<div class="w-4/5 mx-auto max-w-full rounded-xl bg-white shadow-lg {root}">
 					{#each items as { id, title, description }, i}
@@ -130,9 +118,9 @@
 									<div class="px-5 py-4">
 										{#if title == 'INGREDIENTS'}
 											<div>
-												<ul class="list-disc text-md">
+												<ul class="list-disc text-md list-inside">
 													{#each description as descriptions}
-														<li class="box-content">
+														<li class="box-content text-start">
 															{descriptions}
 														</li>
 													{/each}
@@ -148,7 +136,7 @@
 					{/each}
 				</div>
 			</div>
-			<div class="flex flex-row h-1/5 gap-20 justify-center">
+			<div class="flex flex-row h-1/5 gap-40 justify-center">
 				<!-- this will contain the serving size and time to cook -->
 				<div class="flex flex-row items-center justify-center gap-5">
 					<Icon name="users-group-outline" class="h-10 w-10" />
@@ -167,20 +155,20 @@
 	</div>
 
 	<!-- This contains the instructions for the recipe -->
-	<div class="flex flex-col w-1/2 h-full flex-wrap items-center justify-center">
+	<div
+		class="flex flex-col w-1/2 h-full flex-wrap items-center justify-center place-content-evenly gap-10">
 		<div use:melt={$vertical} class="h-full w-[3px] bg-emerald-700" />
-		<h1 class="text-3xl font-serif text-center">INSTRUCTIONS</h1>
-		<!-- <div class="flex flex-col flex-wrap justify-between"> -->
-		<div class="flex flex-col overflow-scroll">
+
+		<h1 class="text-5xl font-serif text-center">INSTRUCTIONS</h1>
+		<div class="flex flex-col overflow-scroll gap-5 h-4/5">
 			<ol class="list-decimal list-inside text-md">
 				{#each recipeInstructions as instruction}
 					<li
-						class="ml-5 mt-2 box-content shadow-lg shadow-emerald-500 hover:bg-zinc-500 p-3 border-2 mb-2">
+						class="box-content border-emerald-700 shadow-lg dark: border-emerald-700 rounded hover:bg-zinc-500 p-2 border-2 mb-2 text-start">
 						{instruction}
 					</li>
 				{/each}
 			</ol>
 		</div>
-		<!-- </div> -->
 	</div>
 </div>
