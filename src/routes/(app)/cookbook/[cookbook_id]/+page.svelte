@@ -58,9 +58,26 @@
 	}
 
 	const deleteCookbook = async () => {
-		const smallRecipe_res = await fetch(`/api/cookbook/delete?cookbook_id=`, {
-			method: 'DELETE'
-		});
+		try {
+			const response = await fetch('/api/cookbook/delete', {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ cookbook_id: cookbookID })
+			});
+
+			if (response.ok) {
+				// Recipe deleted successfully
+				// You can add additional logic here if needed
+				//invalidateAll();
+			} else {
+				const errorMessage = await response.text();
+				console.error(`Error deleting recipe: ${errorMessage}`);
+			}
+		} catch (error) {
+			console.error('An error occurred while deleting the recipe:', error);
+		}
 	};
 </script>
 
