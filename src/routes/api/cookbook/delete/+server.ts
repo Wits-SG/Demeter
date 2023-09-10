@@ -1,5 +1,5 @@
 import { turso_client } from '$lib/turso';
-import { json } from '@sveltejs/kit';
+import { json, error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
 export const DELETE = async (event: RequestEvent) => {
@@ -26,11 +26,12 @@ export const DELETE = async (event: RequestEvent) => {
 		});
 
 		const deleteCookBook = await turso_client.execute({
-			sql: 'DELETE FROM cookbook where cookbook_id=?',
+			sql: 'DELETE FROM cookbooks where cookbook_id=?',
 			args: [cookbook_id]
 		});
-	} catch (error) {
-		console.log(error);
-		return new Response('Error deleting cookbook', { status: 500 });
+		return new Response('Success');
+	} catch (e: any) {
+		console.log(e);
+		throw error(400, 'Error deleting cookbook');
 	}
 };

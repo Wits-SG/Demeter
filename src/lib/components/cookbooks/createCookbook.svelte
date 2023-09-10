@@ -16,14 +16,7 @@
 	let cookbookTitle: string;
 	const cookbookID = uuidv4();
 
-	//Execute this code when the component is loaded into the DOM
-	onMount(async () => {
-		const fetchResult = await fetch('/api/cookbook/create');
-		cookbooks = await fetchResult.json();
-	});
-
 	const createCookbook = async () => {
-		//Check if the title already exists
 		await fetch('/api/cookbook/create', {
 			method: 'POST',
 			headers: {
