@@ -25,7 +25,7 @@
 				{#each data.cookbooks as cookbook}
 					<a
 						class="flex justify-center items-center text-black h-1/2 w-full bg-contain"
-						style="background-image: url('/src/lib/assets/images/cookbook_cover_image.jpeg')"
+						style="background-image: url('/src/lib/assets/images/cookbook.jpeg')"
 						href="/cookbook/{cookbook.id}">{cookbook.name}</a>
 				{/each}
 			</div>
