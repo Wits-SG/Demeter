@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidate, invalidateAll } from '$app/navigation';
 	import SmallRecipe from '$lib/components/small_recipe.svelte';
-
+	import { Icon } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
 	export let data: PageData;
 	console.log(data.recipes);
@@ -9,6 +9,16 @@
 	let currentRecipeID: string = noRecipe ? '' : data.recipes[0].id;
 	let currentRecipeIndex: number = 0;
 	let userID: string = 'SmOouPpFdJViJaRq933q3iCt0Ho2';
+
+	import { createSeparator, type CreateSeparatorProps } from '@melt-ui/svelte';
+
+	export let orientation: CreateSeparatorProps['orientation'] = 'horizontal';
+
+	const {
+		elements: { root: horizontal }
+	} = createSeparator({
+		orientation
+	});
 
 	function prevPress() {
 		if (data.recipes) currentRecipeIndex -= 1;
@@ -102,15 +112,15 @@
 	</div>
 	<!-- div for the small recipe box -->
 	<div
-		class="mt-24 flex flex-col border-4 border-emerald-700 h-3/4 overflow-scroll w-4/5 text-center justify-center place-items-center">
-		<div class="flex flex-row w-full justify-end mb-5 mr-5">
+		class="mt-24 flex flex-col border-4 border-emerald-700 h-4/5 overflow-scroll w-4/5 text-center justify-center place-items-center">
+		<div class="flex flex-row w-full justify-end px-5 py-5">
 			<button
 				on:click={deleteRecipe}
 				class="rounded-md border-2 w-80 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold gap-1"
 				>Remove recipe from cookbook</button>
 		</div>
 		<div
-			class="self-center flex flex-col border-2 border-emerald-700 h-5/6 w-11/12 overflow-hidden place-content-evenly">
+			class="self-center flex flex-col border-2 border-emerald-700 h-5/6 w-11/12 max-h-fit overflow-hidden">
 			<SmallRecipe recipeID={currentRecipeID} cookbook_id={cookbookID} />
 		</div>
 		<div class="flex flex-row h-1/9 w-11/12 gap-x-96 place-content-between">

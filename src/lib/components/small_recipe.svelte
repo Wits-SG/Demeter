@@ -79,18 +79,22 @@
 </script>
 
 <!-- Contains the recipe name, ingredients, description, time and serving size -->
+
 <div class="flex flex-row h-full w-full">
-	<div class="flex flex-col w-1/2">
-		<div class="grid grid-cols-3 w-full h-1/5 items-center">
+	<div class="flex flex-col w-1/2 items-center justify-center">
+		<!-- <div class="grid grid-cols-3 w-full h-1/5 items-center"> -->
+		<div class="flex flex-row w-full h-1/5 justify-center">
 			<!-- This will contain the picture and the name of the recipe -->
-			<div class="container md:mx-auto w-2/3">
+			<div class="flex flex-row container md:mx-auto w-1/3 justify-center">
 				<img alt="" src={recipeImageURL} class="object-cover" />
 			</div>
-			<h1 class="text-5xl font-serif col-span-2">{recipeTitle}</h1>
+			<h1 class="flex flex-row text-3xl font-serif w-2/3 justify-start items-center">
+				{recipeTitle}
+			</h1>
 		</div>
 
 		<div class="flex flex-col h-4/5 w-full overflow-scroll">
-			<div class="flex flex-col h-4/5 w-full justify-center gap-5 overflow-scroll">
+			<div class="flex flex-col h-2/3 w-full justify-center gap-5 overflow-scroll">
 				<!-- this will contain the description and the ingredients -->
 				<div class="w-4/5 mx-auto max-w-full rounded-xl bg-white shadow-lg {root}">
 					{#each items as { id, title, description }, i}
@@ -155,13 +159,12 @@
 	</div>
 
 	<!-- This contains the instructions for the recipe -->
-	<div
-		class="flex flex-col w-1/2 h-full flex-wrap items-center justify-center place-content-evenly gap-10">
+	<div class="flex flex-col w-1/2 h-full flex-wrap justify-center place-content-evenly gap-10">
 		<div use:melt={$vertical} class="h-full w-[3px] bg-emerald-700" />
 
-		<h1 class="text-5xl font-serif text-center">INSTRUCTIONS</h1>
-		<div class="flex flex-col overflow-scroll gap-5 h-4/5">
-			<ol class="list-decimal list-inside text-md">
+		<div class="flex flex-col gap-5 h-full place-items-center py-5">
+			<h1 class="text-3xl font-serif text-center">INSTRUCTIONS</h1>
+			<ol class="list-decimal list-inside text-md overflow-scroll h-4/5 items-center">
 				{#each recipeInstructions as instruction}
 					<li
 						class="box-content border-emerald-700 shadow-lg dark: border-emerald-700 rounded hover:bg-zinc-500 p-2 border-2 mb-2 text-start">
