@@ -10,16 +10,6 @@
 	let currentRecipeIndex: number = 0;
 	let userID: string = 'SmOouPpFdJViJaRq933q3iCt0Ho2';
 
-	import { createSeparator, type CreateSeparatorProps } from '@melt-ui/svelte';
-
-	export let orientation: CreateSeparatorProps['orientation'] = 'horizontal';
-
-	const {
-		elements: { root: horizontal }
-	} = createSeparator({
-		orientation
-	});
-
 	function prevPress() {
 		if (data.recipes) currentRecipeIndex -= 1;
 		if (currentRecipeIndex < 0) {
