@@ -6,7 +6,7 @@
 
 <main class="grid grid-cols-1 grid-rows-[90px_1fr] h-full w-full overflow-x-hidden">
 	<div
-		class="row-start-1 row-span-1 sticky top-0 w-full h-full flex justify-center items-center bg-zinc-100 dark:bg-zinc-800 backdrop-blur-3xl">
+		class="row-start-1 row-span-1 sticky top-0 w-full h-full flex justify-center items-center bg-zinc-100 dark:bg-zinc-800 backdrop-blur-3xl z-40">
 		<nav
 			class="h-full w-full flex flex-row items-center gap-2 justify-between rounded-b-md bg-zinc-500 px-5 backdrop-blur-md backdrop-opacity-5 dark:text-black">
 			<section class="h-full w-full flex flex-row justify-start items-center gap-5">
