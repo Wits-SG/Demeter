@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { createDialog, melt } from '@melt-ui/svelte';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatcher = createEventDispatcher();
 
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
@@ -7,6 +10,27 @@
 	} = createDialog({
 		forceVisible: true
 	});
+
+	let inputSection: string;
+	let sectionList: Array<string> = [];
+	let errorMessage = '';
+
+	function handleAddSection() {
+		if (inputSection.trim() === '') {
+			errorMessage = 'Section name cannot be empty.';
+		} else {
+			errorMessage = '';
+			dispatcher('addSection', { sectionName: inputSection });
+			sectionList = [...sectionList, inputSection];
+			inputSection = ''; // Clear the input field
+		}
+	}
+
+	function handleCreateMenu() {
+		// Clear input boxes and text areas
+		inputSection = '';
+		sectionList = [];
+	}
 </script>
 
 <button
@@ -45,21 +69,28 @@
 					class="inline-flex h-8 w-full flex-1 items-center justify-center
                       rounded-sm border border-solid px-3 leading-none text-black"
 					id="section"
-					value="" />
+					bind:value={inputSection} />
 			</fieldset>
 
-			<div class="flex items-center justify-center gap-5">
-				<textarea
-					class="block w-full h-fit dark:text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
-					id="decription"
-					rows="3"
-					maxlength="512"
-					placeholder="Sections" />
+			{#if errorMessage}
+				<p class="text-red-600">{errorMessage}</p>
+			{/if}
+
+			<div class="flex items-start justify-start gap-10 pl-10">
+				<ul class="list-disc list-inside">
+					{#if sectionList.length != 0}
+						{#each sectionList as section}
+							<li class="mb-2 text-zinc-900">
+								{section}
+							</li>
+						{/each}
+					{/if}
+				</ul>
 			</div>
 
 			<div class="mt-6 flex justify-end gap-4">
 				<button
-					use:melt={$close}
+					on:click={handleAddSection}
 					class="inline-flex h-8 items-center justify-center rounded-sm
             bg-teal-600 px-4 font-medium leading-none text-zinc-50 hover:bg-emerald-600">
 					Add Section
@@ -75,6 +106,7 @@
 				</button>
 
 				<button
+					on:click={handleCreateMenu}
 					use:melt={$close}
 					class="inline-flex h-8 items-center justify-center rounded-sm
             bg-teal-600 px-4 font-medium leading-none text-zinc-50 hover:bg-emerald-600">
