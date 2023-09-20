@@ -32,7 +32,7 @@
 	</button>
 	{#if $open}
 		<div
-			class="flex max-h-[300px] flex-col overflow-y-auto rounded-lg bg-white p-1"
+			class="z-50 flex max-h-[300px] flex-col overflow-y-auto rounded-lg bg-white p-1"
 			use:melt={$menu}>
 			{#each Object.entries(options) as [key, arr]}
 				<div use:melt={$group(key)}>
