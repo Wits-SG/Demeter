@@ -27,9 +27,21 @@
 	}
 
 	function handleCreateMenu() {
-		// Clear input boxes and text areas
+		if (sectionList.length == 0) {
+			errorMessage = 'You cannot create a menu with no sections.';
+		} else {
+			errorMessage = '';
+
+			// Clear input boxes and text areas
+			inputSection = '';
+			sectionList = [];
+		}
+	}
+
+	function handleCancel() {
 		inputSection = '';
 		sectionList = [];
+		errorMessage = '';
 	}
 </script>
 
@@ -99,6 +111,7 @@
 
 			<div class="mt-6 flex justify-end gap-4">
 				<button
+					on:click={handleCancel}
 					use:melt={$close}
 					class="inline-flex h-8 items-center justify-center rounded-sm
             bg-teal-600 px-4 font-medium leading-none text-zinc-50 hover:bg-emerald-600">
