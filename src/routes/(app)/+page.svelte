@@ -6,7 +6,10 @@
 	import IntersectionObserver from 'svelte-intersection-observer';
 
 	export let data: PageData;
-	let items = data.recipes;
+	let itemsList: any[];
+	itemsList = data.recipes;
+	$: items = itemsList;
+	//$: indices = [...Array(nItems).keys()]
 	let [minColWidth, maxColWidth, gap] = [280, 350, 30];
 	let width: number;
 	let height: number;
@@ -15,7 +18,7 @@
 	let gridIconName: String = 'grid-solid';
 	let element: any;
 	let intersecting;
-	let pageNumber: number;
+	let pageNumber: number = 0;
 	let tempRecipeList: any;
 	let tempItems;
 
@@ -32,7 +35,8 @@
 
 	const getMorePosts = async (pageNum: Number) => {
 		try {
-			const recipeIDs = await fetch(`/?page_num=${pageNum}`, {
+			let strPageNum: string = pageNum.toString();
+			const recipeIDs = await fetch(`/?page_num=${strPageNum}`, {
 				method: 'GET'
 			});
 
@@ -53,35 +57,44 @@
 <div class="flex justify-center h-fit w-full">
 	{#if !listView}
 		<div class="p-8 md:w-4/5 -z-10">
+			<Masonry
+				{items}
+				{minColWidth}
+				{maxColWidth}
+				{gap}
+				let:item
+				bind:masonryHeight={height}
+				bind:masonryWidth={width}>
+				<RecipePreview recipeID={item} />
+			</Masonry>
 			<IntersectionObserver
 				{element}
 				on:intersect={async (e) => {
 					console.log('reached the bottom');
-					pageNumber = (pageNumber + 1) * 5;
+					pageNumber = pageNumber + 5;
 					tempRecipeList = await getMorePosts(pageNumber);
 					tempItems = tempRecipeList.recipes;
-					for (let i = 0; i < 5; i++) {
-						items.push(tempItems[i]);
-					}
+					itemsList = [...itemsList, ...tempItems];
 				}}>
-				<Masonry
-					bind:this={element}
-					{items}
-					{minColWidth}
-					{maxColWidth}
-					{gap}
-					let:item
-					bind:masonryHeight={height}
-					bind:masonryWidth={width}>
-					<RecipePreview recipeID={item} />
-				</Masonry>
+				<div bind:this={element} />
 			</IntersectionObserver>
 		</div>
 	{:else}
 		<div class="p-8 w-3/4 sm:w-3/6 md:w-2/5 lg:4/6 gap-20 flex flex-col justify-center">
-			{#each items as item}
+			{#each itemsList as item}
 				<RecipePreview recipeID={item} />
 			{/each}
+			<IntersectionObserver
+				{element}
+				on:intersect={async (e) => {
+					console.log('reached the bottom');
+					pageNumber = pageNumber + 5;
+					tempRecipeList = await getMorePosts(pageNumber);
+					tempItems = tempRecipeList.recipes;
+					itemsList = [...itemsList, ...tempItems];
+				}}>
+				<div bind:this={element} />
+			</IntersectionObserver>
 		</div>
 	{/if}
 </div>
