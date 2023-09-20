@@ -1,15 +1,33 @@
 <script lang="ts">
-	import picture from '$lib/assets/images/penne-alla-vodka.jpg';
-	import picture2 from '$lib/assets/images/pavs.jpg';
-	import logo from '$lib/assets/images/logo.png';
 	import { Icon } from 'flowbite-svelte-icons';
-	import { createAccordion, melt } from '@melt-ui/svelte';
+	import { createAccordion, melt, createTabs } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
-	import { onMount } from 'svelte';
+	import { cubicInOut } from 'svelte/easing';
+	import { crossfade } from 'svelte/transition';
 
 	export let recipeID: string = '';
 	export let cookbook_id: string = '';
 	let smallRecipeData: any;
+
+	const {
+		elements: { root, list, content, trigger },
+		states: { value }
+	} = createTabs({
+		defaultValue: 'tab-1'
+	});
+
+	let className = '';
+	export { className as class };
+
+	const triggers = [
+		{ id: 'tab-1', title: 'Ingredients' },
+		{ id: 'tab-2', title: 'Instructions' }
+	];
+
+	const [send, receive] = crossfade({
+		duration: 250,
+		easing: cubicInOut
+	});
 
 	const getSmallRecipeData = async () => {
 		try {
@@ -46,13 +64,6 @@
 		recipeInstructions = smallRecipeData.recipe.instructions;
 	};
 
-	const {
-		elements: { content, item, trigger, root },
-		helpers: { isSelected }
-	} = createAccordion({
-		defaultValue: ['Description'],
-		multiple: true
-	});
 	import { createSeparator, type CreateSeparatorProps } from '@melt-ui/svelte';
 
 	export let orientation: CreateSeparatorProps['orientation'] = 'vertical';
@@ -62,27 +73,12 @@
 	} = createSeparator({
 		orientation
 	});
-
-	let items: any;
-	$: items = [
-		{
-			id: 'description',
-			title: 'DESCRIPTION',
-			description: Description
-		},
-		{
-			id: 'ingredients',
-			title: 'INGREDIENTS',
-			description: recipeIngredients
-		}
-	];
 </script>
 
 <!-- Contains the recipe name, ingredients, description, time and serving size -->
 
 <div class="flex flex-row h-full w-full">
-	<div class="flex flex-col w-1/2 items-center justify-center">
-		<!-- <div class="grid grid-cols-3 w-full h-1/5 items-center"> -->
+	<div class="flex flex-col w-1/2 items-center justify-center maax-w-[50vh]">
 		<div class="flex flex-row w-full h-1/5 items-center justify-center">
 			<!-- This will contain the picture and the name of the recipe  -->
 			<div class="flex flex-row md:mx-auto w-1/3 justify-center">
@@ -93,85 +89,111 @@
 			</h1>
 		</div>
 
-		<div class="flex flex-col h-4/5 w-full overflow-scroll">
-			<div class="flex flex-col h-full w-full justify-center gap-5 overflow-scroll">
-				<!-- this will contain the description and the ingredients -->
-				<div class="w-4/5 mx-auto max-w-full rounded-xl bg-white shadow-lg {root} ">
-					{#each items as { id, title, description }, i}
-						<div
-							use:melt={$item(id)}
-							class="overflow-scroll transition-colors first:rounded-t-xl
-                            last:rounded-b-xl">
-							<h2 class="flex">
-								<button
-									use:melt={$trigger(id)}
-									class="flex flex-1 cursor-pointer items-center justify-center
-                            bg-emerald-700 px-5 py-5 text-lg leading-none
-                            text-white transition-colors hover:bg-emerald-300 focus:!ring-0
-                            focus-visible:text-magnum-800
-                            i !== 0 && 'border-t border-t-neutral-300">
-									{title}
-								</button>
-							</h2>
-							{#if $isSelected(id)}
-								<div
-									class="content
-                            overflow-scroll bg-neutral-100 text-md text-neutral-600 h-1/2"
-									use:melt={$content(id)}
-									transition:slide>
-									<div class="px-5 py-4">
-										{#if title == 'INGREDIENTS'}
-											<div>
-												<ul class="list-disc text-md list-inside h-2/3">
-													{#each description as descriptions}
-														<li class="box-content text-start">
-															{descriptions}
-														</li>
-													{/each}
-												</ul>
-											</div>
-										{:else}
-											{description}
-										{/if}
-									</div>
-								</div>
-							{/if}
-						</div>
-					{/each}
-				</div>
+		<div class=" flex flex-col h-4/5 justify-center">
+			<h1 class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-serif">
+				DESCRIPTION
+			</h1>
+			<p class="font-serif text-2xl text-black">{Description}</p>
+		</div>
+		<div class="flex flex-row h-1/5 gap-40 justify-center">
+			<!-- this will contain the serving size and time to cook -->
+			<div class="flex flex-row items-center justify-center gap-5">
+				<Icon name="users-group-outline" class="h-10 w-10" />
+				<p class="">
+					{recipeServingSize} Person
+				</p>
 			</div>
-			<div class="flex flex-row h-1/5 gap-40 justify-center">
-				<!-- this will contain the serving size and time to cook -->
-				<div class="flex flex-row items-center justify-center gap-5">
-					<Icon name="users-group-outline" class="h-10 w-10" />
-					<p class="">
-						{recipeServingSize} Person
-					</p>
-				</div>
-				<div class="flex flex-row items-center justify center gap-5">
-					<Icon name="clock-outline" class="h-10 w-10" />
-					<p class="">
-						~{recipeCookingTime} Mins
-					</p>
-				</div>
+			<div class="flex flex-row items-center justify center gap-5">
+				<Icon name="clock-outline" class="h-10 w-10" />
+				<p class="">
+					~{recipeCookingTime} Mins
+				</p>
 			</div>
 		</div>
 	</div>
 
-	<!-- This contains the instructions for the recipe -->
-	<div class="flex flex-col w-1/2 h-full flex-wrap justify-center place-content-evenly gap-10">
+	<div class="flex flex-row w-1/2 h-full justify-center items-center">
 		<div use:melt={$vertical} class="h-full w-[3px] bg-emerald-700" />
+		<div class="flex flex-col h-full justify-center items-center max-h-[70vh]">
+			<div
+				use:melt={$root}
+				class="flex max-w-[25rem] flex-col overflow-hidden rounded-xl shadow-lg
+			data-[orientation=vertical]:flex-row {className} ">
+				<div
+					use:melt={$list}
+					class="flex shrink-0 overflow-x-auto bg-neutral-100
+					data-[orientation=vertical]:flex-col data-[orientation=vertical]:border-r"
+					aria-label="Manage your account">
+					{#each triggers as triggerItem}
+						<button use:melt={$trigger(triggerItem.id)} class="trigger relative">
+							{triggerItem.title}
+							{#if $value === triggerItem.id}
+								<div
+									in:send={{ key: 'trigger' }}
+									out:receive={{ key: 'trigger' }}
+									class="absolute bottom-1 left-1/2 h-1 w-6 -translate-x-1/2 rounded-full bg-magnum-400" />
+							{/if}
+						</button>
+					{/each}
+				</div>
+				<div use:melt={$content('tab-1')} class="grow bg-neutral-100 p-5 overflow-scroll">
+					<ul
+						class="list-inside text-md list-disc text-start min-w-[50vh] overflow-scroll">
+						{#each recipeIngredients as ingredients}
+							<li class="text-black">
+								{ingredients}
+							</li>
+						{/each}
+					</ul>
+				</div>
 
-		<div class="flex flex-col gap-5 h-full place-items-center py-5">
-			<h1 class="text-3xl font-serif text-center">INSTRUCTIONS</h1>
-			<ol class="list-decimal list-inside text-md overflow-scroll h-4/5 items-center">
-				{#each recipeInstructions as instruction}
-					<li
-						class="box-content border-emerald-700 shadow-lg dark: border-emerald-700 rounded hover:bg-zinc-500 p-2 border-2 mb-2 text-start">
-						{instruction}
-					</li>
-				{/each}
-			</ol>
+				<div use:melt={$content('tab-2')} class="grow bg-neutral-100 p-5 overflow-scroll">
+					<ol class="list-decimal list-inside text-md overflow-scroll items-center">
+						{#each recipeInstructions as instruction}
+							<li
+								class="box-content border-emerald-700 shadow-lg dark: border-emerald-700 rounded hover:bg-zinc-500 p-2 border-2 mb-2 text-start">
+								{instruction}
+							</li>
+						{/each}
+					</ol>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
+
+<style lang="postcss">
+	.trigger {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		cursor: default;
+		user-select: none;
+
+		border-radius: 0;
+		background-color: #f5f5f5;
+
+		color: #047857;
+		font-weight: 500;
+		line-height: 1;
+
+		flex: 1;
+		height: theme(spacing.12);
+		padding-inline: theme(spacing.2);
+
+		&:focus {
+			position: relative;
+		}
+
+		&:focus-visible {
+			@apply z-10 ring-2;
+		}
+
+		&[data-state='active'] {
+			@apply focus:relative;
+			background-color: #a7f3d0;
+			color: #047857;
+		}
+	}
+</style>

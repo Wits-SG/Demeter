@@ -83,10 +83,10 @@
 	};
 </script>
 
-<div class="flex flex-row h-full w-full justify-center gap-20">
+<div class="flex flex-row h-full w-full justify-center gap-10 p-3">
 	<!-- div for index box  -->
-	<div class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 w-1/6 text-center gap-10">
-		<h2 class="text-3xl font-semibold text-emerald-700 mt-5">INDEX</h2>
+	<div class=" flex flex-col border-4 border-emerald-700 h-fit w-1/6 text-center gap-5 p-5">
+		<h2 class="text-3xl font-semibold text-emerald-700">INDEX</h2>
 		<div class="flex flex-col gap-5">
 			{#each data.recipes as recipe, index}
 				<button
@@ -102,7 +102,7 @@
 	</div>
 	<!-- div for the small recipe box -->
 	<div
-		class="mt-24 flex flex-col border-4 border-emerald-700 h-4/5 overflow-scroll w-4/5 text-center justify-center place-items-center">
+		class="flex flex-col border-4 border-emerald-700 h-full max-h-[85vh] overflow-scroll w-4/5 text-center justify-center place-items-center">
 		<div class="flex flex-row w-full justify-end px-5 py-5">
 			<button
 				on:click={deleteRecipe}
