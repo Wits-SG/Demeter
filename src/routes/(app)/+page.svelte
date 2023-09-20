@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import RecipePreview from '$lib/components/recipe_preview.svelte';
+	//@ts-ignore
 	import Masonry from 'svelte-bricks';
 	import { Icon } from 'flowbite-svelte-icons';
 	import IntersectionObserver from 'svelte-intersection-observer';
