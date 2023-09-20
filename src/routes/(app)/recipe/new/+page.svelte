@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Icon } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
-	import { json } from '@sveltejs/kit';
+	import { goto } from '$app/navigation';
 	import { v4 as uuidv4 } from 'uuid';
 	import { fb_storage } from '$lib/firebase';
 	import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
@@ -71,6 +71,8 @@
 				ingredients: ingredientsList
 			})
 		});
+
+		goto(`/recipe/${recipeId}`);
 	}
 </script>
 
