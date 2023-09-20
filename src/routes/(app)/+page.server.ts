@@ -2,9 +2,7 @@ import type { PageServerLoad } from './$types';
 import { turso_client } from '$lib/turso';
 
 export const load = (async () => {
-	const recipesResult = await turso_client.execute(
-		'SELECT recipe_id FROM recipes WHERE recipe_id NOT IN ( SELECT recipe_id FROM recipes ASC LIMIT 20 ) LIMIT 10'
-	);
+	const recipesResult = await turso_client.execute('SELECT recipe_id FROM recipes LIMIT 10');
 
 	let recipesList: Array<string> = [];
 

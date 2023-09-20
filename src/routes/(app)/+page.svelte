@@ -19,7 +19,7 @@
 	let gridIconName: String = 'grid-solid';
 	let element: any;
 	let intersecting;
-	let pageNumber: number = 0;
+	let pageNumber: number = 10;
 	let tempRecipeList: any;
 	let tempItems;
 
@@ -72,10 +72,10 @@
 				{element}
 				on:intersect={async (e) => {
 					console.log('reached the bottom');
-					pageNumber = pageNumber + 5;
 					tempRecipeList = await getMorePosts(pageNumber);
 					tempItems = tempRecipeList.recipes;
 					itemsList = [...itemsList, ...tempItems];
+					pageNumber = pageNumber + 5;
 				}}>
 				<div bind:this={element} />
 			</IntersectionObserver>
@@ -89,10 +89,10 @@
 				{element}
 				on:intersect={async (e) => {
 					console.log('reached the bottom');
-					pageNumber = pageNumber + 5;
 					tempRecipeList = await getMorePosts(pageNumber);
 					tempItems = tempRecipeList.recipes;
 					itemsList = [...itemsList, ...tempItems];
+					pageNumber = pageNumber + 5;
 				}}>
 				<div bind:this={element} />
 			</IntersectionObserver>
