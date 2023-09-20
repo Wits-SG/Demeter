@@ -91,10 +91,10 @@
 
 		<div class=" flex flex-col h-4/5 justify-center">
 			<h1
-				class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-semi-bold font-serif p-5">
+				class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-semi-bold font-serif p-5 dark: text-emerald-300">
 				DESCRIPTION
 			</h1>
-			<p class="font-serif text-xl text-black">{Description}</p>
+			<p class="font-serif text-xl text-black dark: text-white">{Description}</p>
 		</div>
 		<div class="flex flex-row h-1/5 gap-40 justify-center">
 			<!-- this will contain the serving size and time to cook -->
@@ -125,7 +125,12 @@
 					data-[orientation=vertical]:flex-col data-[orientation=vertical]:border-r"
 					aria-label="Manage your account">
 					{#each triggers as triggerItem}
-						<button use:melt={$trigger(triggerItem.id)} class="trigger relative">
+						<button
+							use:melt={$trigger(triggerItem.id)}
+							class="trigger relative
+						flex items-center justify-center rounded-none bg-emerald-300 text-emerald-700 font-bold leading-6
+						text-lg font-serif flex-1 h-12 p-2 focus:relative focus-visible: z-10 ring-2 data-[state=active]:focus:relative data-[state=active]:bg-neutral-100 data-[state=active]:text-emerald-300
+						dark:bg-emerald-700 dark:text-emerald-300 dark:data-[state=active]:bg-neutral-800">
 							{triggerItem.title}
 							{#if $value === triggerItem.id}
 								<div
@@ -138,21 +143,24 @@
 				</div>
 				<div
 					use:melt={$content('tab-1')}
-					class="grow bg-neutral-100 p-5 overflow-scroll min-w-[100vh]">
+					class="grow bg-neutral-100 bg-neutral-800 p-5 overflow-scroll min-w-[100vh]">
 					<ul class="list-inside text-md list-disc text-start overflow-scroll">
 						{#each recipeIngredients as ingredients}
-							<li class="text-black">
+							<li class="text-black dark:text-white">
 								{ingredients}
 							</li>
 						{/each}
 					</ul>
 				</div>
 
-				<div use:melt={$content('tab-2')} class="grow bg-neutral-100 p-5 overflow-scroll">
-					<ol class="list-decimal list-inside text-md overflow-scroll items-center">
+				<div
+					use:melt={$content('tab-2')}
+					class="grow bg-neutral-100 p-5 overflow-scroll dark:bg-neutral-800">
+					<ol
+						class="list-decimal list-inside text-md overflow-scroll items-center text-black dark:text-white">
 						{#each recipeInstructions as instruction}
 							<li
-								class="border-emerald-700 shadow-lg dark: border-emerald-700 rounded hover:bg-zinc-100 p-2 border-2 mb-2 text-start min-w-[20rem]">
+								class="border-emerald-700 shadow-lg dark:border-emerald-300 rounded hover:bg-emerald-300 p-2 border-2 mb-2 text-start min-w-[20rem]">
 								{instruction}
 							</li>
 						{/each}
@@ -163,7 +171,7 @@
 	</div>
 </div>
 
-<style lang="postcss">
+<!-- <style lang="postcss">
 	.trigger {
 		display: flex;
 		align-items: center;
@@ -174,8 +182,10 @@
 
 		border-radius: 0;
 		background-color: #a7f3d0;
+		
 
-		color: #047857;
+		color: #047857; 
+		
 		font-weight: bold;
 		line-height: 3;
 		font-size: large;
@@ -197,6 +207,7 @@
 			@apply focus:relative;
 			background-color: #f5f5f5;
 			color: #047857;
+			dark: text-emerald-300, bg-neutral-900;
 		}
 	}
-</style>
+</style> -->
