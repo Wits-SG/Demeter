@@ -56,7 +56,7 @@
 
 <div class="flex justify-center h-fit w-full">
 	{#if !listView}
-		<div class="p-8 md:w-4/5 -z-10">
+		<div class="p-8 md:w-4/5 z-0">
 			<Masonry
 				{items}
 				{minColWidth}

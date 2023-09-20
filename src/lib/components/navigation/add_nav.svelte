@@ -23,7 +23,7 @@
 
 {#if $open}
 	<div
-		class="bg-zinc-200 h-fit w-fit dark:text-black p-2 flex flex-col justify-center items-center rounded-lg gap-3"
+		class="bg-zinc-200 h-fit w-fit dark:text-black p-2 flex flex-col justify-center items-center rounded-lg gap-3 z-50"
 		use:melt={$menu}
 		transition:fly={{ duration: 150, y: -10 }}>
 		{#each addPages as addPage}
