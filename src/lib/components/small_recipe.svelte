@@ -93,7 +93,7 @@
 			<h1 class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-serif">
 				DESCRIPTION
 			</h1>
-			<p class="font-serif text-2xl text-black">{Description}</p>
+			<p class="font-serif text-xl text-black">{Description}</p>
 		</div>
 		<div class="flex flex-row h-1/5 gap-40 justify-center">
 			<!-- this will contain the serving size and time to cook -->
@@ -111,10 +111,9 @@
 			</div>
 		</div>
 	</div>
-
+	<div use:melt={$vertical} class="h-full w-[3px] bg-emerald-700" />
 	<div class="flex flex-row w-1/2 h-full justify-center items-center">
-		<div use:melt={$vertical} class="h-full w-[3px] bg-emerald-700" />
-		<div class="flex flex-col h-full justify-center items-center max-h-[70vh]">
+		<div class="flex flex-col h-full justify-center items-center min-w-[25rem] p-5">
 			<div
 				use:melt={$root}
 				class="flex max-w-[25rem] flex-col overflow-hidden rounded-xl shadow-lg
@@ -138,7 +137,7 @@
 				</div>
 				<div use:melt={$content('tab-1')} class="grow bg-neutral-100 p-5 overflow-scroll">
 					<ul
-						class="list-inside text-md list-disc text-start min-w-[50vh] overflow-scroll">
+						class="list-inside text-md list-disc text-start min-w-[100vh] overflow-scroll">
 						{#each recipeIngredients as ingredients}
 							<li class="text-black">
 								{ingredients}
@@ -172,7 +171,7 @@
 		user-select: none;
 
 		border-radius: 0;
-		background-color: #f5f5f5;
+		background-color: #a7f3d0;
 
 		color: #047857;
 		font-weight: 500;
@@ -192,7 +191,7 @@
 
 		&[data-state='active'] {
 			@apply focus:relative;
-			background-color: #a7f3d0;
+			background-color: #f5f5f5;
 			color: #047857;
 		}
 	}
