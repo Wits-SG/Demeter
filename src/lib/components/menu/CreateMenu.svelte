@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createDialog, melt } from '@melt-ui/svelte';
+	import SelectRecipes from '$lib/components/menu/SelectRecipes.svelte';
 
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
@@ -47,6 +48,10 @@
 					id="section"
 					value="" />
 			</fieldset>
+
+			<div>
+				<SelectRecipes />
+			</div>
 
 			<div class="mt-6 flex justify-end gap-4">
 				<button
