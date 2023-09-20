@@ -90,7 +90,7 @@
 		</div>
 
 		<div class=" flex flex-col h-4/5 justify-center">
-			<h1 class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-serif">
+			<h1 class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-serif p-5">
 				DESCRIPTION
 			</h1>
 			<p class="font-serif text-xl text-black">{Description}</p>
@@ -113,7 +113,7 @@
 	</div>
 	<div use:melt={$vertical} class="h-full w-[3px] bg-emerald-700" />
 	<div class="flex flex-row w-1/2 h-full justify-center items-center">
-		<div class="flex flex-col h-full justify-center items-center min-w-[25rem] p-5">
+		<div class="flex flex-col h-full justify-start items-center min-w-[100vh] p-5">
 			<div
 				use:melt={$root}
 				class="flex max-w-[25rem] flex-col overflow-hidden rounded-xl shadow-lg
@@ -135,9 +135,10 @@
 						</button>
 					{/each}
 				</div>
-				<div use:melt={$content('tab-1')} class="grow bg-neutral-100 p-5 overflow-scroll">
-					<ul
-						class="list-inside text-md list-disc text-start min-w-[100vh] overflow-scroll">
+				<div
+					use:melt={$content('tab-1')}
+					class="grow bg-neutral-100 p-5 overflow-scroll min-w-[100vh]">
+					<ul class="list-inside text-md list-disc text-start overflow-scroll">
 						{#each recipeIngredients as ingredients}
 							<li class="text-black">
 								{ingredients}
@@ -150,7 +151,7 @@
 					<ol class="list-decimal list-inside text-md overflow-scroll items-center">
 						{#each recipeInstructions as instruction}
 							<li
-								class="box-content border-emerald-700 shadow-lg dark: border-emerald-700 rounded hover:bg-zinc-500 p-2 border-2 mb-2 text-start">
+								class="border-emerald-700 shadow-lg dark: border-emerald-700 rounded hover:bg-zinc-100 p-2 border-2 mb-2 text-start min-w-[20rem]">
 								{instruction}
 							</li>
 						{/each}
@@ -174,8 +175,10 @@
 		background-color: #a7f3d0;
 
 		color: #047857;
-		font-weight: 500;
-		line-height: 1;
+		font-weight: bold;
+		line-height: 3;
+		font-size: large;
+		font-family: serif;
 
 		flex: 1;
 		height: theme(spacing.12);
