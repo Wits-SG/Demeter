@@ -83,24 +83,24 @@
 <div class="flex flex-row h-full w-full">
 	<div class="flex flex-col w-1/2 items-center justify-center">
 		<!-- <div class="grid grid-cols-3 w-full h-1/5 items-center"> -->
-		<div class="flex flex-row w-full h-1/5 justify-center">
-			<!-- This will contain the picture and the name of the recipe -->
-			<div class="flex flex-row container md:mx-auto w-1/3 justify-center">
-				<img alt="" src={recipeImageURL} class="object-cover" />
+		<div class="flex flex-row w-full h-1/5 items-center justify-center">
+			<!-- This will contain the picture and the name of the recipe  -->
+			<div class="flex flex-row md:mx-auto w-1/3 justify-center">
+				<img alt="" src={recipeImageURL} class="object-fit" />
 			</div>
-			<h1 class="flex flex-row text-3xl font-serif w-2/3 justify-start items-center">
+			<h1 class="flex flex-row text-3xl font-serif w-2/3 justify-center">
 				{recipeTitle}
 			</h1>
 		</div>
 
 		<div class="flex flex-col h-4/5 w-full overflow-scroll">
-			<div class="flex flex-col h-2/3 w-full justify-center gap-5 overflow-scroll">
+			<div class="flex flex-col h-full w-full justify-center gap-5 overflow-scroll">
 				<!-- this will contain the description and the ingredients -->
-				<div class="w-4/5 mx-auto max-w-full rounded-xl bg-white shadow-lg {root}">
+				<div class="w-4/5 mx-auto max-w-full rounded-xl bg-white shadow-lg {root} ">
 					{#each items as { id, title, description }, i}
 						<div
 							use:melt={$item(id)}
-							class="overflow-hidden transition-colors first:rounded-t-xl
+							class="overflow-scroll transition-colors first:rounded-t-xl
                             last:rounded-b-xl">
 							<h2 class="flex">
 								<button
@@ -116,13 +116,13 @@
 							{#if $isSelected(id)}
 								<div
 									class="content
-                            overflow-hidden bg-neutral-100 text-md text-neutral-600"
+                            overflow-scroll bg-neutral-100 text-md text-neutral-600 h-1/2"
 									use:melt={$content(id)}
 									transition:slide>
 									<div class="px-5 py-4">
 										{#if title == 'INGREDIENTS'}
 											<div>
-												<ul class="list-disc text-md list-inside">
+												<ul class="list-disc text-md list-inside h-2/3">
 													{#each description as descriptions}
 														<li class="box-content text-start">
 															{descriptions}
