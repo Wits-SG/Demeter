@@ -79,18 +79,19 @@
 
 <div class="flex flex-row h-full w-full">
 	<div class="flex flex-col w-1/2 items-center justify-center maax-w-[50vh]">
-		<div class="flex flex-row w-full h-1/5 items-center justify-center">
+		<div class="flex flex-row w-full h-2/5 items-center justify-center">
 			<!-- This will contain the picture and the name of the recipe  -->
-			<div class="flex flex-row md:mx-auto w-1/3 justify-center">
+			<div class="flex flex-row md:mx-auto w-1/3 justify-center px-5 py-5">
 				<img alt="" src={recipeImageURL} class="object-fit" />
 			</div>
-			<h1 class="flex flex-row text-3xl font-serif w-2/3 justify-center">
+			<h1 class="flex flex-row text-4xl font-semi-bold font-serif w-2/3 justify-center">
 				{recipeTitle}
 			</h1>
 		</div>
 
 		<div class=" flex flex-col h-4/5 justify-center">
-			<h1 class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-serif p-5">
+			<h1
+				class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-semi-bold font-serif p-5">
 				DESCRIPTION
 			</h1>
 			<p class="font-serif text-xl text-black">{Description}</p>
