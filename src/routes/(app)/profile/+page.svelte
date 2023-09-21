@@ -10,26 +10,26 @@
 <div class="w-full h-full flex flex-col gap-12 p-6">
 	<div class="flex flex-row gap-20">
 		<div class="flex flex-col items-end justify-end w-1/3 gap-10">
-			<section>
-				<img class="rounded-full" src={logo} alt="None found" width="200" height="200" />
+			<section class="w-64 h-64 rounded-full overflow-hidden">
+				<img alt="" src={logo} class="w-full h-full object-cover" />
 			</section>
 		</div>
 
 		<div class="flex flex-col items-start justify-start w-1/2 gap-3">
 			<section>
-				<p style="font-size: 35px;">{username}</p>
+				<p class="text-3xl">{username}</p>
 			</section>
 
 			<section>
-				<p class="font-bold" style="font-size: 19px;">{name}</p>
+				<p class="font-bold text-lg">{name}</p>
 			</section>
 
 			<section>
-				<p style="font-size: 18px;">{bio}</p>
+				<p class="text-lg md:max-w-lg">{bio}</p>
 			</section>
 
 			<section>
-				<p class="font-light" style="font-size: 18px;">{pronouns}</p>
+				<p class="font-light text-base">{pronouns}</p>
 			</section>
 
 			<section>
