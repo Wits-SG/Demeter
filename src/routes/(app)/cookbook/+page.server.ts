@@ -20,6 +20,7 @@ export const load = (async ({ params }) => {
 	const menus: Array<Menu> = [];
 	for (let row of menu_res.rows) {
 		menus.push({
+			menuID: row['menu_id'],
 			name: row['name']
 		} as Menu);
 	}

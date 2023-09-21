@@ -62,7 +62,7 @@
 
 <button
 	use:melt={$trigger}
-	class="rounded-md border-2 w-32 h-32 border-emerald-700 text-4xl text-emerald-700 dark:text-emerald-300 dark:border-emerald-300 text-center">
+	class="rounded-md border-2 w-32 h-40 border-emerald-700 text-4xl text-emerald-700 dark:text-emerald-200 dark:border-emerald-700 text-center">
 	+
 </button>
 
