@@ -44,6 +44,7 @@
 		inputSection = '';
 		sectionList = [];
 		errorMessage = '';
+		inputName = '';
 	}
 
 	async function postMenu() {
@@ -74,14 +75,18 @@
               max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-xl bg-white
               p-6 shadow-lg"
 			use:melt={$content}>
-			<h2 use:melt={$title} class="text-lg font-medium text-black">Create a Menu</h2>
+			<h2 use:melt={$title} class="text-xl font-bold text-emerald-700 text-center">
+				Create a Menu
+			</h2>
 			<p use:melt={$description} class="mb-5 mt-2 leading-normal text-zinc-600">
 				Create a menu by typing in the Title and Section names. Then press 'Add Section'. To
 				finalise press 'Create Menu'.
 			</p>
 
 			<fieldset class="mb-4 flex items-center gap-5">
-				<label class="w-[90px] text-right text-black" for="title"> Title </label>
+				<label class="w-[90px] text-right text-emerald-600 font-bold" for="title">
+					Title
+				</label>
 				<input
 					class="inline-flex h-8 w-full flex-1 items-center justify-center
                       rounded-sm border border-solid px-3 leading-none text-black"
@@ -90,7 +95,9 @@
 			</fieldset>
 
 			<fieldset class="mb-4 flex items-center gap-5">
-				<label class="w-[90px] text-right text-black" for="section"> Section </label>
+				<label class="w-[90px] text-right text-emerald-600 font-bold" for="section">
+					Section
+				</label>
 				<input
 					class="inline-flex h-8 w-full flex-1 items-center justify-center
                       rounded-sm border border-solid px-3 leading-none text-black"
