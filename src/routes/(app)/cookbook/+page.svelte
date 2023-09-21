@@ -16,8 +16,8 @@
 	});
 </script>
 
-<div class=" flex flex-col h-screen w-screen justify-center items-center gap-1">
-	<div class="flex flex-col w-full h-1/2 justify-center">
+<div class=" flex flex-col h-screen w-screen justify-center items-center gap-2">
+	<div class="flex flex-col w-full h-1/2 justify-center gap-2">
 		<div class="flex flex-col items-start justify-center">
 			<h1 class="text-3xl p-3">COOKBOOKS</h1>
 		</div>
@@ -39,7 +39,7 @@
 
 	<div use:melt={$horizontal} class="w-11/12 h-[3px] bg-emerald-700" />
 
-	<div class="flex flex-col w-full h-1/2 justify-center">
+	<div class="flex flex-col w-full h-1/2 justify-center gap-2">
 		<div class="flex flex-col items-start justify-center">
 			<h1 class="text-3xl p-3">MENUS</h1>
 		</div>
