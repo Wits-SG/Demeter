@@ -11,6 +11,7 @@
 		forceVisible: true
 	});
 
+	let inputName: string;
 	let inputSection: string;
 	let sectionList: Array<string> = [];
 	let errorMessage = '';
@@ -30,6 +31,7 @@
 		if (sectionList.length == 0) {
 			errorMessage = 'You cannot create a menu with no sections.';
 		} else {
+			postMenu();
 			errorMessage = '';
 
 			// Clear input boxes and text areas
@@ -42,6 +44,19 @@
 		inputSection = '';
 		sectionList = [];
 		errorMessage = '';
+	}
+
+	async function postMenu() {
+		await fetch('/api/menu/add', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				name: inputName,
+				sections: sectionList
+			})
+		});
 	}
 </script>
 
@@ -61,9 +76,8 @@
 			use:melt={$content}>
 			<h2 use:melt={$title} class="text-lg font-medium text-black">Create a Menu</h2>
 			<p use:melt={$description} class="mb-5 mt-2 leading-normal text-zinc-600">
-				Create a menu by typing in the Title and Section names. Then using the dropdown
-				select which recipes you would like to add to the section and then press 'Add
-				Section'.
+				Create a menu by typing in the Title and Section names. Then press 'Add Section'. To
+				finalise press 'Create Menu'.
 			</p>
 
 			<fieldset class="mb-4 flex items-center gap-5">
@@ -72,7 +86,7 @@
 					class="inline-flex h-8 w-full flex-1 items-center justify-center
                       rounded-sm border border-solid px-3 leading-none text-black"
 					id="title"
-					value="" />
+					bind:value={inputName} />
 			</fieldset>
 
 			<fieldset class="mb-4 flex items-center gap-5">

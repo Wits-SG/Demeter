@@ -14,15 +14,18 @@ export const load = (async ({ params }) => {
 		} as Cookbook);
 	}
 
-	//Cookbook Name
-	// const cookbookName_res = await turso_client.execute({
-	// 	sql: 'select * from cookbooks where cookbook_name = ?',
-	// 	args: [params.cookbook_id]
-	// });
+	//Menus
+	const menu_res = await turso_client.execute('select * from menus');
 
-	//console.log(cookbooks);
+	const menus: Array<Menu> = [];
+	for (let row of menu_res.rows) {
+		menus.push({
+			name: row['name']
+		} as Menu);
+	}
 
 	return {
-		cookbooks: cookbooks
+		cookbooks: cookbooks,
+		menus: menus
 	};
 }) satisfies PageServerLoad;
