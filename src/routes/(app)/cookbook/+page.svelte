@@ -21,7 +21,7 @@
 		<h1 class="text-3xl items-start px-5">COOKBOOKS</h1>
 		<div class="px-10 flex flex-row align-center h-full w-full items-center gap-10">
 			<button
-				class="rounded-md border-2 w-32 h-40 text-4xl text-emerald-700 border-emerald-700 dark:text-emerald-300 dark: border-emerald-300"
+				class="rounded-md border-2 w-32 h-40 text-4xl text-emerald-700 border-emerald-700 dark:text-emerald-300 darkborder-emerald-300"
 				><CreateCookbook /></button>
 			<div class="flex flex-row items-center gap-10 text-center h-full w-auto">
 				{#each data.cookbooks as cookbook}
