@@ -30,5 +30,6 @@ export const POST = async (event: RequestEvent) => {
 		sql: 'insert into cookbook_recipes values(?, ?)',
 		args: [addedRecipe.cookbookId, addedRecipe.recipeId]
 	});
+
 	return new Response('Successful');
 };

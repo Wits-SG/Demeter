@@ -12,7 +12,6 @@
 
 	const navPages: Array<NavPage> = [
 		{ name: 'Home', href: '/', iconName: 'home-outline' },
-		{ name: 'Explore', href: '/', iconName: 'papper-plane-outline' },
 		{ name: 'Cookbook', href: '/cookbook', iconName: 'book-outline' }
 	];
 	let currentNavPage: NavPage = navPages[0];
@@ -32,7 +31,7 @@
 </button>
 {#if $open}
 	<div
-		class="bg-zinc-200 h-fit w-64 dark:text-black p-2 flex flex-col justify-center items-start rounded-lg gap-3"
+		class="bg-zinc-200 h-fit w-64 dark:text-black p-2 flex flex-col justify-center items-start rounded-lg gap-3 z-50"
 		use:melt={$menu}
 		transition:fly={{ duration: 150, y: -10 }}>
 		{#each navPages as navPage}

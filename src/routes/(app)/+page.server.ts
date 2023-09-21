@@ -2,9 +2,7 @@ import type { PageServerLoad } from './$types';
 import { turso_client } from '$lib/turso';
 
 export const load = (async () => {
-	const recipesResult = await turso_client.execute(
-		'SELECT recipe_id FROM recipes ORDER BY RANDOM() LIMIT 20'
-	);
+	const recipesResult = await turso_client.execute('SELECT recipe_id FROM recipes LIMIT 10');
 
 	let recipesList: Array<string> = [];
 
