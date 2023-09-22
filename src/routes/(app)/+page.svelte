@@ -42,10 +42,9 @@
 			});
 
 			const recipe_ids: JSON = await recipeIDs.json();
-			//console.log(recipe_data);
 			return recipe_ids;
 		} catch (recipePreview_err: any) {
-			console.log('error occured in fetch');
+			console.error('Failed to fetch next page');
 		}
 	};
 </script>
@@ -71,7 +70,6 @@
 			<IntersectionObserver
 				{element}
 				on:intersect={async (e) => {
-					console.log('reached the bottom');
 					tempRecipeList = await getMorePosts(pageNumber);
 					tempItems = tempRecipeList.recipes;
 					itemsList = [...itemsList, ...tempItems];
@@ -88,7 +86,6 @@
 			<IntersectionObserver
 				{element}
 				on:intersect={async (e) => {
-					console.log('reached the bottom');
 					tempRecipeList = await getMorePosts(pageNumber);
 					tempItems = tempRecipeList.recipes;
 					itemsList = [...itemsList, ...tempItems];

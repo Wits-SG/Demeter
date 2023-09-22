@@ -17,7 +17,7 @@
 
 	// Execute this code when the component is loaded into the DOM
 	onMount(async () => {
-		const fetchResult = await fetch('/api/cookbook/add');
+		const fetchResult = await fetch('/api/cookbook');
 		cookbooks = await fetchResult.json();
 		selectedCookbook = cookbooks[0];
 	});

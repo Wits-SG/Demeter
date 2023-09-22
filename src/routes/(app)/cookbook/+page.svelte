@@ -5,7 +5,6 @@
 
 	import { createSeparator, type CreateSeparatorProps, melt } from '@melt-ui/svelte';
 	export let data: PageData;
-	$: console.log(data);
 
 	export let orientation: CreateSeparatorProps['orientation'] = 'horizontal';
 

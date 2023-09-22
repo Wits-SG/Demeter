@@ -49,7 +49,7 @@
 	}
 
 	async function postMenu() {
-		await fetch('/api/menu/add', {
+		await fetch('/api/menu', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -61,15 +61,15 @@
 		});
 	}
 
-	onMount(() => {
-		const interval = setInterval(() => {
-			invalidateAll();
-		}, 1000);
+	// onMount(() => {
+	// 	const interval = setInterval(() => {
+	// 		invalidateAll();
+	// 	}, 1000);
 
-		return () => {
-			clearInterval(interval);
-		};
-	});
+	// 	return () => {
+	// 		clearInterval(interval);
+	// 	};
+	// });
 </script>
 
 <button

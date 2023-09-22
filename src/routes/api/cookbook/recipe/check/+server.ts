@@ -2,6 +2,9 @@
 import { turso_client } from '$lib/turso';
 import type { RequestEvent } from './$types';
 
+/**
+ * @description Check if a recipe already exists in a cookbook
+ */
 export const POST = async (event: RequestEvent) => {
 	try {
 		const { recipeId, cookbookId } = await event.request.json();
