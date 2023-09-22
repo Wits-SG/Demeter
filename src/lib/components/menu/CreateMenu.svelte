@@ -49,7 +49,7 @@
 	}
 
 	async function postMenu() {
-		await fetch('/api/menu/add', {
+		await fetch('/api/menu', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
