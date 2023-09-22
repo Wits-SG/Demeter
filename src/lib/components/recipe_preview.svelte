@@ -6,7 +6,7 @@
 
 	const getPreviewData = async () => {
 		try {
-			const recipePreview_res = await fetch(`/api/recipe_preview?recipe_id=${recipeID}`, {
+			const recipePreview_res = await fetch(`/api/recipe/preview?recipe_id=${recipeID}`, {
 				method: 'GET'
 			});
 

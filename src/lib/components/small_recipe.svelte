@@ -31,7 +31,7 @@
 
 	const getSmallRecipeData = async () => {
 		try {
-			const smallRecipe_res = await fetch(`/api/small_recipe?recipe_id=${recipeID}`, {
+			const smallRecipe_res = await fetch(`/api/recipe?recipe_id=${recipeID}`, {
 				method: 'GET'
 			});
 
