@@ -31,6 +31,8 @@ export const DELETE = async (event: RequestEvent) => {
 			sql: 'delete from cookbook_recipes where recipe_id = ? and cookbook_id = ?',
 			args: [removedRecipe.recipeId, removedRecipe.cookbookId]
 		});
+
+		return new Response('Successful');
 	} catch (e: any) {
 		return error(500, 'Error removing recipe from cookbook');
 	}
