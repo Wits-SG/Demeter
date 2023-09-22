@@ -38,12 +38,12 @@
 
 	async function deleteRecipe() {
 		try {
-			const response = await fetch('/cookbook/cookbok_id', {
+			const response = await fetch('/cookbook/recipe', {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ recipeId: currentRecipeID, cookbook_id: cookbookID })
+				body: JSON.stringify({ recipeId: currentRecipeID, cookbookId: cookbookID })
 			});
 
 			if (response.ok) {
@@ -61,7 +61,7 @@
 
 	const deleteCookbook = async () => {
 		try {
-			const response = await fetch('/api/cookbook/delete', {
+			const response = await fetch('/api/cookbook', {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json'
