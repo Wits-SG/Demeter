@@ -1,23 +1,27 @@
 import { turso_client } from '$lib/turso';
-import { json, error } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
+/**
+ * @description Create a new cookbook for a user
+ */
+export const POST = async (event: RequestEvent) => {
+	const addCookbook: { cookbookID: string; name: string } = await event.request.json();
+
+	const insertCookbook = await turso_client.execute({
+		sql: 'INSERT INTO cookbooks (cookbook_id, name) values (?,?)',
+		args: [addCookbook.cookbookID, addCookbook.name]
+	});
+
+	return new Response('Successful');
+};
+
+/**
+ * @description Remove a cookbook from a users account
+ */
 export const DELETE = async (event: RequestEvent) => {
 	try {
 		const { cookbook_id } = await event.request.json();
-
-		// // Check if the recipe exists in the specified cookbook
-		// const cookbookExists = await turso_client.execute({
-		// 	sql: 'SELECT * FROM cookbook_recipes WHERE cookbook_id = ?',
-		// 	args: [cookbook_id]
-		// });
-
-		// if (cookbookExists.rows.length === 0) {
-		// 	return {
-		// 		status: 404, // Recipe not found in the cookbook
-		// 		body: { message: 'Recipe not found in the specified cookbook.' }
-		// 	};
-		// }
 
 		//Query to database to delete cookbook_id
 		const deleteRecipe = await turso_client.execute({
@@ -26,7 +30,7 @@ export const DELETE = async (event: RequestEvent) => {
 		});
 
 		const deleteCookBook = await turso_client.execute({
-			sql: 'DELETE FROM cookbooks where cookbook_id=?',
+			sql: 'DELETE FROM cookbooks where cookbook_id = ?',
 			args: [cookbook_id]
 		});
 		return new Response('Success');
