@@ -17,7 +17,7 @@
 	const cookbookID = uuidv4();
 
 	const createCookbook = async () => {
-		await fetch('/api/cookbook/create', {
+		await fetch('/api/cookbook', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
