@@ -35,7 +35,6 @@ export const DELETE = async (event: RequestEvent) => {
 		});
 		return new Response('Success');
 	} catch (e: any) {
-		console.log(e);
 		throw error(400, 'Error deleting cookbook');
 	}
 };

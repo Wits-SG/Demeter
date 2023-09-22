@@ -36,10 +36,9 @@
 			});
 
 			const recipe_data: JSON = await smallRecipe_res.json();
-			console.log(recipe_data);
 			return recipe_data;
 		} catch (recipePreview_err: any) {
-			console.log('error occured in fetch');
+			console.error('Failed to fetch recipe');
 		}
 	};
 	let recipeTitle = '';
