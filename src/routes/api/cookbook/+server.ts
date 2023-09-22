@@ -1,6 +1,29 @@
 import { turso_client } from '$lib/turso';
-import { error } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
+
+/**
+ * @description Fetch a list of all cookbooks for a user
+ */
+export const GET = async (event: RequestEvent) => {
+	try {
+		const cookbooksResult = await turso_client.execute(
+			'select cookbook_id, name from cookbooks'
+		);
+		const returnedCookbooks = [];
+
+		for (let row of cookbooksResult.rows) {
+			returnedCookbooks.push({
+				cookbook_id: row['cookbook_id'],
+				name: row['name']
+			});
+		}
+
+		return json(returnedCookbooks);
+	} catch (e: any) {
+		throw error(500, 'Failed to fetch cookbooks');
+	}
+};
 
 /**
  * @description Create a new cookbook for a user
