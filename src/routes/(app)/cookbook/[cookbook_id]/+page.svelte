@@ -38,7 +38,7 @@
 
 	async function deleteRecipe() {
 		try {
-			const response = await fetch('/cookbook/recipe', {
+			const response = await fetch('/api/cookbook/recipe', {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json'
