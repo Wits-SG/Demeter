@@ -93,7 +93,7 @@
 				class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-semi-bold font-serif p-5 dark: text-emerald-300">
 				DESCRIPTION
 			</h1>
-			<p class="font-serif text-xl text-black dark: text-white">{Description}</p>
+			<p class="font-serif text-xl text-black dark:text-white">{Description}</p>
 		</div>
 		<div class="flex flex-row h-1/5 gap-40 justify-center">
 			<!-- this will contain the serving size and time to cook -->
@@ -142,7 +142,7 @@
 				</div>
 				<div
 					use:melt={$content('tab-1')}
-					class="grow bg-neutral-100 bg-neutral-800 p-5 overflow-scroll min-w-[100vh]">
+					class="grow bg-neutral-100 dark:bg-neutral-800 p-5 overflow-scroll min-w-[100vh]">
 					<ul class="list-inside text-md list-disc text-start overflow-scroll">
 						{#each recipeIngredients as ingredients}
 							<li class="text-black dark:text-white">
