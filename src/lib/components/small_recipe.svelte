@@ -6,7 +6,7 @@
 	import { crossfade } from 'svelte/transition';
 
 	export let recipeID: string = '';
-	export let cookbook_id: string = '';
+
 	let smallRecipeData: any;
 
 	const {
@@ -41,6 +41,7 @@
 			console.error('Failed to fetch recipe');
 		}
 	};
+
 	let recipeTitle = '';
 	let recipeImageURL = '';
 	let Description = '';
@@ -50,10 +51,9 @@
 	let recipeInstructions = '';
 	$: recipeID && refreshRecipe();
 
-	let recipeExists = false;
-
 	const refreshRecipe = async () => {
 		smallRecipeData = await getSmallRecipeData();
+		console.log(smallRecipeData);
 		recipeTitle = smallRecipeData.recipe.name;
 		Description = smallRecipeData.recipe.description;
 		recipeImageURL = smallRecipeData.recipe.imageURL;
@@ -169,44 +169,3 @@
 		</div>
 	</div>
 </div>
-
-<!-- <style lang="postcss">
-	.trigger {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		cursor: default;
-		user-select: none;
-
-		border-radius: 0;
-		background-color: #a7f3d0;
-		
-
-		color: #047857; 
-		
-		font-weight: bold;
-		line-height: 3;
-		font-size: large;
-		font-family: serif;
-
-		flex: 1;
-		height: theme(spacing.12);
-		padding-inline: theme(spacing.2);
-
-		&:focus {
-			position: relative;
-		}
-
-		&:focus-visible {
-			@apply z-10 ring-2;
-		}
-
-		&[data-state='active'] {
-			@apply focus:relative;
-			background-color: #f5f5f5;
-			color: #047857;
-			dark: text-emerald-300, bg-neutral-900;
-		}
-	}
-</style> -->
