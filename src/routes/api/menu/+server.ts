@@ -19,7 +19,7 @@ export const POST = async (event: RequestEvent) => {
 		for (let section of menu.sections) {
 			await turso_client.execute({
 				sql: 'insert into menu_sections(section_id, menu_id, name) values(?,?,?)',
-				args: [menu.sections.indexOf(section), section, menu.menuID]
+				args: [menu.sections.indexOf(section), menu.menuID, section]
 			});
 		}
 	} catch (e: any) {
