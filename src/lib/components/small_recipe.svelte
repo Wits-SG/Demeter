@@ -6,7 +6,7 @@
 	import { crossfade } from 'svelte/transition';
 
 	export let recipeID: string = '';
-	export let cookbook_id: string = '';
+
 	let smallRecipeData: any;
 
 	const {
@@ -41,6 +41,7 @@
 			console.error('Failed to fetch recipe');
 		}
 	};
+
 	let recipeTitle = '';
 	let recipeImageURL = '';
 	let Description = '';
@@ -50,10 +51,9 @@
 	let recipeInstructions = '';
 	$: recipeID && refreshRecipe();
 
-	let recipeExists = false;
-
 	const refreshRecipe = async () => {
 		smallRecipeData = await getSmallRecipeData();
+
 		recipeTitle = smallRecipeData.recipe.name;
 		Description = smallRecipeData.recipe.description;
 		recipeImageURL = smallRecipeData.recipe.imageURL;
@@ -93,7 +93,7 @@
 				class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-semi-bold font-serif p-5 dark: text-emerald-300">
 				DESCRIPTION
 			</h1>
-			<p class="font-serif text-xl text-black dark: text-white">{Description}</p>
+			<p class="font-serif text-xl text-black dark:text-white">{Description}</p>
 		</div>
 		<div class="flex flex-row h-1/5 gap-40 justify-center">
 			<!-- this will contain the serving size and time to cook -->
@@ -142,7 +142,7 @@
 				</div>
 				<div
 					use:melt={$content('tab-1')}
-					class="grow bg-neutral-100 bg-neutral-800 p-5 overflow-scroll min-w-[100vh]">
+					class="grow bg-neutral-100 dark:bg-neutral-800 p-5 overflow-scroll min-w-[100vh]">
 					<ul class="list-inside text-md list-disc text-start overflow-scroll">
 						{#each recipeIngredients as ingredients}
 							<li class="text-black dark:text-white">
@@ -169,44 +169,3 @@
 		</div>
 	</div>
 </div>
-
-<!-- <style lang="postcss">
-	.trigger {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		cursor: default;
-		user-select: none;
-
-		border-radius: 0;
-		background-color: #a7f3d0;
-		
-
-		color: #047857; 
-		
-		font-weight: bold;
-		line-height: 3;
-		font-size: large;
-		font-family: serif;
-
-		flex: 1;
-		height: theme(spacing.12);
-		padding-inline: theme(spacing.2);
-
-		&:focus {
-			position: relative;
-		}
-
-		&:focus-visible {
-			@apply z-10 ring-2;
-		}
-
-		&[data-state='active'] {
-			@apply focus:relative;
-			background-color: #f5f5f5;
-			color: #047857;
-			dark: text-emerald-300, bg-neutral-900;
-		}
-	}
-</style> -->

@@ -3,13 +3,26 @@
 	import SmallRecipe from '$lib/components/small_recipe.svelte';
 	import { Icon } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
+	import { onMount } from 'svelte';
 	export let data: PageData;
-	console.log(data.recipes);
-	let noRecipe = data.recipes.length == 0;
-	let currentRecipeID: string = noRecipe ? '' : data.recipes[0].id;
-	let currentRecipeIndex: number = 0;
-	let userID: string = 'SmOouPpFdJViJaRq933q3iCt0Ho2';
+	console.log('Recipes', data.recipes);
 
+	let cookbookID: string = '';
+	let noRecipe = data.recipes.length == 0;
+	let currentRecipeIndex: number = 0;
+	let currentRecipeID: string = '';
+	//currentRecipeID = noRecipe ? '' : data.recipes[0].id;
+
+	onMount(async () => {
+		cookbookID = data.cookbook_info.id;
+		currentRecipeID = noRecipe ? '' : data.recipes[0].id;
+	});
+	// const refreshCookbook = async () => {
+	// 	cookbookID = data.cookbook_info.id;
+	// 	currentRecipeID = noRecipe ? '' : data.recipes[0].id;
+	// 	console.log("Recipe id",currentRecipeID);
+	// };
+	$: cookbookID; //&& refreshCookbook();
 	function prevPress() {
 		if (data.recipes) currentRecipeIndex -= 1;
 		if (currentRecipeIndex < 0) {
@@ -31,10 +44,6 @@
 	}
 
 	let cookbookName: string = data.cookbook_info.name;
-
-	let cookbookID: string = data.cookbook_info.id;
-	console.log(cookbookName);
-	console.log(cookbookID);
 
 	async function deleteRecipe() {
 		try {
@@ -111,7 +120,7 @@
 		</div>
 		<div
 			class="self-center flex flex-col border-2 border-emerald-700 h-5/6 w-11/12 max-h-fit overflow-hidden">
-			<SmallRecipe recipeID={currentRecipeID} cookbook_id={cookbookID} />
+			<SmallRecipe recipeID={currentRecipeID} />
 		</div>
 		<div class="flex flex-row h-1/9 w-11/12 gap-x-96 place-content-between">
 			{#if !noRecipe}

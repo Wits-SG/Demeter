@@ -1,5 +1,5 @@
 import { turso_client } from '$lib/turso';
-import { error } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
 /**
@@ -35,5 +35,30 @@ export const DELETE = async (event: RequestEvent) => {
 		return new Response('Successful');
 	} catch (e: any) {
 		return error(500, 'Error removing recipe from cookbook');
+	}
+};
+
+/**
+ * @description Get recipe from cookbook and return recipe_id
+ */
+
+export const GET = async ({ url }) => {
+	const cookbookID = url.searchParams.get('cookbook_id');
+
+	try {
+		const recipe_res = await turso_client.execute({
+			sql: 'select recipe_id from cookbook_recipe where cookbook_id=?',
+			args: [cookbookID]
+		});
+
+		const recipeIDs = [];
+		for (let row of recipe_res.rows) {
+			recipeIDs.push(row['recipe_id']);
+		}
+		return json({
+			recipeIDs
+		});
+	} catch (e: any) {
+		throw error(500, 'Failed to fetch recipe preview');
 	}
 };
