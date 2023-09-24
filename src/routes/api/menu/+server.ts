@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import type { RequestEvent } from './$types';
 
 /**
- * @description Add a new cookbook to a user
+ * @description Add a new menu to a user
  */
 export const POST = async (event: RequestEvent) => {
 	const menu: Menu = await event.request.json();

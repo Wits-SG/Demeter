@@ -52,7 +52,7 @@
 					<a
 						class="flex justify-center items-center text-black w-32 h-48 bg-contain"
 						style="background-image: url('/src/lib/assets/images/cookbook_cover_image.jpeg')"
-						href="/cookbook/{menu.menuID}">{menu.name}</a>
+						href="/menu/{menu.menuID}">{menu.name}</a>
 				{/each}
 			</div>
 		</div>

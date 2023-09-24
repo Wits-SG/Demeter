@@ -4,7 +4,7 @@
 	import { Icon } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
 	export let data: PageData;
-	console.log(data.recipes);
+
 	let noRecipe = data.recipes.length == 0;
 	let currentRecipeID: string = noRecipe ? '' : data.recipes[0].id;
 	let currentRecipeIndex: number = 0;
