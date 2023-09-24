@@ -53,7 +53,7 @@
 
 	const refreshRecipe = async () => {
 		smallRecipeData = await getSmallRecipeData();
-		console.log(smallRecipeData);
+
 		recipeTitle = smallRecipeData.recipe.name;
 		Description = smallRecipeData.recipe.description;
 		recipeImageURL = smallRecipeData.recipe.imageURL;

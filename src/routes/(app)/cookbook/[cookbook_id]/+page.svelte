@@ -90,8 +90,6 @@
 			console.error('An error occurred while deleting the recipe:', error);
 		}
 	};
-
-	console.log(cookbookID);
 </script>
 
 <div class="flex flex-row h-full w-full justify-center gap-10 p-3">
