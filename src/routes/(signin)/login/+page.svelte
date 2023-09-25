@@ -3,6 +3,8 @@
 	import { Icon } from 'flowbite-svelte-icons';
 	import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 	import { fb_auth } from '$lib/firebase';
+	import { userInfo, userSignedIn } from '$lib/stores/user.store';
+	import type { User } from '$lib/types/user.type';
 
 	const googleProvider = new GoogleAuthProvider();
 
@@ -16,9 +18,26 @@
 		try {
 			const loginRes = await signInWithEmailAndPassword(fb_auth, email, password);
 
-			// client info goes here, so probably communicating with turso also goes here
+			const demeterUserData = {
+				userId: loginRes.user.uid,
+				pictureUrl: loginRes.user.photoURL,
+				userName: loginRes.user.displayName
+			};
 
-			goto('/');
+			try {
+				const result = await fetch('/api/user', {
+					method: 'POST',
+					body: JSON.stringify(demeterUserData)
+				});
+
+				const json = (await result.json()) as User;
+
+				userInfo.set(json);
+				userSignedIn.set(true);
+				goto('/');
+			} catch (e: any) {
+				unknownError = true;
+			}
 		} catch (exception: any) {
 			incorrectCredentials =
 				exception.code == 400 &&
@@ -33,7 +52,27 @@
 	const googleLoginPress = async () => {
 		try {
 			const loginRes = await signInWithPopup(fb_auth, googleProvider);
-			goto('/');
+
+			const demeterUserData = {
+				userId: loginRes.user.uid,
+				pictureUrl: loginRes.user.photoURL,
+				userName: loginRes.user.displayName
+			};
+
+			try {
+				const result = await fetch('/api/user', {
+					method: 'POST',
+					body: JSON.stringify(demeterUserData)
+				});
+
+				const json = (await result.json()) as User;
+
+				userInfo.set(json);
+				userSignedIn.set(true);
+				goto('/');
+			} catch (e: any) {
+				unknownError = true;
+			}
 		} catch (exception: any) {
 			unknownError = true;
 		}
