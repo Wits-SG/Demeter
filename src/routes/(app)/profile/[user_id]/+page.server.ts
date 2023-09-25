@@ -4,13 +4,6 @@ import { turso_client } from '$lib/turso';
 import { error } from '@sveltejs/kit';
 
 export const load = (async ({ params }) => {
-	if (params.user_id == undefined) {
-		return {
-			otherUser: false, // I.E if its not the currently signed in user
-			user: undefined
-		};
-	}
-
 	try {
 		const userResult = await turso_client.execute({
 			sql: 'SELECT * FROM users JOIN user_pronouns ON users.pronoun_id = user_pronouns.pronoun_id WHERE user_id = ? LIMIT 1',
@@ -18,7 +11,6 @@ export const load = (async ({ params }) => {
 		});
 
 		return {
-			otherUser: true,
 			user: {
 				userId: params.user_id,
 				pronouns: userResult.rows[0]['pronouns'],
@@ -29,6 +21,7 @@ export const load = (async ({ params }) => {
 			} as User
 		};
 	} catch (e: any) {
+		console.log(e);
 		throw error(404, 'User not found');
 	}
 }) satisfies PageServerLoad;

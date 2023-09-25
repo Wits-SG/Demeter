@@ -3,8 +3,10 @@
 	import PageNav from '$lib/components/navigation/page_nav.svelte';
 	import AddNav from '$lib/components/navigation/add_nav.svelte';
 
-	import { userInfo, userSignedIn } from '$lib/stores/user.store';
 	import * as Avatar from '$lib/components/ui/avatar';
+	import { fb_auth } from '$lib/firebase'; // This is here to force the init call of onAuthStateChange - keep it here
+	// afaik sveltekit has some sort of lazy evaluation of ts files, and they only get called on their first import
+	import { userInfo, userSignedIn } from '$lib/stores/user.store';
 </script>
 
 <main class="grid grid-cols-1 grid-rows-[90px_1fr] h-full w-full overflow-x-hidden">
@@ -30,7 +32,7 @@
 					placeholder="search" />
 
 				{#if $userSignedIn}
-					<a class="h-fit w-fit" href="/profile">
+					<a class="h-fit w-fit" href="/profile/{$userInfo.userId}">
 						<Avatar.Root>
 							<Avatar.Image src={$userInfo.pictureUrl} alt="User Icon" />
 							<Avatar.Fallback>

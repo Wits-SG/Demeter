@@ -7,8 +7,11 @@ import {
 	PUBLIC_FB_PROJECT_ID,
 	PUBLIC_FB_APP_ID
 } from '$env/static/public';
-import { browserSessionPersistence, getAuth, setPersistence } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
+
+import type { User } from '$lib/types/user.type';
+import { userInfo, userSignedIn } from '$lib/stores/user.store';
 
 const firebase_config = {
 	apiKey: PUBLIC_FB_API_KEY,
@@ -22,4 +25,22 @@ const firebase_config = {
 const fb_app = initializeApp(firebase_config, 'WEB_CLIENT');
 export const fb_auth = getAuth(fb_app);
 export const fb_storage = getStorage(fb_app);
-setPersistence(fb_auth, browserSessionPersistence);
+
+fb_auth.onAuthStateChanged(async (user) => {
+	if (user == null) {
+		// User logged out
+		userInfo.set({
+			userId: 'NONE',
+			pictureUrl: 'NONE',
+			userName: 'NONE'
+		});
+		userSignedIn.set(false);
+	}
+
+	userInfo.set({
+		userId: user?.uid ? user?.uid : '',
+		userName: user?.displayName ? user?.displayName : '',
+		pictureUrl: user?.photoURL ? user?.photoURL : ''
+	});
+	userSignedIn.set(true);
+});

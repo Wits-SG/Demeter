@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { Icon } from 'flowbite-svelte-icons';
-	import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+	import {
+		GoogleAuthProvider,
+		browserLocalPersistence,
+		setPersistence,
+		signInWithEmailAndPassword,
+		signInWithPopup
+	} from 'firebase/auth';
 	import { fb_auth } from '$lib/firebase';
-	import { userInfo, userSignedIn } from '$lib/stores/user.store';
-	import type { User } from '$lib/types/user.type';
 
 	const googleProvider = new GoogleAuthProvider();
 
@@ -16,28 +20,9 @@
 
 	const emailLoginPress = async () => {
 		try {
-			const loginRes = await signInWithEmailAndPassword(fb_auth, email, password);
-
-			const demeterUserData = {
-				userId: loginRes.user.uid,
-				pictureUrl: loginRes.user.photoURL,
-				userName: loginRes.user.displayName
-			};
-
-			try {
-				const result = await fetch('/api/user', {
-					method: 'POST',
-					body: JSON.stringify(demeterUserData)
-				});
-
-				const json = (await result.json()) as User;
-
-				userInfo.set(json);
-				userSignedIn.set(true);
-				goto('/');
-			} catch (e: any) {
-				unknownError = true;
-			}
+			await setPersistence(fb_auth, browserLocalPersistence);
+			await signInWithEmailAndPassword(fb_auth, email, password);
+			goto('/');
 		} catch (exception: any) {
 			incorrectCredentials =
 				exception.code == 400 &&
@@ -51,28 +36,9 @@
 
 	const googleLoginPress = async () => {
 		try {
-			const loginRes = await signInWithPopup(fb_auth, googleProvider);
-
-			const demeterUserData = {
-				userId: loginRes.user.uid,
-				pictureUrl: loginRes.user.photoURL,
-				userName: loginRes.user.displayName
-			};
-
-			try {
-				const result = await fetch('/api/user', {
-					method: 'POST',
-					body: JSON.stringify(demeterUserData)
-				});
-
-				const json = (await result.json()) as User;
-
-				userInfo.set(json);
-				userSignedIn.set(true);
-				goto('/');
-			} catch (e: any) {
-				unknownError = true;
-			}
+			await setPersistence(fb_auth, browserLocalPersistence);
+			await signInWithPopup(fb_auth, googleProvider);
+			goto('/');
 		} catch (exception: any) {
 			unknownError = true;
 		}

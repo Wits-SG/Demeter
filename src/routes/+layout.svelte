@@ -3,8 +3,6 @@
 	// from some config files.
 
 	import '../app.css';
-
-	import { initializeApp } from 'firebase/app';
 </script>
 
 <slot />
