@@ -1,5 +1,5 @@
 import { turso_client } from '$lib/turso';
-import { json } from '@sveltejs/kit';
+import { json, error } from '@sveltejs/kit';
 
 export const GET = async ({ url }) => {
 	const recipeID = url.searchParams.get('recipe_id');
@@ -17,7 +17,7 @@ export const GET = async ({ url }) => {
 				imageURL: recipe_res.rows[0]['image_url']
 			}
 		});
-	} catch (e) {
-		console.error(e);
+	} catch (e: any) {
+		throw error(500, 'Failed to fetch recipe preview');
 	}
 };

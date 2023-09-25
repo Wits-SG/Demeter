@@ -1,15 +1,30 @@
 <script lang="ts">
 	import { invalidate, invalidateAll } from '$app/navigation';
 	import SmallRecipe from '$lib/components/small_recipe.svelte';
-
+	import { Icon } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
+	import { onMount } from 'svelte';
 	export let data: PageData;
+	console.log('Recipes', data.recipes);
 
-	let currentRecipeID: string = data.recipes[0].id;
+	let cookbookID: string = '';
+	let noRecipe = data.recipes.length == 0;
 	let currentRecipeIndex: number = 0;
+	let currentRecipeID: string = '';
+	//currentRecipeID = noRecipe ? '' : data.recipes[0].id;
 
+	onMount(async () => {
+		cookbookID = data.cookbook_info.id;
+		currentRecipeID = noRecipe ? '' : data.recipes[0].id;
+	});
+	// const refreshCookbook = async () => {
+	// 	cookbookID = data.cookbook_info.id;
+	// 	currentRecipeID = noRecipe ? '' : data.recipes[0].id;
+	// 	console.log("Recipe id",currentRecipeID);
+	// };
+	$: cookbookID; //&& refreshCookbook();
 	function prevPress() {
-		currentRecipeIndex -= 1;
+		if (data.recipes) currentRecipeIndex -= 1;
 		if (currentRecipeIndex < 0) {
 			currentRecipeID = data.recipes[lastIndex].id;
 			currentRecipeIndex = lastIndex;
@@ -30,18 +45,14 @@
 
 	let cookbookName: string = data.cookbook_info.name;
 
-	let cookbookID: string = data.cookbook_info.id;
-	console.log(cookbookName);
-	console.log(cookbookID);
-
 	async function deleteRecipe() {
 		try {
-			const response = await fetch('/cookbook/cookbok_id', {
+			const response = await fetch('/api/cookbook/recipe', {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ recipeId: currentRecipeID, cookbook_id: cookbookID })
+				body: JSON.stringify({ recipeId: currentRecipeID, cookbookId: cookbookID })
 			});
 
 			if (response.ok) {
@@ -56,44 +67,72 @@
 			console.error('An error occurred while deleting the recipe:', error);
 		}
 	}
+
+	const deleteCookbook = async () => {
+		try {
+			const response = await fetch('/api/cookbook', {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ cookbook_id: cookbookID })
+			});
+
+			if (response.ok) {
+				// Recipe deleted successfully
+				// You can add additional logic here if needed
+				//invalidateAll();
+			} else {
+				const errorMessage = await response.text();
+				console.error(`Error deleting recipe: ${errorMessage}`);
+			}
+		} catch (error) {
+			console.error('An error occurred while deleting the recipe:', error);
+		}
+	};
 </script>
 
-<div class="flex flex-row h-full w-full justify-center gap-20">
+<div class="flex flex-row h-full w-full justify-center gap-10 p-3">
 	<!-- div for index box  -->
-	<div class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 w-1/6 text-center gap-10">
-		<h2 class="text-3xl font-semibold text-emerald-700 mt-5">INDEX</h2>
+	<div class=" flex flex-col border-4 border-emerald-700 h-fit w-1/6 text-center gap-5 p-5">
+		<h2 class="text-3xl font-semibold text-emerald-700">INDEX</h2>
 		<div class="flex flex-col gap-5">
 			{#each data.recipes as recipe, index}
 				<button
-					class="border-4"
 					on:click={() => {
 						currentRecipeID = recipe.id;
 						currentRecipeIndex = index;
 					}}>{recipe.name}</button>
 			{/each}
+
 			<a href="/cookbook/">Back</a>
+			<button on:click={deleteCookbook}>Delete</button>
 		</div>
 	</div>
 	<!-- div for the small recipe box -->
 	<div
-		class=" mt-24 flex flex-col border-4 border-emerald-700 h-3/4 overflow-scroll w-2/3 text-center justify-center items-end">
-		<button
-			on:click={deleteRecipe}
-			class="rounded-md border-2 w-80 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold justify-items-end gap-1"
-			>Remove recipe from cookbook</button>
+		class="flex flex-col border-4 border-emerald-700 h-full max-h-[85vh] overflow-scroll w-4/5 text-center justify-center place-items-center">
+		<div class="flex flex-row w-full justify-end px-5 py-5">
+			<button
+				on:click={deleteRecipe}
+				class="rounded-md border-2 w-80 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold gap-1"
+				>Remove recipe from cookbook</button>
+		</div>
 		<div
-			class="mt-10 self-center flex flex-col border-2 border-emerald-700 h-5/6 w-11/12 overflow-hidden">
+			class="self-center flex flex-col border-2 border-emerald-700 h-5/6 w-11/12 max-h-fit overflow-hidden">
 			<SmallRecipe recipeID={currentRecipeID} />
 		</div>
-		<div class="mt-10 flex flex-row space-x-96 h-1/9 w-11/12 justify-between">
-			<button
-				on:click={prevPress}
-				class="ml-20 rounded-md border-2 w-20 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold"
-				>Prev</button>
-			<button
-				on:click={nextPress}
-				class="mr-2 rounded-md border-2 w-20 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold"
-				>Next</button>
+		<div class="flex flex-row h-1/9 w-11/12 gap-x-96 place-content-between">
+			{#if !noRecipe}
+				<button
+					on:click={prevPress}
+					class="mt-5 rounded-md border-2 w-20 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold"
+					>Prev</button>
+				<button
+					on:click={nextPress}
+					class=" mt-5 rounded-md border-2 w-20 h-10 border-emerald-700 text-emerald-700 text-lg font-semibold"
+					>Next</button>
+			{/if}
 		</div>
 	</div>
 </div>

@@ -48,7 +48,7 @@
 				<button
 					on:click={async () => {
 						// Check if the recipe already exists in the selected cookbook
-						const response = await fetch('/api/cookbook/check', {
+						const response = await fetch('/api/cookbook/recipe/check', {
 							method: 'POST',
 							headers: {
 								'Content-Type': 'application/json'
@@ -66,7 +66,7 @@
 								alert('Recipe already exists in this cookbook.');
 							} else {
 								// Recipe doesn't exist, proceed to save it
-								await fetch('/api/cookbook/add', {
+								await fetch('/api/cookbook/recipe', {
 									method: 'POST',
 									headers: {
 										'Content-Type': 'application/json'

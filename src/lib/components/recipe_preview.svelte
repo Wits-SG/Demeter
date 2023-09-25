@@ -6,15 +6,14 @@
 
 	const getPreviewData = async () => {
 		try {
-			const recipePreview_res = await fetch(`/api/recipe_preview?recipe_id=${recipeID}`, {
+			const recipePreview_res = await fetch(`/api/recipe/preview?recipe_id=${recipeID}`, {
 				method: 'GET'
 			});
 
 			const recipe_data: JSON = await recipePreview_res.json();
-			//console.log(recipe_data);
 			return recipe_data;
 		} catch (recipePreview_err: any) {
-			console.log('error occured in fetch');
+			console.error('Failed to fetch recipe preview');
 		}
 	};
 
