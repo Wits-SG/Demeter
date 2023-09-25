@@ -2,6 +2,12 @@
 	import { Icon } from 'flowbite-svelte-icons';
 	import PageNav from '$lib/components/navigation/page_nav.svelte';
 	import AddNav from '$lib/components/navigation/add_nav.svelte';
+
+	import { userInfo, userSignedIn } from '$lib/stores/user.store';
+	import * as Avatar from '$lib/components/ui/avatar';
+	import { goto } from '$app/navigation';
+
+	console.log($userInfo);
 </script>
 
 <main class="grid grid-cols-1 grid-rows-[90px_1fr] h-full w-full overflow-x-hidden">
@@ -25,9 +31,22 @@
 					class="h-8 w-64 min-w-fit rounded-lg bg-zinc-200 flex justify-center items-center p-1 outline-none focus:outline-2 focus:outline-emerald-500"
 					type="search"
 					placeholder="search" />
-				<div class="h-16 w-16 rounded-full bg-emerald-700 flex justify-center items-center">
-					<Icon name="user-outline" class="text-white w-10 h-10" />
-				</div>
+
+				{#if $userSignedIn}
+					<a class="h-fit w-fit" href="/profile">
+						<Avatar.Root>
+							<Avatar.Image src={$userInfo.pictureUrl} alt="User Icon" />
+							<Avatar.Fallback>
+								<Icon name="user-outline" class="text-white w-10 h-10" />
+							</Avatar.Fallback>
+						</Avatar.Root>
+					</a>
+				{:else}
+					<a
+						href="/login"
+						class="h-10 w-20 rounded-lg bg-emerald-700 flex justify-center items-center text-white"
+						>Login</a>
+				{/if}
 			</section>
 		</nav>
 	</div>
