@@ -1,21 +1,58 @@
 <script lang="ts">
-	import { Icon } from 'flowbite-svelte-icons';
+	import { userInfo } from '$lib/stores/user.store';
+	import { onMount } from 'svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
 
 	let username: string;
 	let name: string;
 	let bio: string;
-
 	let picture: File;
 	let pictureLocalUrl: any;
+	let pronounsId: number;
 
 	const onFileSelected = (e: any) => {
 		picture = e.target.files[0];
-		//console.log(picture instanceof File);
 		let reader = new FileReader();
 		reader.readAsDataURL(picture);
 		reader.onload = (e) => {
 			pictureLocalUrl = e.target?.result;
 		};
+	};
+
+	// The onmount value loading should be in a +page file but it wouldn't work with the store
+	onMount(async () => {
+		const result = await fetch(`/api/user?user_id=${$userInfo.userId}`);
+		try {
+			const json = await result.json();
+
+			username = json['userName'];
+			name = json['displayName'];
+			bio = json['biography'];
+			pictureLocalUrl = json['pictureUrl'];
+			pronounsId = json['pronounId'];
+		} catch (e: any) {
+			console.error(e);
+		}
+	});
+
+	const handleSave = async () => {
+		try {
+			await fetch('/api/user', {
+				method: 'PUT',
+				body: JSON.stringify({
+					userId: $userInfo.userId,
+					userName: username,
+					displayName: name,
+					biography: bio,
+					pictureUrl: '',
+					pronounsId: pronounsId
+				})
+			});
+		} catch (e: any) {
+			console.error(e); // This should have some sort of visual error handling
+		}
 	};
 </script>
 
@@ -75,16 +112,18 @@
 
 				<select
 					id="pronouns"
-					class="p-1 w-fit text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500">
-					<option value="1">she/her</option>
-					<option value="2">he/him</option>
-					<option value="3">they/them</option>
-					<option value="4">prefer not to say</option>
+					class="p-1 w-fit text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
+					bind:value={pronounsId}>
+					{#each data.pronouns as pronoun, index}
+						<option value={index}>{pronoun}</option>
+					{/each}
 				</select>
 			</section>
 
 			<section>
-				<button class="w-40 h-8 rounded-md bg-emerald-300"> Save </button>
+				<button class="w-40 h-8 rounded-md bg-emerald-300" on:click={handleSave}>
+					Save
+				</button>
 			</section>
 		</div>
 	</div>

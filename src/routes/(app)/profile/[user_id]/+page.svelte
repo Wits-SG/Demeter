@@ -34,9 +34,11 @@
 
 			{#if data.user.userId == $userInfo.userId}
 				<section>
-					<button class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black">
+					<a
+						href="/profile/edit"
+						class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black p-3">
 						Edit Profile
-					</button>
+					</a>
 					<button
 						on:click={() => {
 							fb_auth

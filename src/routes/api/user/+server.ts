@@ -3,9 +3,27 @@ import { error, json } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 import type { User } from '$lib/types/user.type';
 
-// export const GET = async ({ url }) => {
+export const GET = async ({ url }) => {
+	try {
+		const userId = url.searchParams.get('user_id');
 
-// }
+		const result = await turso_client.execute({
+			sql: 'SELECT * FROM users WHERE user_id = ? LIMIT 1',
+			args: [userId]
+		});
+
+		return json({
+			userId: userId,
+			pictureUrl: result.rows[0]['picture_url'],
+			displayName: result.rows[0]['display_name'],
+			userName: result.rows[0]['user_name'],
+			biography: result.rows[0]['bio'],
+			pronounId: result.rows[0]['pronoun_id']
+		});
+	} catch (e: any) {
+		throw error(500, 'Failed to fetch user information');
+	}
+};
 
 /**
  * @description Add a new user to the database if they currently don't exist
@@ -40,32 +58,29 @@ export const POST = async (event: RequestEvent) => {
  */
 export const PUT = async (event: RequestEvent) => {
 	try {
-		const data: User = await event.request.json();
+		const data: {
+			userId: string;
+			userName: string;
+			displayName: string;
+			pictureUrl: string;
+			biography: string;
+			pronounsId: number;
+		} = await event.request.json();
 
-		const checkResult = await turso_client.execute({
-			sql: 'SELECT * FROM users WHERE user_id = ? LIMIT 1',
-			args: [data.userId]
+		await turso_client.execute({
+			sql: 'UPDATE users SET pronoun_id = ?, picture_url = ?, display_name = ?, user_name = ?, biography = ? WHERE user_id = ?',
+			args: [
+				data.pronounsId,
+				data.pictureUrl,
+				data.displayName,
+				data.userName,
+				data.biography,
+				data.userId
+			]
 		});
 
-		if (checkResult.rows.length > 0) {
-			const pronounRes = await turso_client.execute({
-				sql: 'SELECT pronoun_id from user_pronouns WHERE pronoun = ? LIMIT 1',
-				args: [data.pronouns]
-			});
-
-			await turso_client.execute({
-				sql: 'UPDATE users SET pronoun_id = ?, picture_url = ?, display_name = ?, user_name = ?, bio = ? WHERE user_id = ?',
-				args: [
-					pronounRes.rows[0]['pronoun_id'],
-					data.pictureUrl,
-					data.displayName,
-					data.userName,
-					data.biography,
-					data.userId
-				]
-			});
-		} else {
-			throw error(404, 'Account does not exist');
-		}
-	} catch (e: any) {}
+		return new Response('Successful');
+	} catch (e: any) {
+		throw error(500, e);
+	}
 };
