@@ -17,7 +17,7 @@ export const load = (async ({ params }) => {
 				pictureUrl: userResult.rows[0]['picture_url'],
 				userName: userResult.rows[0]['user_name'],
 				displayName: userResult.rows[0]['display_name'],
-				biography: userResult.rows[0]['bio']
+				biography: userResult.rows[0]['biography']
 			} as User
 		};
 	} catch (e: any) {
