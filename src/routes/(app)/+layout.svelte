@@ -5,9 +5,6 @@
 
 	import { userInfo, userSignedIn } from '$lib/stores/user.store';
 	import * as Avatar from '$lib/components/ui/avatar';
-	import { goto } from '$app/navigation';
-
-	console.log($userInfo);
 </script>
 
 <main class="grid grid-cols-1 grid-rows-[90px_1fr] h-full w-full overflow-x-hidden">
