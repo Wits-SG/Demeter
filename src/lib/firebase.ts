@@ -35,6 +35,7 @@ fb_auth.onAuthStateChanged(async (user) => {
 			userName: 'NONE'
 		});
 		userSignedIn.set(false);
+		return;
 	}
 
 	userInfo.set({

@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { userInfo } from '$lib/stores/user.store';
+	import { userInfo, userSignedIn } from '$lib/stores/user.store';
 	import type { PageData } from './$types';
+	import { fb_auth } from '$lib/firebase';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData;
 </script>
@@ -35,7 +37,14 @@
 					<button class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black">
 						Edit Profile
 					</button>
-					<button class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black">
+					<button
+						on:click={() => {
+							fb_auth
+								.signOut()
+								.then(() => goto('/'))
+								.catch((e) => console.error(e));
+						}}
+						class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black">
 						Logout
 					</button>
 				</section>
