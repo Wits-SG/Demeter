@@ -18,10 +18,32 @@
 	let incorrectCredentials: boolean = false;
 	let unknownError: boolean = false;
 
+	const addNewUser = async (userData: {
+		userId: string;
+		pictureUrl: string;
+		userName: string;
+	}) => {
+		try {
+			await fetch('/api/user', {
+				method: 'POST',
+				body: JSON.stringify(userData)
+			});
+		} catch (e: any) {
+			console.error(e);
+		}
+	};
+
 	const emailLoginPress = async () => {
 		try {
 			await setPersistence(fb_auth, browserLocalPersistence);
-			await signInWithEmailAndPassword(fb_auth, email, password);
+			const result = await signInWithEmailAndPassword(fb_auth, email, password);
+
+			// Entirely unnecessary to do this here i.e. it should be in the sign up but I'm tired - Brendan
+			await addNewUser({
+				userId: result.user.uid,
+				userName: result.user.uid,
+				pictureUrl: result.user.photoURL ? result.user.photoURL : ''
+			});
 			goto('/');
 		} catch (exception: any) {
 			incorrectCredentials =
@@ -37,7 +59,12 @@
 	const googleLoginPress = async () => {
 		try {
 			await setPersistence(fb_auth, browserLocalPersistence);
-			await signInWithPopup(fb_auth, googleProvider);
+			const result = await signInWithPopup(fb_auth, googleProvider);
+			await addNewUser({
+				userId: result.user.uid,
+				userName: result.user.uid,
+				pictureUrl: result.user.photoURL ? result.user.photoURL : ''
+			});
 			goto('/');
 		} catch (exception: any) {
 			unknownError = true;
