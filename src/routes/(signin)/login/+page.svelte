@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { Icon } from 'flowbite-svelte-icons';
-	import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+	import {
+		GoogleAuthProvider,
+		browserLocalPersistence,
+		setPersistence,
+		signInWithEmailAndPassword,
+		signInWithPopup
+	} from 'firebase/auth';
 	import { fb_auth } from '$lib/firebase';
 
 	const googleProvider = new GoogleAuthProvider();
@@ -12,12 +18,32 @@
 	let incorrectCredentials: boolean = false;
 	let unknownError: boolean = false;
 
+	const addNewUser = async (userData: {
+		userId: string;
+		pictureUrl: string;
+		userName: string;
+	}) => {
+		try {
+			await fetch('/api/user', {
+				method: 'POST',
+				body: JSON.stringify(userData)
+			});
+		} catch (e: any) {
+			console.error(e);
+		}
+	};
+
 	const emailLoginPress = async () => {
 		try {
-			const loginRes = await signInWithEmailAndPassword(fb_auth, email, password);
+			await setPersistence(fb_auth, browserLocalPersistence);
+			const result = await signInWithEmailAndPassword(fb_auth, email, password);
 
-			// client info goes here, so probably communicating with turso also goes here
-
+			// Entirely unnecessary to do this here i.e. it should be in the sign up but I'm tired - Brendan
+			await addNewUser({
+				userId: result.user.uid,
+				userName: result.user.uid,
+				pictureUrl: result.user.photoURL ? result.user.photoURL : ''
+			});
 			goto('/');
 		} catch (exception: any) {
 			incorrectCredentials =
@@ -32,7 +58,13 @@
 
 	const googleLoginPress = async () => {
 		try {
-			const loginRes = await signInWithPopup(fb_auth, googleProvider);
+			await setPersistence(fb_auth, browserLocalPersistence);
+			const result = await signInWithPopup(fb_auth, googleProvider);
+			await addNewUser({
+				userId: result.user.uid,
+				userName: result.user.uid,
+				pictureUrl: result.user.photoURL ? result.user.photoURL : ''
+			});
 			goto('/');
 		} catch (exception: any) {
 			unknownError = true;
