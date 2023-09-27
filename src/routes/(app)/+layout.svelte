@@ -2,7 +2,6 @@
 	import { Icon } from 'flowbite-svelte-icons';
 	import PageNav from '$lib/components/navigation/page_nav.svelte';
 	import AddNav from '$lib/components/navigation/add_nav.svelte';
-	import Search from '$lib/components/search.svelte';
 
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { fb_auth } from '$lib/firebase'; // This is here to force the init call of onAuthStateChange - keep it here
