@@ -2,6 +2,7 @@
 	import { Icon } from 'flowbite-svelte-icons';
 	import PageNav from '$lib/components/navigation/page_nav.svelte';
 	import AddNav from '$lib/components/navigation/add_nav.svelte';
+	import Search from '$lib/components/search.svelte';
 
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { fb_auth } from '$lib/firebase'; // This is here to force the init call of onAuthStateChange - keep it here
@@ -26,11 +27,8 @@
 			<section class="h-full w-full flex flex-row justify-end items-center gap-5">
 				<a href="/settings" class="p-1 h-fit w-fit bg-zinc-200 rounded-lg"
 					><Icon name="cog-outline" class="h-6 w-6" /></a>
-				<input
-					class="h-8 w-64 min-w-fit rounded-lg bg-zinc-200 flex justify-center items-center p-1 outline-none focus:outline-2 focus:outline-emerald-500"
-					type="search"
-					placeholder="search" />
-
+				<a href="/search" class="p-1 h-fit w-fit bg-zinc-200 rounded-lg"
+					><Icon name="search-outline" class="h-6 w-6" /></a>
 				{#if $userSignedIn}
 					<a class="h-fit w-fit" href="/profile/{$userInfo.userId}">
 						<Avatar.Root>
