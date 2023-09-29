@@ -52,3 +52,12 @@
 		</button>
 	</div>
 </div>
+
+<!--
+	@ Ashlea if you want to make Menu centered in the page with 3/4 width so that is looks like our original page design
+	you can put all currenct code into this div:
+
+	<div class="flex justify-center items-center">
+		...exisiting code but set width -> w-3/4 in the class of this top div
+	</div>
+-->
