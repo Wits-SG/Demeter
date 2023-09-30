@@ -2,6 +2,7 @@
 	import { Icon } from 'flowbite-svelte-icons';
 	import PageNav from '$lib/components/navigation/page_nav.svelte';
 	import AddNav from '$lib/components/navigation/add_nav.svelte';
+	import ROTD from '$lib/components/recipe_of_the_day.svelte';
 
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { fb_auth } from '$lib/firebase'; // This is here to force the init call of onAuthStateChange - keep it here
@@ -24,6 +25,7 @@
 			</section>
 
 			<section class="h-full w-full flex flex-row justify-end items-center gap-5">
+				<ROTD />
 				<a href="/settings" class="p-1 h-fit w-fit bg-zinc-200 rounded-lg"
 					><Icon name="cog-outline" class="h-6 w-6" /></a>
 				<input
