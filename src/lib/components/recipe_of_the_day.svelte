@@ -79,14 +79,14 @@
 						<img alt="" src={recipeImg} class="object-cover rounded-md" />
 					</section>
 				</div>
-				<div class="flex flex-col justify-center items-center gap-10 w-1/2">
+				<section class="flex flex-col justify-center items-center gap-10 w-1/2">
 					<div class="text-xl font-semibold font-small text-black">
 						{recipeName}
 					</div>
 					<div class="text-xl font-small text-black">
 						{recipeDescription}
 					</div>
-				</div>
+				</section>
 			</section>
 
 			<div class="mt-6 flex justify-end items-end gap-4">

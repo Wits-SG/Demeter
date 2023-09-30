@@ -8,23 +8,6 @@
 
 	export let data: PageData;
 
-	let savedState = 'Save this recipe';
-	function toggleSavedState() {
-		if (savedState === 'Save this recipe') {
-			savedState = 'Saved!';
-		} else {
-			savedState = 'Save this recipe';
-		}
-	}
-
-	export let orientation: CreateSeparatorProps['orientation'] = 'vertical';
-
-	const {
-		elements: { root: vertical }
-	} = createSeparator({
-		orientation
-	});
-
 	const {
 		elements: { root: horizontal }
 	} = createSeparator({
@@ -94,17 +77,6 @@
 			<div
 				use:melt={$horizontal}
 				class="items-center justify-center h-[3px] w-3/5 bg-teal-600 dark:bg-teal-400" />
-
-			<!-- <section class="grid grid-cols-2 items-center gap-20">
-				<div class="flex flex-col items-center gap-2">
-					<Icon name="heart-outline" class="h-14 w-14" />
-					<button
-						on:click={toggleSavedState}
-						class="p-5 bg-emerald-500 rounded-full w-full h-12 text-center text-md flex justify-center items-center hover:bg-emerald-600">
-						{savedState}
-					</button>
-				</div>
-			</section> -->
 
 			<div>
 				<SaveRecipe recipeID={data.recipe.id} />
