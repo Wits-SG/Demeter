@@ -29,6 +29,21 @@ export const POST = async (event: RequestEvent) => {
 	return new Response('Successful');
 };
 
+export const DELETE = async (event: RequestEvent) => {
+	try {
+		const { menu_id } = await event.request.json();
+
+		// Query to database to delete menu_id
+		const deleteMenu = await turso_client.execute({
+			sql: 'delete from menus where menu_id = ?',
+			args: [menu_id]
+		});
+		return new Response('Success');
+	} catch (e: any) {
+		throw error(400, 'Error deleting Menu!');
+	}
+};
+
 /**
  * @description get recipes for each section of menu
  */
