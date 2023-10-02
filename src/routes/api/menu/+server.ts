@@ -28,3 +28,34 @@ export const POST = async (event: RequestEvent) => {
 
 	return new Response('Successful');
 };
+
+/**
+ * @description get recipes for each section of menu
+ */
+
+export const GET = async (event: RequestEvent) => {
+	const getMenuInfo: { recipeID: string } = await event.request.json();
+
+	try {
+		const recipe_section = await turso_client.execute({
+			sql: 'select * from recipes where recipe_id=?',
+			args: [getMenuInfo.recipeID]
+		});
+
+		const recipes: Array<Recipe> = [];
+		for (let row of recipe_section.rows) {
+			recipes.push({
+				id: row['recipe_id'],
+				name: row['name'],
+				description: row['description'],
+				cookingTime: row['cooking_time']
+			} as Recipe);
+		}
+
+		return json({
+			recipe: recipes
+		});
+	} catch (e) {
+		throw error(500, 'Failed to fetch recipe');
+	}
+};

@@ -33,8 +33,6 @@
 	let cookbookName: string = data.cookbook_info.name;
 
 	let cookbookID: string = data.cookbook_info.id;
-	console.log(cookbookName);
-	console.log(cookbookID);
 
 	async function deleteRecipe() {
 		try {
