@@ -3,6 +3,30 @@
 
 	export let data: PageData;
 	console.log(data.menu_info);
+	let menuID: string = data.menu_info.id;
+	const deleteMenu = async () => {
+		try {
+			const response = await fetch('/api/menu', {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ menu_id: menuID })
+			});
+
+			if (response.ok) {
+			} else {
+				const errorMessage = await response.text();
+				console.error(`Error deleting menu: ${errorMessage}`);
+			}
+		} catch (error) {
+			console.error('An error occurred while deleting the menu:', error);
+		}
+	};
+	const recipeID = data.recipes;
+	const recipe_info = data.recipes;
+	console.log(recipe_info);
+	console.log('Menu', data.menu_info);
 
 	const recipes = ['Dish', 'Dish', 'Dish'];
 </script>
