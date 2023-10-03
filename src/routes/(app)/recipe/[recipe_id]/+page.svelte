@@ -52,6 +52,7 @@
 			description: data.recipe.instructions
 		}
 	];
+	console.log(data.recipe.id);
 </script>
 
 <div

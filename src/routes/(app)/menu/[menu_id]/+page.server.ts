@@ -11,6 +11,12 @@ export const load = (async ({ params }) => {
 		sql: 'select * from menu_sections where menu_id=?',
 		args: [params.menu_id]
 	});
+	const menu_recipe_res = await turso_client.execute({
+		sql: 'select * from menu_recipes where menu_id=?',
+		args: [params.menu_id]
+	});
+
+	console.log('Menu recipes', menu_recipe_res);
 
 	const sections = [];
 	const section_ids: Array<string> = [];
@@ -18,28 +24,16 @@ export const load = (async ({ params }) => {
 		sections.push(row['name']);
 		section_ids.push(row['section_id'] as string);
 	}
-	const recipes_id = [];
+	const recipes = [];
 	for (let i = 0; i < section_ids.length; i++) {
 		const sectionId = section_ids[i];
 		const recipe_sections = await turso_client.execute({
-			//sql: 'select recipes.* from menu_recipes join recipes on menu_recipes.recipe_id = recipes.recipe_id where menu_recipes.menu_id = ? AND menu_recipes.section_id =?',
-			sql: 'select recipe_id from menu_recipes where menu_id=? AND section_id =?',
-			args: [params.menu_id, sectionId]
+			sql: 'select recipes.* from menu_recipes left join recipes on menu_recipes.recipe_id = recipes.recipe_id where menu_recipes.menu_id = ? AND menu_recipes.section_id =?',
+			//sql: 'select recipe_id from menu_recipes where menu_id=? AND section_id =?',
+			args: [params.menu_id, i]
 		});
 
 		for (let row of recipe_sections.rows) {
-			recipes_id.push(row['recipe_id'] as string);
-		}
-	}
-	//console.log(recipes_id);
-	const recipes: Array<Recipe> = [];
-	for (let i = 0; i < recipes_id.length; i++) {
-		const recipes_info = await turso_client.execute({
-			sql: 'select * from recipes where recipe_id =?',
-			args: [recipes_id[i]]
-		});
-
-		for (let row of recipes_info.rows) {
 			recipes.push({
 				id: row['recipe_id'],
 				name: row['name'],
@@ -47,6 +41,7 @@ export const load = (async ({ params }) => {
 				cookingTime: row['cooking_time']
 			} as Recipe);
 		}
+		console.log(recipes);
 	}
 
 	return {
@@ -56,6 +51,6 @@ export const load = (async ({ params }) => {
 			section: sections,
 			section_id: section_ids
 		},
-		recipes: recipes_id
+		recipes: [recipes]
 	};
 }) satisfies PageServerLoad;

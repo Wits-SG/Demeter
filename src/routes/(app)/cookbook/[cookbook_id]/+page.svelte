@@ -8,7 +8,6 @@
 	let noRecipe = data.recipes.length == 0;
 	let currentRecipeID: string = noRecipe ? '' : data.recipes[0].id;
 	let currentRecipeIndex: number = 0;
-	let userID: string = 'SmOouPpFdJViJaRq933q3iCt0Ho2';
 
 	function prevPress() {
 		if (data.recipes) currentRecipeIndex -= 1;

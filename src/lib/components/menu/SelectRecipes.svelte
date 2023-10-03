@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createSelect, melt } from '@melt-ui/svelte';
 	import { Icon } from 'flowbite-svelte-icons';
-
+	//THis will have all the recipes
 	const options = {
 		sweet: ['Caramel', 'Chocolate', 'Strawberry', 'Cookies & Cream'],
 		savory: ['Basil', 'Bacon', 'Rosemary']
