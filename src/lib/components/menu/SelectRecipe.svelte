@@ -11,7 +11,7 @@
 			recipe_id: ''
 		}
 	];
-
+	let recipe: string = '';
 	const {
 		elements: { trigger, menu, item },
 		states: { open }
@@ -21,15 +21,15 @@
 	onMount(async () => {
 		const fetchResult = await fetch('/api/menu');
 		recipes = await fetchResult.json();
-		//selectedRecipes.push(recipes.name[0]);
+		recipe = recipes[0].name;
 	});
 </script>
 
 <button
 	use:melt={$trigger}
 	class="h-8 w-64 min-w-fit rounded-lg bg-zinc-200 flex justify-center items-center gap-5 text-lg p-2 hover:bg-zinc-400 overflow-scroll">
-	<Icon name="book-outline" class="h-5 w-5 text-green-700" />
-	<p class="text-zinc-900">{selectedRecipes}</p>
+	<!-- <Icon name="book-outline" class="h-5 w-5 text-green-700" /> -->
+	<p class="text-zinc-900">{recipe}</p>
 	<Icon name="angle-down-outline" class="h-4 w-4 text-zinc-900" />
 </button>
 

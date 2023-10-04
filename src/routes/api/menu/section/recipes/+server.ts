@@ -11,7 +11,7 @@ export const POST = async (event: RequestEvent) => {
 
 	try {
 		await turso_client.execute({
-			sql: 'insert into menu_recipes values(?, ?, ?)',
+			sql: 'insert into menu_recipes (recipe_id, menu_id, section_id) values(?, ?, ?)',
 			args: [addedRecipe.recipeId, addedRecipe.menuId, addedRecipe.sectionID]
 		});
 	} catch (e: any) {

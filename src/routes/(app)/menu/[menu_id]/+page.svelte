@@ -49,7 +49,7 @@
 			<a class="flex flex-col border-4 border-emerald-100 px-10" href="" />
 			<button
 				class=" px-10 rounded-md text-md text-emerald-700 border-emerald-700 dark:text-emerald-300 darkborder-emerald-300">
-				<AddRecipe sectionID={lastSectionIndex + 1} menuId={menuID} /></button>
+				<AddRecipe {menuID} /></button>
 		{/each}
 		<button
 			class=" justify-start rounded-md text-3xl text-emerald-700 border-emerald-700 dark:text-emerald-300 darkborder-emerald-300">

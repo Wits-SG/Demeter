@@ -142,7 +142,7 @@
 				</div>
 				<div
 					use:melt={$content('tab-1')}
-					class="grow bg-neutral-100 bg-neutral-800 p-5 overflow-scroll min-w-[100vh]">
+					class="grow bg-neutral-100 dark:bg-neutral-800 p-5 overflow-scroll min-w-[100vh]">
 					<ul class="list-inside text-md list-disc text-start overflow-scroll">
 						{#each recipeIngredients as ingredients}
 							<li class="text-black dark:text-white">

@@ -20,32 +20,37 @@
 
 	let sectionName: string;
 	export let sectionID: number = 0;
-	export let menuId: string;
+
 	let recipeID: string;
 
 	//check recipe doesnt already exist in the menu?
-	const AddRecipes = async () => {
-		await fetch('/api/menu/section/recipes', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				menuID: menuId,
-				recipeID: recipeID,
-				sectionID: sectionID
-			})
-		});
+	const AddRecipes = async (menuId: string, recipeID: string, sectionID: number) => {
+		try {
+			const response = await fetch('/api/menu/section/recipes', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					recipeID: recipeID,
+					menuID: menuId,
+					sectionID: sectionID
+				})
+			});
+		} catch (e) {
+			console.error('An error occurred:', e);
+		}
 	};
+
 	function addRecipe() {
 		console.log('recipes selected', selectedRecipes);
 		for (let i = 0; i < selectedRecipes.length; i++) {
 			recipeID = selectedRecipes[i].recipe_id;
 			sectionID = sectionID;
 			menuID = menuID;
-			AddRecipes;
-			console.log(AddRecipes);
+			AddRecipes(menuID, recipeID, sectionID);
 		}
+		selectedRecipes = [];
 	}
 </script>
 
