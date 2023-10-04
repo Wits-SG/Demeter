@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createDialog, melt } from '@melt-ui/svelte';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { invalidateAll } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 
 	const dispatcher = createEventDispatcher();
 
@@ -12,8 +12,8 @@
 		forceVisible: true
 	});
 
-	let inputName: string;
-	let inputSection: string;
+	let inputName: string = '';
+	let inputSection: string = '';
 	let sectionList: Array<string> = [];
 	let errorMessage = '';
 
@@ -29,15 +29,24 @@
 	}
 
 	function handleCreateMenu() {
-		if (sectionList.length == 0) {
+		const titleIsEmpty = inputName.trim() === '';
+		const sectionsAreEmpty = sectionList.length === 0;
+
+		if (titleIsEmpty && sectionsAreEmpty) {
+			errorMessage = 'Title and sections cannot be empty.';
+		} else if (titleIsEmpty) {
+			errorMessage = 'Title cannot be empty.';
+		} else if (sectionsAreEmpty) {
 			errorMessage = 'You cannot create a menu with no sections.';
 		} else {
 			postMenu();
+			open.set(false);
 			errorMessage = '';
 
 			// Clear input boxes and text areas
 			inputSection = '';
 			sectionList = [];
+			inputName = '';
 		}
 	}
 
@@ -49,7 +58,7 @@
 	}
 
 	async function postMenu() {
-		await fetch('/api/menu', {
+		const response = await fetch('/api/menu', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -152,7 +161,6 @@
 
 				<button
 					on:click={handleCreateMenu}
-					use:melt={$close}
 					class="inline-flex h-8 items-center justify-center rounded-sm
             bg-teal-600 px-4 font-medium leading-none text-zinc-50 hover:bg-emerald-600">
 					Create Menu
