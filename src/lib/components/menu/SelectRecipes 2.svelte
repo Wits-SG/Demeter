@@ -31,7 +31,7 @@
 		use:melt={$trigger}
 		aria-label="Food">
 		{$selectedLabel || 'Select a flavor'}
-		<ChevronDown class="square-5" />
+		<!-- <ChevronDown class="square-5" /> -->
 	</button>
 	{#if $open}
 		<div
@@ -54,7 +54,7 @@
               data-[highlighted]:text-magnum-900 data-[selected]:text-magnum-900"
 							use:melt={$option({ value: item, label: item })}>
 							<div class="check {$isSelected(item) ? 'block' : 'hidden'}">
-								<Check class="square-4" />
+								<!-- <Check class="square-4" /> -->
 							</div>
 
 							{item}

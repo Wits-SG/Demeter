@@ -1,5 +1,6 @@
 import { turso_client } from '$lib/turso';
 import { error, json } from '@sveltejs/kit';
+//@ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 import type { RequestEvent } from './$types';
 
@@ -41,5 +42,26 @@ export const DELETE = async (event: RequestEvent) => {
 		return new Response('Success');
 	} catch (e: any) {
 		throw error(400, 'Error deleting Menu!');
+	}
+};
+
+/**
+ * @description Fetch a list of all recipes for a user
+ */
+export const GET = async (event: RequestEvent) => {
+	try {
+		const recipeResult = await turso_client.execute('select recipe_id, name from recipes');
+		const returnedRecipes = [];
+
+		for (let row of recipeResult.rows) {
+			returnedRecipes.push({
+				recipe_id: row['recipe_id'],
+				name: row['name']
+			});
+		}
+
+		return json(returnedRecipes);
+	} catch (e: any) {
+		throw error(500, 'Failed to fetch cookbooks');
 	}
 };

@@ -28,7 +28,7 @@ export const load = (async ({ params }) => {
 	for (let i = 0; i < section_ids.length; i++) {
 		const sectionId = section_ids[i];
 		const recipe_sections = await turso_client.execute({
-			sql: 'select recipes.* from menu_recipes left join recipes on menu_recipes.recipe_id = recipes.recipe_id where menu_recipes.menu_id = ? AND menu_recipes.section_id =?',
+			sql: 'select recipes.* from menu_recipes  join recipes on menu_recipes.recipe_id = recipes.recipe_id where menu_recipes.menu_id = ? AND menu_recipes.section_id =?',
 			//sql: 'select recipe_id from menu_recipes where menu_id=? AND section_id =?',
 			args: [params.menu_id, i]
 		});
@@ -51,6 +51,6 @@ export const load = (async ({ params }) => {
 			section: sections,
 			section_id: section_ids
 		},
-		recipes: [recipes]
+		recipes: recipes
 	};
 }) satisfies PageServerLoad;
