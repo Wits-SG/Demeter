@@ -2,6 +2,7 @@
 	import AddRecipe from '$lib/components/menu/AddRecipe.svelte';
 	import CreateSection from '$lib/components/menu/CreateSection.svelte';
 	import type { PageData } from './$types';
+	import { goto } from '$app/navigation';
 
 	export let data: PageData;
 	console.log(data.menu_info);
@@ -18,6 +19,7 @@
 			});
 
 			if (response.ok) {
+				goto('/cookbook');
 			} else {
 				const errorMessage = await response.text();
 				console.error(`Error deleting menu: ${errorMessage}`);
