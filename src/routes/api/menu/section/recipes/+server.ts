@@ -3,7 +3,7 @@ import { error, json } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
 /**
- * @description Add a recipe to a cookbook
+ * @description Add a recipe to a section
  */
 export const POST = async (event: RequestEvent) => {
 	const addedRecipe: { recipeId: string; menuId: string; sectionID: number } =
@@ -11,8 +11,8 @@ export const POST = async (event: RequestEvent) => {
 
 	try {
 		await turso_client.execute({
-			sql: 'insert into menu_recipes (recipe_id, menu_id, section_id) values(?, ?, ?)',
-			args: [addedRecipe.recipeId, addedRecipe.menuId, addedRecipe.sectionID]
+			sql: 'insert into menu_recipes(menu_id,recipe_id,  section_id) values(?, ?, ?)',
+			args: [addedRecipe.menuId, addedRecipe.recipeId, addedRecipe.sectionID]
 		});
 	} catch (e: any) {
 		return error(500, 'Error inserting recipe into menu');

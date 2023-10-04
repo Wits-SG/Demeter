@@ -17,8 +17,6 @@
 	export let menuID: string = '';
 
 	let selectedRecipes: Array<{ recipe_id: string; name: string }> = [];
-
-	let sectionName: string;
 	export let sectionID: number = 0;
 
 	let recipeID: string;
@@ -32,8 +30,9 @@
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					recipeID: recipeID,
 					menuID: menuId,
+					recipeID: recipeID,
+
 					sectionID: sectionID
 				})
 			});
