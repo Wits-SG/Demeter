@@ -16,7 +16,7 @@ export const load = (async ({ params }) => {
 		args: [params.menu_id]
 	});
 
-	console.log('Menu recipes', menu_recipe_res);
+	//console.log('Menu recipes', menu_recipe_res);
 
 	const sections = [];
 	const section_ids: Array<string> = [];
