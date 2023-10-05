@@ -20,7 +20,7 @@ export const load = (async ({ params }) => {
 		sql: 'select name from cookbooks where cookbook_id = ?',
 		args: [params.cookbook_id]
 	});
-	console.log(cookbookRes.rows[0]);
+	//console.log(cookbookRes.rows[0]);
 
 	const recipes: Array<Recipe> = [];
 	for (let row of recipe_name.rows) {

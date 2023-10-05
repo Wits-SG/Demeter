@@ -25,7 +25,7 @@ export const load = (async ({ params }) => {
 		} as Menu);
 	}
 
-	console.log(cookbooks);
+	//console.log(cookbooks);
 	return {
 		cookbooks: cookbooks,
 		menus: menus

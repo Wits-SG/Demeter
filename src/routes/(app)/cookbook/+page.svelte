@@ -15,7 +15,7 @@
 	});
 </script>
 
-<div class=" flex flex-col h-screen w-screen justify-center items-center gap-2">
+<div class=" flex flex-col h-screen w-screen justify-center items-center gap-2 overflow-x-scroll">
 	<div class="flex flex-col w-full h-1/2 justify-center gap-2">
 		<div class="flex flex-col items-start justify-center">
 			<h1 class="text-3xl p-3">COOKBOOKS</h1>
