@@ -32,7 +32,6 @@
 				body: JSON.stringify({
 					menuID: menuId,
 					recipeID: recipeID,
-
 					sectionID: sectionID
 				})
 			});
