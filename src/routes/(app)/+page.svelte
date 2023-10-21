@@ -11,7 +11,6 @@
 	let itemsList: Array<{ id: string; type: number }>;
 	itemsList = data.posts;
 	let items: Array<{ id: string; type: number }>;
-	console.log(itemsList);
 	$: items = itemsList;
 	let [minColWidth, maxColWidth, gap] = [280, 350, 30];
 	let width: number;

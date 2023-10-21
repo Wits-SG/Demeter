@@ -34,7 +34,7 @@
 </script>
 
 <!--replace with page path-->
-<a href="/" class="w-full">
+<a href="/picture/{pictureID}" class="w-full">
 	<div
 		class="w-full h-full rounded-md shadow-md shadow-zinc-600 dark:shadow-zinc-300 overflow-hidden md:w-full md:h-full">
 		<div class="md:flex md:flex-col">
