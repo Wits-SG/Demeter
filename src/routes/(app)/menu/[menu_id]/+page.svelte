@@ -71,61 +71,67 @@
 	//need a refresh of data
 </script>
 
-<div class="flex justify-center items-center">
+<div class="flex justify-center items-center h-full justify-evenly">
 	<div
-		class="flex flex-col border-4 w-full max-w-[95vh] h-full border-4 border-emerald-700 dark:border-emerald-300">
-		<h1 class="flex flex-col text-emerald-700 dark:text-emerald-300 text-4xl text-center">
+		class="flex flex-col justify-evenly border-8 w-full max-w-[95vh] h-full border-4 border-emerald-700 dark:border-emerald-300">
+		<h1
+			class="flex flex-col text-emerald-700 dark:text-emerald-300 text-6xl text-center font-serif italic font-bold outline-dotted">
 			{data.menu_info.name}
 		</h1>
 		<!-- This will contain all sections and recipes -->
-		<div class="flex flex-col items-start">
+		<div class="flex flex-col justify-center items-center">
 			{#each data.menu_info.section as section, i}
-				<h2 class="text-3xl text-emerald-700 px-5">{section}</h2>
+				<h2
+					class="text-4xl text-emerald-800 dark:text-emerald-400 px-5 font-sans italic font-semibold justify-center items-center">
+					{section}
+				</h2>
 				<!-- Displaying recipes under their sections -->
-				{#each data.recipe[i] as recipe}
-					<div class="flex flex-col w-full">
-						<div class="flex flex-row justify-between w-11/12 min-w-[85vh]">
-							<button class="text-lg px-10">
-								<DisplayRecipe recipeID={recipe.id} recipeName={recipe.name} />
-							</button>
-							<div class="flex flex-row items-center justify center gap-1">
-								<Icon name="clock-outline" class="h-5 w-5" />
-								<p class="">
-									~{recipe.cookingTime} Mins
-								</p>
-								<button
-									use:melt={$trigger}
-									on:click={() => deleteRecipe(i, recipe.id)}
-									class="text-md px-5 text-red-600">X</button>
-								{#if $open}
-									<div
-										use:melt={$content}
-										transition:fade={{ duration: 100 }}
-										class="z-10 rounded-lg bg-neutral-100 dark:bg-neutral-800 shadow">
-										<div use:melt={$arrow} />
-										<p class="px-4 py-1 text-black dark:text-white">
-											Delete recipe
-										</p>
-									</div>
-								{/if}
+				<div
+					class="flex flex-col w-full items-start outline-dotted outline-sky-900 outline-4">
+					{#each data.recipe[i] as recipe}
+						<div class="flex flex-col w-full">
+							<div class="flex flex-row justify-between w-11/12 min-w-[85vh]">
+								<button class="text-2xl px-10 font-sans font-medium">
+									<DisplayRecipe recipeID={recipe.id} recipeName={recipe.name} />
+								</button>
+								<div class="flex flex-row items-center justify center gap-1">
+									<Icon name="clock-outline" class="h-5 w-5" />
+									<p class="">
+										~{recipe.cookingTime} Mins
+									</p>
+									<button
+										use:melt={$trigger}
+										on:click={() => deleteRecipe(i, recipe.id)}
+										class="text-md px-5 text-red-600">X</button>
+									{#if $open}
+										<div
+											use:melt={$content}
+											transition:fade={{ duration: 100 }}
+											class="z-10 rounded-lg bg-neutral-100 dark:bg-neutral-800 shadow">
+											<div use:melt={$arrow} />
+											<p class="px-4 py-1 text-black dark:text-white">
+												Delete recipe
+											</p>
+										</div>
+									{/if}
+								</div>
 							</div>
+							<p class="text-md px-20">{recipe.description}</p>
 						</div>
-						<p class="text-md px-20">{recipe.description}</p>
-					</div>
-				{/each}
-				<button class="px-5 text-emerald-700 dark:text-emerald-300">
-					<AddRecipe {menuID} sectionID={i} /></button>
+					{/each}
+
+					<button class="px-5"> <AddRecipe {menuID} sectionID={i} /></button>
+				</div>
 			{/each}
 			<button
-				class=" justify-start rounded-md text-3xl text-emerald-700 border-emerald-700 dark:text-emerald-300 darkborder-emerald-300">
+				class=" justify-start rounded-md text-4xl text-emerald-800 border-emerald-700 dark:text-emerald-400">
 				<CreateSection sectionID={lastSectionIndex + 1} menuId={menuID} /></button>
 		</div>
 
-		<div
-			class="flex flex-col border-2 dark:border-emerald-300 border-emerald-300 justify-center items-center p-1">
+		<div class="flex flex-col justify-center items-center p-1">
 			<button
 				on:click={deleteMenu}
-				class="rounded-full border-2 w-40 h-10 border-emerald-700 text-emerald-700 dark:text-emerald-300 text-lg font-semibold">
+				class="rounded-md border-2 w-40 h-10 border-emerald-700 text-emerald-700 dark:text-emerald-300 text-lg font-semibold">
 				Delete Menu
 			</button>
 		</div>

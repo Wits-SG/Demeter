@@ -54,9 +54,8 @@
 
 <button
 	use:melt={$trigger}
-	class="inline-flex justify-start items-start px-5 py-1 text-lg
-  font-medium leading-none"
-	>+ recipe
+	class="px-5 py-1 text-lg font-xl font-sans italic text-emerald-600 dark:text-emerald-300 font-medium"
+	>+ Recipe
 </button>
 
 <div use:melt={$portalled}>
@@ -73,6 +72,17 @@
 			</p>
 
 			<SelectRecipes bind:selectedRecipes />
+			<div class="flex items-start justify-start gap-10 pl-10">
+				<ul class="list-disc list-inside">
+					{#if selectedRecipes.length != 0}
+						{#each selectedRecipes as recipes}
+							<li class="mb-2 text-zinc-900">
+								{recipes}
+							</li>
+						{/each}
+					{/if}
+				</ul>
+			</div>
 			<div class="mt-6 flex justify-end gap-4">
 				<button
 					use:melt={$close}

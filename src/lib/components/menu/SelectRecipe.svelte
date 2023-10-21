@@ -44,7 +44,6 @@
 				use:melt={$item}
 				on:click={() => {
 					selectedRecipes.push(recipe);
-					console.log('Selected Recipes:', selectedRecipes);
 				}}>
 				{recipe.name}</button>
 		{/each}

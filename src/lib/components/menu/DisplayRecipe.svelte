@@ -13,7 +13,11 @@
 	export let recipeName: string = '';
 </script>
 
-<button use:melt={$trigger} class="inline-flex justify-start items-start">{recipeName} </button>
+<button
+	use:melt={$trigger}
+	class="inline-flex justify-start items-start italic text-emerald-600 dark:text-emerald-300"
+	>{recipeName}
+</button>
 <div use:melt={$portalled}>
 	{#if $open}
 		<div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50" />

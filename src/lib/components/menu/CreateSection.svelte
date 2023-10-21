@@ -34,7 +34,7 @@
 <button
 	use:melt={$trigger}
 	class="inline-flex justify-start items-start rounded-md px-5 py-1
-  font-medium leading-none"
+   leading-none font-sans font-semibold italic"
 	>+ Section
 </button>
 
