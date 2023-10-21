@@ -12,13 +12,11 @@
 		orientation
 	});
 
-	// let pictureTitle = 'A new picture post';
-	// let pictureDescription = 'This is a test for the picture post.';
-
 	export let data: PageData;
 </script>
 
-<div class="w-full h-full bg-zinc-100 dark:bg-zinc-800 flex flex-col justify-center gap-15 pt-5">
+<div
+	class="w-full h-full bg-zinc-100 dark:bg-zinc-800 flex flex-col justify-center gap-15 pt-5 overflow-y-scroll">
 	<div class="flex flex-row justify start items-start gap-2">
 		<!-- picture section -->
 		<section class="flex flex-col items-center justify-center w-1/2 gap-5">
