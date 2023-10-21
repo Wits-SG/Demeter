@@ -28,11 +28,8 @@
 				<ROTD />
 				<a href="/settings" class="p-1 h-fit w-fit bg-zinc-200 rounded-lg"
 					><Icon name="cog-outline" class="h-6 w-6" /></a>
-				<input
-					class="h-8 w-64 min-w-fit rounded-lg bg-zinc-200 flex justify-center items-center p-1 outline-none focus:outline-2 focus:outline-emerald-500"
-					type="search"
-					placeholder="search" />
-
+				<a href="/search" class="p-1 h-fit w-fit bg-zinc-200 rounded-lg"
+					><Icon name="search-outline" class="h-6 w-6" /></a>
 				{#if $userSignedIn}
 					<a class="h-fit w-fit" href="/profile/{$userInfo.userId}">
 						<Avatar.Root>
