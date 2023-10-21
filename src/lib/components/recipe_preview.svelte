@@ -18,7 +18,8 @@
 	};
 
 	let dishTitle = 'NONE';
-	let dishImageURL = 'NONE';
+	let dishImageURL =
+		'https://previews.123rf.com/images/solarus/solarus2112/solarus211200026/178493166-default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo-available.jpg';
 	let dishDescription = 'NONE';
 
 	onMount(async () => {
