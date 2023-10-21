@@ -74,13 +74,11 @@
 			<SelectRecipes bind:selectedRecipes />
 			<div class="flex items-start justify-start gap-10 pl-10">
 				<ul class="list-disc list-inside">
-					{#if selectedRecipes.length != 0}
-						{#each selectedRecipes as recipes}
-							<li class="mb-2 text-zinc-900">
-								{recipes}
-							</li>
-						{/each}
-					{/if}
+					{#each selectedRecipes as section}
+						<li class="mb-2 text-zinc-900">
+							{section.name}
+						</li>
+					{/each}
 				</ul>
 			</div>
 			<div class="mt-6 flex justify-end gap-4">

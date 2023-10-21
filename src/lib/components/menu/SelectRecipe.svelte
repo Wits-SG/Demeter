@@ -23,6 +23,10 @@
 		recipes = await fetchResult.json();
 		recipe = recipes[0].name;
 	});
+
+	function handleAddSection() {
+		selectedRecipes = [...selectedRecipes];
+	}
 </script>
 
 <button
@@ -35,7 +39,7 @@
 
 {#if $open}
 	<div
-		class="bg-zinc-200 h-96 w-96 dark:text-black p-2 flex flex-col justify-start items-start rounded-lg gap-3 overflow-scroll"
+		class="bg-zinc-200 dark:text-black p-2 flex flex-col justify-start items-start rounded-lg gap-3 overflow-scroll"
 		use:melt={$menu}
 		transition:fly={{ duration: 150, y: -10 }}>
 		{#each recipes as recipe}
@@ -45,7 +49,8 @@
 				on:click={() => {
 					selectedRecipes.push(recipe);
 				}}>
-				{recipe.name}</button>
+				{recipe.name}
+			</button>
 		{/each}
 	</div>
 {/if}
