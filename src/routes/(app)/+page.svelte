@@ -1,16 +1,18 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import RecipePreview from '$lib/components/recipe_preview.svelte';
+	import PostPreview from '$lib/components/posts/post_preview.svelte';
 	//@ts-ignore
 	import Masonry from 'svelte-bricks';
 	import { Icon } from 'flowbite-svelte-icons';
 	import IntersectionObserver from 'svelte-intersection-observer';
+	import AddNav from '$lib/components/navigation/add_nav.svelte';
 
 	export let data: PageData;
-	let itemsList: any[];
-	itemsList = data.recipes;
+	let itemsList: Array<{ id: string; type: number }>;
+	itemsList = data.posts;
+	let items: Array<{ id: string; type: number }>;
+	console.log(itemsList);
 	$: items = itemsList;
-	//$: indices = [...Array(nItems).keys()]
 	let [minColWidth, maxColWidth, gap] = [280, 350, 30];
 	let width: number;
 	let height: number;
@@ -20,7 +22,7 @@
 	let element: any;
 	let intersecting;
 	let pageNumber: number = 10;
-	let tempRecipeList: any;
+	let tempPosts: any;
 	let tempItems;
 
 	const handleClick = () => {
@@ -34,15 +36,15 @@
 		}
 	};
 
-	const getMorePosts = async (pageNum: Number) => {
+	const getMorePosts = async (pageNum: number) => {
 		try {
 			let strPageNum: string = pageNum.toString();
-			const recipeIDs = await fetch(`/?page_num=${strPageNum}`, {
+			const postIDs = await fetch(`/?page_num=${strPageNum}`, {
 				method: 'GET'
 			});
 
-			const recipe_ids: JSON = await recipeIDs.json();
-			return recipe_ids;
+			const post_ids: JSON = await postIDs.json();
+			return post_ids;
 		} catch (recipePreview_err: any) {
 			console.error('Failed to fetch next page');
 		}
@@ -60,18 +62,19 @@
 			<Masonry
 				{items}
 				{minColWidth}
+				console.log(tempItems[i]);
 				{maxColWidth}
 				{gap}
 				let:item
 				bind:masonryHeight={height}
 				bind:masonryWidth={width}>
-				<RecipePreview recipeID={item} />
+				<PostPreview postID={item.id} postType={item.type} />
 			</Masonry>
 			<IntersectionObserver
 				{element}
 				on:intersect={async (e) => {
-					tempRecipeList = await getMorePosts(pageNumber);
-					tempItems = tempRecipeList.recipes;
+					tempPosts = await getMorePosts(pageNumber);
+					tempItems = tempPosts.posts;
 					itemsList = [...itemsList, ...tempItems];
 					pageNumber = pageNumber + 5;
 				}}>
@@ -81,13 +84,13 @@
 	{:else}
 		<div class="p-8 w-3/4 sm:w-3/6 md:w-2/5 lg:4/6 gap-20 flex flex-col justify-center">
 			{#each itemsList as item}
-				<RecipePreview recipeID={item} />
+				<PostPreview postID={item.id} postType={item.type} />
 			{/each}
 			<IntersectionObserver
 				{element}
 				on:intersect={async (e) => {
-					tempRecipeList = await getMorePosts(pageNumber);
-					tempItems = tempRecipeList.recipes;
+					tempPosts = await getMorePosts(pageNumber);
+					tempItems = tempPosts.posts;
 					itemsList = [...itemsList, ...tempItems];
 					pageNumber = pageNumber + 5;
 				}}>
