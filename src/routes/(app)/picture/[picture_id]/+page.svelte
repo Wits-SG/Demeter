@@ -21,7 +21,7 @@
 		<!-- picture section -->
 		<section class="flex flex-col items-center justify-center w-1/2 gap-5">
 			<section>
-				<h1 class="text-4xl font-serif">
+				<h1 class="text-4xl font-serif dark:text-white text-black">
 					{data.picture.title}
 				</h1>
 			</section>
@@ -29,7 +29,7 @@
 				<img alt="" src={data.picture.url} class="object-cover rounded-xl" />
 			</section>
 			<section>
-				<p class="text-lg">
+				<p class="text-lg dark:text-white text-black">
 					{data.picture.description}
 				</p>
 			</section>
