@@ -33,8 +33,8 @@
 
 <button
 	use:melt={$trigger}
-	class="inline-flex justify-start items-start rounded-md px-10 py-1
-  font-medium leading-none text-magnum-700 shadow hover:opacity-75"
+	class="inline-flex justify-start items-start rounded-md px-5 py-1
+  font-medium leading-none"
 	>+ Section
 </button>
 

@@ -5,7 +5,21 @@
 	import { goto } from '$app/navigation';
 	import { Icon } from 'flowbite-svelte-icons';
 	import DisplayRecipe from '$lib/components/menu/DisplayRecipe.svelte';
+	import { createTooltip, melt } from '@melt-ui/svelte';
+	import { fade } from 'svelte/transition';
 
+	const {
+		elements: { trigger, content, arrow },
+		states: { open }
+	} = createTooltip({
+		positioning: {
+			placement: 'top'
+		},
+		openDelay: 0,
+		closeDelay: 0,
+		closeOnPointerDown: false,
+		forceVisible: true
+	});
 	export let data: PageData;
 
 	let menuID: string = data.menu_info.id;
@@ -58,9 +72,9 @@
 </script>
 
 <div class="flex justify-center items-center">
-	<div class="flex flex-col border-4 w-full max-w-[95vh] h-full">
-		<h1
-			class="flex flex-col border-4 border-emerald-700 text-emerald-700 dark:text-emerald-300 text-4xl text-center">
+	<div
+		class="flex flex-col border-4 w-full max-w-[95vh] h-full border-4 border-emerald-700 dark:border-emerald-300">
+		<h1 class="flex flex-col text-emerald-700 dark:text-emerald-300 text-4xl text-center">
 			{data.menu_info.name}
 		</h1>
 		<!-- This will contain all sections and recipes -->
@@ -80,16 +94,26 @@
 									~{recipe.cookingTime} Mins
 								</p>
 								<button
+									use:melt={$trigger}
 									on:click={() => deleteRecipe(i, recipe.id)}
 									class="text-md px-5 text-red-600">X</button>
+								{#if $open}
+									<div
+										use:melt={$content}
+										transition:fade={{ duration: 100 }}
+										class="z-10 rounded-lg bg-neutral-100 dark:bg-neutral-800 shadow">
+										<div use:melt={$arrow} />
+										<p class="px-4 py-1 text-black dark:text-white">
+											Delete recipe
+										</p>
+									</div>
+								{/if}
 							</div>
 						</div>
 						<p class="text-md px-20">{recipe.description}</p>
 					</div>
 				{/each}
-
-				<button
-					class=" px-10 rounded-md text-md text-emerald-700 border-emerald-700 dark:text-emerald-300 dark:border-emerald-300">
+				<button class="px-5 text-emerald-700 dark:text-emerald-300">
 					<AddRecipe {menuID} sectionID={i} /></button>
 			{/each}
 			<button
