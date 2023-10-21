@@ -3,11 +3,13 @@
 	import CreateSection from '$lib/components/menu/CreateSection.svelte';
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
+	import { Icon } from 'flowbite-svelte-icons';
+	import DisplayRecipe from '$lib/components/menu/DisplayRecipe.svelte';
 
 	export let data: PageData;
 
 	let menuID: string = data.menu_info.id;
-	console.log('Recipe data', data.recipe);
+
 	const deleteMenu = async () => {
 		try {
 			const response = await fetch('/api/menu', {
@@ -28,32 +30,66 @@
 			console.error('An error occurred while deleting the menu:', error);
 		}
 	};
-	const recipeID = data.recipe;
-	const recipe_info = data.recipe;
+	async function deleteRecipe(sectionID: number, recipeID: string) {
+		try {
+			const response = await fetch('/api/menu/section/recipes', {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ recipeID: recipeID, menuID: menuID, sectionID: sectionID })
+			});
+
+			if (response.ok) {
+				// Recipe deleted successfully
+				// You can add additional logic here if needed
+				//invalidateAll();
+			} else {
+				const errorMessage = await response.text();
+				console.error(`Error deleting recipe: ${errorMessage}`);
+			}
+		} catch (error) {
+			console.error('An error occurred while deleting the recipe:', error);
+		}
+	}
+
 	const lastSectionIndex: number = data.menu_info.section_id.length - 1;
 	//need a refresh of data
 </script>
 
 <div class="flex justify-center items-center">
-	<div class="flex flex-col border-4 w-3/4">
+	<div class="flex flex-col border-4 w-full max-w-[95vh] h-full">
 		<h1
 			class="flex flex-col border-4 border-emerald-700 text-emerald-700 dark:text-emerald-300 text-4xl text-center">
 			{data.menu_info.name}
 		</h1>
 		<!-- This will contain all sections and recipes -->
-		<div class="flex flex-col border-4 border-emerald-300 items-start">
+		<div class="flex flex-col items-start">
 			{#each data.menu_info.section as section, i}
 				<h2 class="text-3xl text-emerald-700 px-5">{section}</h2>
-				<!-- Displaying the recipes and adding recipe to section, need to check if a recipe exists first -->
-				<!-- Need to make recipes with section_id -->
+				<!-- Displaying recipes under their sections -->
 				{#each data.recipe[i] as recipe}
-					<a class="flex flex-row border-4 border-emerald-100 px-10" href=""
-						>{recipe.name}</a>
-					<p class="flex flex-col text-md px-20">{recipe.description}</p>
-					<p class="flex flex-row text-md">{recipe.cookingTime} minutes</p>
+					<div class="flex flex-col w-full">
+						<div class="flex flex-row justify-between w-11/12 min-w-[85vh]">
+							<button class="text-lg px-10">
+								<DisplayRecipe recipeID={recipe.id} recipeName={recipe.name} />
+							</button>
+							<div class="flex flex-row items-center justify center gap-1">
+								<Icon name="clock-outline" class="h-5 w-5" />
+								<p class="">
+									~{recipe.cookingTime} Mins
+								</p>
+								<button
+									on:click={() => deleteRecipe(i, recipe.id)}
+									class="text-md px-5 text-red-600">X</button>
+							</div>
+						</div>
+						<p class="text-md px-20">{recipe.description}</p>
+					</div>
 				{/each}
+
 				<button
-					class=" px-10 rounded-md text-md text-emerald-700 border-emerald-700 dark:text-emerald-300 darkborder-emerald-300">
+					class=" px-10 rounded-md text-md text-emerald-700 border-emerald-700 dark:text-emerald-300 dark:border-emerald-300">
 					<AddRecipe {menuID} sectionID={i} /></button>
 			{/each}
 			<button

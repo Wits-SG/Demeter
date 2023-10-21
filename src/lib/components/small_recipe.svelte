@@ -50,8 +50,6 @@
 	let recipeInstructions = '';
 	$: recipeID && refreshRecipe();
 
-	let recipeExists = false;
-
 	const refreshRecipe = async () => {
 		smallRecipeData = await getSmallRecipeData();
 		recipeTitle = smallRecipeData.recipe.name;
@@ -93,7 +91,7 @@
 				class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-semi-bold font-serif p-5 dark: text-emerald-300">
 				DESCRIPTION
 			</h1>
-			<p class="font-serif text-xl text-black dark: text-white">{Description}</p>
+			<p class="font-serif text-xl text-black dark:text-white">{Description}</p>
 		</div>
 		<div class="flex flex-row h-1/5 gap-40 justify-center">
 			<!-- this will contain the serving size and time to cook -->
@@ -169,44 +167,3 @@
 		</div>
 	</div>
 </div>
-
-<!-- <style lang="postcss">
-	.trigger {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		cursor: default;
-		user-select: none;
-
-		border-radius: 0;
-		background-color: #a7f3d0;
-		
-
-		color: #047857; 
-		
-		font-weight: bold;
-		line-height: 3;
-		font-size: large;
-		font-family: serif;
-
-		flex: 1;
-		height: theme(spacing.12);
-		padding-inline: theme(spacing.2);
-
-		&:focus {
-			position: relative;
-		}
-
-		&:focus-visible {
-			@apply z-10 ring-2;
-		}
-
-		&[data-state='active'] {
-			@apply focus:relative;
-			background-color: #f5f5f5;
-			color: #047857;
-			dark: text-emerald-300, bg-neutral-900;
-		}
-	}
-</style> -->

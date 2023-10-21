@@ -20,3 +20,22 @@ export const POST = async (event: RequestEvent) => {
 
 	return new Response('Successful');
 };
+
+/**
+ * @description Delete a recipe from a section
+ */
+export const DELETE = async (event: RequestEvent) => {
+	const removedRecipe: { recipeID: string; menuID: string; sectionID: number } =
+		await event.request.json();
+
+	try {
+		await turso_client.execute({
+			sql: 'delete from menu_recipes where recipe_id = ? and menu_id = ? and section_id =?',
+			args: [removedRecipe.recipeID, removedRecipe.menuID, removedRecipe.sectionID]
+		});
+
+		return new Response('Successful');
+	} catch (e: any) {
+		return error(500, 'Error removing recipe from section');
+	}
+};

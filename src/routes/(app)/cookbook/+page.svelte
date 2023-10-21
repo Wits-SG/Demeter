@@ -28,7 +28,7 @@
 			<div class="flex flex-row items-center gap-10 text-center h-full w-auto">
 				{#each data.cookbooks as cookbook}
 					<a
-						class="flex justify-center items-center text-black h-1/2 w-full bg-contain"
+						class="flex justify-center items-center text-black w-32 h-40 w-full bg-contain"
 						style="background-image: url('/src/lib/assets/images/cookbook.jpeg')"
 						href="/cookbook/{cookbook.id}">{cookbook.name}</a>
 				{/each}
