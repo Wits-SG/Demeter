@@ -36,7 +36,7 @@
 		</section>
 
 		<!-- separator -->
-		<div use:melt={$vertical} class="h-full w-[4px] bg-emerald-500" />
+		<div use:melt={$vertical} class="h-full w-[5px] bg-emerald-500" />
 
 		<!-- comments section -->
 		<section class="flex flex-col items-center justify-center w-1/2 gap-5">
