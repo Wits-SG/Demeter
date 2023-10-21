@@ -6,9 +6,8 @@
 	import { fb_storage } from '$lib/firebase';
 	import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-	export let data: PageData;
-
 	let caption: string;
+	let title: string;
 
 	let picture: File;
 	let pictureLocalUrl: any;
@@ -27,7 +26,7 @@
 	let hasError: boolean = false;
 
 	function validateForm(): boolean {
-		if (!caption || !picture) {
+		if (!caption || !picture || !title) {
 			errorMessage = 'Please fill in all required fields.';
 			hasError = true;
 			return false;
@@ -54,6 +53,7 @@
 				},
 				body: JSON.stringify({
 					id: pictureId,
+					title: title,
 					description: caption,
 					imageUrl: imageUrl
 				})
@@ -90,6 +90,15 @@
 		</section>
 
 		<section class="flex flex-col items-center w-1/2 gap-5">
+			<label class="text-lg font-bold" for="title"> Recipe Title </label>
+
+			<input
+				bind:value={title}
+				class="p-1 w-full text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
+				maxlength="64"
+				type="text"
+				placeholder="Write a title..." />
+
 			<label class="text-lg font-bold" for="caption"> Caption </label>
 
 			<textarea
