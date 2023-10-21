@@ -7,7 +7,7 @@
 	export let data: PageData;
 
 	let menuID: string = data.menu_info.id;
-	//console.log(data.recipe);
+	console.log('Recipe data', data.recipe);
 	const deleteMenu = async () => {
 		try {
 			const response = await fetch('/api/menu', {
@@ -30,8 +30,6 @@
 	};
 	const recipeID = data.recipe;
 	const recipe_info = data.recipe;
-	//console.log("Recipe",recipe_info);
-	// console.log('Menu', data.menu_info);
 	const lastSectionIndex: number = data.menu_info.section_id.length - 1;
 	//need a refresh of data
 </script>
@@ -48,8 +46,12 @@
 				<h2 class="text-3xl text-emerald-700 px-5">{section}</h2>
 				<!-- Displaying the recipes and adding recipe to section, need to check if a recipe exists first -->
 				<!-- Need to make recipes with section_id -->
-
-				<a class="flex flex-col border-4 border-emerald-100 px-10" href="" />
+				{#each data.recipe[i] as recipe}
+					<a class="flex flex-row border-4 border-emerald-100 px-10" href=""
+						>{recipe.name}</a>
+					<p class="flex flex-col text-md px-20">{recipe.description}</p>
+					<p class="flex flex-row text-md">{recipe.cookingTime} minutes</p>
+				{/each}
 				<button
 					class=" px-10 rounded-md text-md text-emerald-700 border-emerald-700 dark:text-emerald-300 darkborder-emerald-300">
 					<AddRecipe {menuID} sectionID={i} /></button>

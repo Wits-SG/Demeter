@@ -46,7 +46,7 @@ export const load = (async ({ params }) => {
 		}
 		section_recipes[i] = sectionRecipes; //Assign the section-specific array to section_recipes
 	}
-	console.log(section_recipes);
+	//console.log(section_recipes);
 	return {
 		menu_info: {
 			id: params.menu_id,
