@@ -3,11 +3,12 @@
 	import { createSeparator, melt, type CreateSeparatorProps } from '@melt-ui/svelte';
 	import picture from '$lib/assets/images/penne-alla-vodka.jpg';
 
+	export let orientation: CreateSeparatorProps['orientation'] = 'vertical';
+
 	const {
 		elements: { root: vertical }
 	} = createSeparator({
-		orientation: 'vertical',
-		decorative: true
+		orientation
 	});
 
 	let pictureTitle = 'A new picture post';
@@ -30,6 +31,18 @@
 				<p class="text-lg">
 					{pictureDescription}
 				</p>
+			</section>
+		</section>
+
+		<!-- separator -->
+		<div use:melt={$vertical} class="h-full w-[4px] bg-emerald-500" />
+
+		<!-- comments section -->
+		<section class="flex flex-col items-center justify-center w-1/2 gap-5">
+			<section>
+				<!-- <h1 class="text-4xl font-serif">
+					Comments
+				</h1> -->
 			</section>
 		</section>
 	</div>
