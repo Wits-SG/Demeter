@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Icon } from 'flowbite-svelte-icons';
 	import { createSeparator, melt, type CreateSeparatorProps } from '@melt-ui/svelte';
-	import picture from '$lib/assets/images/penne-alla-vodka.jpg';
 	import type { PageData } from './$types';
 
 	export let orientation: CreateSeparatorProps['orientation'] = 'vertical';
