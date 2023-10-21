@@ -5,9 +5,9 @@
 	import { goto } from '$app/navigation';
 
 	export let data: PageData;
-	console.log(data.menu_info);
-	let menuID: string = data.menu_info.id;
 
+	let menuID: string = data.menu_info.id;
+	//console.log(data.recipe);
 	const deleteMenu = async () => {
 		try {
 			const response = await fetch('/api/menu', {
@@ -28,10 +28,10 @@
 			console.error('An error occurred while deleting the menu:', error);
 		}
 	};
-	const recipeID = data.recipes;
-	const recipe_info = data.recipes;
-	console.log(recipe_info);
-	console.log('Menu', data.menu_info);
+	const recipeID = data.recipe;
+	const recipe_info = data.recipe;
+	//console.log("Recipe",recipe_info);
+	// console.log('Menu', data.menu_info);
 	const lastSectionIndex: number = data.menu_info.section_id.length - 1;
 	//need a refresh of data
 </script>
@@ -52,7 +52,7 @@
 				<a class="flex flex-col border-4 border-emerald-100 px-10" href="" />
 				<button
 					class=" px-10 rounded-md text-md text-emerald-700 border-emerald-700 dark:text-emerald-300 darkborder-emerald-300">
-					<AddRecipe {menuID} /></button>
+					<AddRecipe {menuID} sectionID={i} /></button>
 			{/each}
 			<button
 				class=" justify-start rounded-md text-3xl text-emerald-700 border-emerald-700 dark:text-emerald-300 darkborder-emerald-300">
@@ -69,11 +69,3 @@
 		</div>
 	</div>
 </div>
-<!--
-	@ Ashlea if you want to make Menu centered in the page with 3/4 width so that is looks like our original page design
-	you can put all currenct code into this div:
-
-	<div class="flex justify-center items-center">
-		...exisiting code but set width -> w-3/4 in the class of this top div
-	</div>
--->

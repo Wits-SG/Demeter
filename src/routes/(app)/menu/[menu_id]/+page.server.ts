@@ -16,18 +16,18 @@ export const load = (async ({ params }) => {
 		args: [params.menu_id]
 	});
 
-	//console.log('Menu recipes', menu_recipe_res);
-
+	//Getting the section ids and putting into an array
 	const sections = [];
 	const section_ids: Array<string> = [];
 	for (let row of menu_section.rows) {
 		sections.push(row['name']);
 		section_ids.push(row['section_id'] as string);
 	}
-	const recipes = [];
-	const section_recipes = [];
+
+	//Adding the recipes to their sections for display
+	let section_recipes: Array<Array<Recipe>> = [[]];
 	for (let i = 0; i < section_ids.length; i++) {
-		const sectionId = section_ids[i];
+		const sectionRecipes = []; // Create a new array for each section
 
 		const recipe_sections = await turso_client.execute({
 			sql: 'select recipes.* from menu_recipes  join recipes on menu_recipes.recipe_id = recipes.recipe_id where menu_recipes.menu_id = ? AND menu_recipes.section_id =?',
@@ -36,19 +36,17 @@ export const load = (async ({ params }) => {
 		});
 
 		for (let row of recipe_sections.rows) {
-			recipes.push({
+			//this is an issue, its adding all the recipes to the recipes array before adding to section_recipes
+			sectionRecipes.push({
 				id: row['recipe_id'],
 				name: row['name'],
 				description: row['description'],
 				cookingTime: row['cooking_time']
 			} as Recipe);
 		}
-		//console.log(recipes);
+		section_recipes[i] = sectionRecipes; //Assign the section-specific array to section_recipes
 	}
-	for (let i = 0; i < section_ids.length; i++) {
-		section_recipes.push(recipes[i]);
-	}
-	console.log('section recipes', section_recipes);
+	console.log(section_recipes);
 	return {
 		menu_info: {
 			id: params.menu_id,
@@ -56,6 +54,6 @@ export const load = (async ({ params }) => {
 			section: sections,
 			section_id: section_ids
 		},
-		recipes: recipes
+		recipe: section_recipes
 	};
 }) satisfies PageServerLoad;
