@@ -2,17 +2,18 @@ import type { PageServerLoad } from './$types';
 import { turso_client } from '$lib/turso';
 
 export const load = (async () => {
-	const recipesResult = await turso_client.execute('SELECT recipe_id FROM recipes LIMIT 10');
+	const postsResult = await turso_client.execute(
+		'SELECT post_id, type FROM posts ORDER BY upload_date LIMIT 10'
+	);
 
-	let recipesList: Array<string> = [];
-
-	for (let row of recipesResult.rows) {
-		if (row['recipe_id'] != null) {
-			recipesList.push(row['recipe_id'] as string);
+	let postsList: Array<{ id: string; type: number }> = [];
+	for (let row of postsResult.rows) {
+		if (row['post_id'] != null) {
+			postsList.push({ id: row['post_id'] as string, type: row['type'] as number });
 		}
 	}
 
 	return {
-		recipes: recipesList
+		posts: postsList
 	};
 }) satisfies PageServerLoad;
