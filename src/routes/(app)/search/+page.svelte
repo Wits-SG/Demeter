@@ -1,5 +1,5 @@
 <script lang="ts">
-	import RecipePreview from '$lib/components/recipe_preview.svelte';
+	import RecipePreview from '$lib/components/posts/recipe_preview.svelte';
 	//@ts-ignore
 	import Masonry from 'svelte-bricks';
 	import { Icon } from 'flowbite-svelte-icons';
