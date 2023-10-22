@@ -13,7 +13,7 @@ export const GET = async ({ url }) => {
 		return json({
 			picture: {
 				pictureID: picture_res.rows[0]['picture_id'],
-				name: picture_res.rows[0]['name'],
+				name: picture_res.rows[0]['title'],
 				description: picture_res.rows[0]['description'],
 				imageURL: picture_res.rows[0]['url']
 			}

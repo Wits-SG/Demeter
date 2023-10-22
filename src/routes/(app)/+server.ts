@@ -18,7 +18,6 @@ export const GET = async ({ url }) => {
 			}
 		}
 
-		console.log(postsList);
 		return json({
 			posts: postsList
 		});
