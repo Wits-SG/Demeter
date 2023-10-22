@@ -1,10 +1,10 @@
 import type { PageServerLoad } from './$types';
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 
 export const load = (async ({ params }) => {
 	// Picture Posts
 
-	const picture_res = await turso_client.execute({
+	const picture_res = await tursoClient.execute({
 		sql: 'select * from pictures where picture_id = ?',
 		args: [params.picture_id]
 	});

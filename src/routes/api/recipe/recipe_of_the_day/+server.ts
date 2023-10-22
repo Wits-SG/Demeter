@@ -1,11 +1,11 @@
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 import { error, json } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
 // Function to select a random recipe from the database
 async function selectRandomRecipe() {
 	try {
-		let recipeResult = await turso_client.execute(
+		let recipeResult = await tursoClient.execute(
 			'SELECT * FROM recipe_of_the_day ORDER BY date DESC LIMIT 1'
 		);
 
@@ -18,10 +18,10 @@ async function selectRandomRecipe() {
 		const currentDate = new Date().setHours(0, 0, 0, 0);
 
 		if (recipeDate != currentDate) {
-			turso_client.executeMultiple(
+			tursoClient.executeMultiple(
 				"delete from recipe_of_the_day; insert into recipe_of_the_day (recipe_id, date) values ((select recipe_id from recipes order by random() limit 1), unixepoch('now'))"
 			);
-			recipeResult = await turso_client.execute(
+			recipeResult = await tursoClient.execute(
 				'SELECT * FROM recipe_of_the_day ORDER BY date DESC LIMIT 1'
 			);
 		}
@@ -39,7 +39,7 @@ export const GET = async (event: RequestEvent) => {
 		const recipeID = recipeResult.rows[0]['recipe_id'];
 
 		// Query the database to fetch the selected recipe's details
-		const recipeDetailsResult = await turso_client.execute({
+		const recipeDetailsResult = await tursoClient.execute({
 			sql: 'select name, description, image_url from recipes where recipe_id = ?',
 			args: [recipeID]
 		});

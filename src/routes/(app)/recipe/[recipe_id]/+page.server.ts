@@ -1,27 +1,27 @@
 import type { PageServerLoad } from './$types';
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 
 export const load = (async ({ params }) => {
 	// Recipes
-	const recipe_res = await turso_client.execute({
+	const recipe_res = await tursoClient.execute({
 		sql: 'select * from recipes where recipe_id = ?',
 		args: [params.recipe_id]
 	});
 
 	// Instructions
-	const instruction_res = await turso_client.execute({
+	const instruction_res = await tursoClient.execute({
 		sql: 'select * from instructions where recipe_id = ?',
 		args: [params.recipe_id]
 	});
 
 	// Skill Level
-	const skill_level_res = await turso_client.execute({
+	const skill_level_res = await tursoClient.execute({
 		sql: 'select skill_levels.* from recipes left join skill_levels on skill_levels.skill_level_id = recipes.skill_level_id where recipe_id = ?',
 		args: [params.recipe_id]
 	});
 
 	// Ingredients
-	const ingredients_res = await turso_client.execute({
+	const ingredients_res = await tursoClient.execute({
 		sql: 'select ingredients.* from recipes join ingredients on recipes.recipe_id = ingredients.recipe_id where recipes.recipe_id = ?',
 		args: [params.recipe_id]
 	});

@@ -1,8 +1,8 @@
 import type { PageServerLoad } from './$types';
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 
 export const load = (async () => {
-	const recipesResult = await turso_client.execute('SELECT recipe_id FROM recipes LIMIT 10');
+	const recipesResult = await tursoClient.execute('SELECT recipe_id FROM recipes LIMIT 10');
 
 	let recipesList: Array<string> = [];
 

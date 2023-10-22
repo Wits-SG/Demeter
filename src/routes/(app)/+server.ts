@@ -1,4 +1,4 @@
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 import { json } from '@sveltejs/kit';
 
 export const GET = async ({ url }) => {
@@ -7,7 +7,7 @@ export const GET = async ({ url }) => {
 
 	try {
 		console.log('in wrong file');
-		const recipesResult = await turso_client.execute({
+		const recipesResult = await tursoClient.execute({
 			sql: 'SELECT recipe_id FROM recipes WHERE recipe_id NOT IN ( SELECT recipe_id FROM recipes ASC LIMIT ? ) LIMIT 5',
 			args: [pageNum]
 		});
