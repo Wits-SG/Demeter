@@ -1,8 +1,8 @@
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params }) => {
-	const recipe_res = await turso_client.execute({
+	const recipe_res = await tursoClient.execute({
 		sql: 'select recipe_id from cookbook_recipes where cookbook_id = ?',
 		args: [params.cookbook_id]
 	});
@@ -11,12 +11,12 @@ export const load = (async ({ params }) => {
 		recipesIDs.push(row['recipe_id'] as string);
 	}
 
-	const recipe_name = await turso_client.execute({
+	const recipe_name = await tursoClient.execute({
 		sql: 'select recipes.* from cookbook_recipes join recipes on cookbook_recipes.recipe_id = recipes.recipe_id where cookbook_recipes.cookbook_id = ?',
 		args: [params.cookbook_id]
 	});
 
-	const cookbookRes = await turso_client.execute({
+	const cookbookRes = await tursoClient.execute({
 		sql: 'select name from cookbooks where cookbook_id = ?',
 		args: [params.cookbook_id]
 	});

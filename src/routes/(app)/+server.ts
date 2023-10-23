@@ -1,11 +1,11 @@
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 import { json } from '@sveltejs/kit';
 
 export const GET = async ({ url }) => {
 	const pageNum = url.searchParams.get('page_num');
 
 	try {
-		const postsResult = await turso_client.execute({
+		const postsResult = await tursoClient.execute({
 			sql: 'SELECT post_id, type FROM posts WHERE post_id NOT IN ( SELECT post_id FROM posts ORDER BY upload_date LIMIT ? ) ORDER BY upload_date LIMIT 5',
 			args: [pageNum]
 		});

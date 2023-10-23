@@ -32,24 +32,17 @@
 				<p class="font-light text-base">{data.user.pronouns}</p>
 			</section>
 
-			{#if data.user.userId == $userInfo.userId}
-				<section>
+			{#if data.isLoggedIn}
+				<form method="post" action="?/logout">
 					<a
 						href="/profile/edit"
 						class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black p-3">
 						Edit Profile
 					</a>
-					<button
-						on:click={() => {
-							fb_auth
-								.signOut()
-								.then(() => goto('/'))
-								.catch((e) => console.error(e));
-						}}
-						class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black">
+					<button class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black">
 						Logout
 					</button>
-				</section>
+				</form>
 			{/if}
 		</div>
 	</div>

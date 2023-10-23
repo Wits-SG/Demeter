@@ -1,9 +1,9 @@
 import type { PageServerLoad } from './[cookbook_id]/$types';
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 
 export const load = (async ({ params }) => {
 	//Cookbook IDs
-	const cookbook_res = await turso_client.execute('select * from cookbooks');
+	const cookbook_res = await tursoClient.execute('select * from cookbooks');
 
 	const cookbooks: Array<Cookbook> = [];
 	for (let row of cookbook_res.rows) {
@@ -15,7 +15,7 @@ export const load = (async ({ params }) => {
 	}
 
 	//Menus
-	const menu_res = await turso_client.execute('select * from menus');
+	const menu_res = await tursoClient.execute('select * from menus');
 
 	const menus: Array<Menu> = [];
 	for (let row of menu_res.rows) {

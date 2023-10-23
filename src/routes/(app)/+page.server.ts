@@ -1,8 +1,8 @@
 import type { PageServerLoad } from './$types';
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 
 export const load = (async () => {
-	const postsResult = await turso_client.execute(
+	const postsResult = await tursoClient.execute(
 		'SELECT post_id, type FROM posts ORDER BY upload_date LIMIT 10'
 	);
 
