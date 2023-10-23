@@ -9,6 +9,9 @@
 	import { userInfo, userSignedIn } from '$lib/stores/user.store';
 
 	export let data: LayoutData;
+
+	$userSignedIn = data.userSignedIn;
+	$userInfo.userId = data.userId ? data.userId : '';
 </script>
 
 <main class="grid grid-cols-1 grid-rows-[90px_1fr] h-full w-full overflow-x-hidden">
