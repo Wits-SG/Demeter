@@ -24,7 +24,6 @@
 
 	const Search = async (pageNum: Number, searchValue: string) => {
 		try {
-			console.log(pageNum);
 			let strPageNum: string = pageNum.toString();
 			const recipeIDs = await fetch(
 				`/search?search_value=${searchValue}&page_num=${strPageNum}`,
