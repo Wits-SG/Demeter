@@ -46,7 +46,16 @@
 		placeholder="search"
 		name="q"
 		bind:value={searchValue}
-		id="search" />
+		id="search"
+		on:keydown={async (event) => {
+			if (event.key == 'Enter') {
+				pageNumber = 0;
+				items = [];
+				tempRecipeList = await Search(pageNumber, searchValue);
+				tempItems = tempRecipeList.recipes;
+				itemsList = tempItems;
+			}
+		}} />
 	<Icon
 		name="search-outline"
 		class="h-6 w-6 p-1"
