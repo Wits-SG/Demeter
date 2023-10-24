@@ -26,7 +26,8 @@ export const load = (async ({ params }) => {
 			//picture_id: params.picture_id,
 			url: picture_res.rows[0]['url'],
 			title: picture_res.rows[0]['title'],
-			description: picture_res.rows[0]['description']
+			description: picture_res.rows[0]['description'],
+			postId: postID
 		} as Picture
 	};
 }) satisfies PageServerLoad;
