@@ -13,6 +13,8 @@
 	} = createSeparator({
 		orientation
 	});
+
+	let userId = $userInfo.userId;
 </script>
 
 <div class=" flex flex-col h-screen w-screen justify-center items-center gap-2">

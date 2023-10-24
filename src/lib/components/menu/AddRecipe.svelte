@@ -41,7 +41,6 @@
 	};
 
 	function addRecipe() {
-		console.log('recipes selected', selectedRecipes);
 		for (let i = 0; i < selectedRecipes.length; i++) {
 			recipeID = selectedRecipes[i].recipe_id;
 			sectionID = sectionID;
@@ -72,17 +71,10 @@
 			</p>
 
 			<SelectRecipes bind:selectedRecipes />
-			<div class="flex items-start justify-start gap-10 pl-10">
-				<ul class="list-disc list-inside">
-					{#each selectedRecipes as section}
-						<li class="mb-2 text-zinc-900">
-							{section.name}
-						</li>
-					{/each}
-				</ul>
-			</div>
+
 			<div class="mt-6 flex justify-end gap-4">
 				<button
+					on:click={() => (selectedRecipes = [])}
 					use:melt={$close}
 					class="inline-flex h-8 items-center justify-center rounded-sm
                       bg-teal-600 px-4 font-medium leading-none text-zinc-50 hover:bg-emerald-600">
