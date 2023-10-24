@@ -5,6 +5,7 @@
 	import { createAccordion } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
 	import SaveRecipe from '$lib/components/save_recipe.svelte';
+	import PostComments from '$lib/components/comments/post_comments.svelte';
 
 	export let data: PageData;
 
@@ -78,8 +79,14 @@
 				use:melt={$horizontal}
 				class="items-center justify-center h-[3px] w-3/5 bg-teal-600 dark:bg-teal-400" />
 
-			<div>
-				<SaveRecipe recipeID={data.recipe.id} />
+			<SaveRecipe recipeID={data.recipe.id} />
+
+			<div
+				use:melt={$horizontal}
+				class="items-center justify-center h-[3px] w-3/5 bg-teal-600 dark:bg-teal-400" />
+
+			<div class="w-3/5">
+				<PostComments postId={data.recipe.postId} />
 			</div>
 		</section>
 
