@@ -40,7 +40,7 @@
 <div
 	class="w-full h-full bg-zinc-100 dark:bg-zinc-800 flex flex-col justify-center items-center gap-20 pt-6">
 	<div class="flex flex-row justify start items-start gap-1">
-		<section class="flex flex-col items-center justify-center w-1/2 gap-10">
+		<section class="flex flex-col items-center justify-center w-1/2 gap-10 pt-5">
 			<section class="container md:mx-auto w-2/3">
 				<img alt="" src={data.recipe.imageUrl} class="object-cover rounded-xl" />
 			</section>
@@ -83,9 +83,13 @@
 			</div>
 		</section>
 
-		<div class="flex flex-col items-start gap-20 w-1/2">
-			<section class="flex flex-col items-center gap-10 w-4/5">
+		<div class="flex flex-col items-start gap-10 w-1/2 pt-5">
+			<section class="flex flex-col items-center gap-14 w-4/5">
 				<h1 class="text-6xl font-serif">{data.recipe.name}</h1>
+				<a
+					href={`/profile/${data.user.userID}`}
+					class="text-lg font-thin italic underline underline-offset-1">
+					by {data.user.displayName}</a>
 				<h3 class="text-3xl font-serif no-underline">Description</h3>
 				<p class="text-lg">{data.recipe.description}</p>
 			</section>

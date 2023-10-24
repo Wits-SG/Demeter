@@ -9,7 +9,10 @@
 		href: string;
 	}
 
-	const addPages: Array<AddNav> = [{ name: 'Create new recipe', href: '/recipe/new' }];
+	const addPages: Array<AddNav> = [
+		{ name: 'Create new recipe', href: '/recipe/new' },
+		{ name: 'Create new picture', href: '/picture/new' }
+	];
 
 	const {
 		elements: { trigger, menu, item },
