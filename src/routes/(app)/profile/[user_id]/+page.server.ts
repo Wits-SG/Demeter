@@ -19,7 +19,7 @@ export const load = (async ({ locals, params }) => {
 		});
 
 		const userPostsResult = await tursoClient.execute({
-			sql: 'SELECT post_id, type FROM posts WHERE user_id = ? ORDER BY upload_date LIMIT 10 ',
+			sql: 'SELECT post_id, type FROM posts WHERE user_id = ? ORDER BY upload_date LIMIT 10',
 			args: [params.user_id]
 		});
 

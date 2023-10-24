@@ -8,7 +8,7 @@ export const GET = async ({ url }) => {
 	try {
 		const postsResult = await tursoClient.execute({
 			sql: 'SELECT post_id, type FROM posts WHERE user_id = ? AND post_id NOT IN ( SELECT post_id FROM posts WHERE user_id = ? ORDER BY upload_date LIMIT ? ) ORDER BY upload_date LIMIT 5',
-			args: [userID, pageNum, userID]
+			args: [userID, userID, pageNum]
 		});
 
 		let postsList: Array<{ id: string; type: number }> = [];

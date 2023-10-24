@@ -17,7 +17,7 @@
 	let width: number;
 	let height: number;
 	let element: any;
-	let pageNumber: number = 1;
+	let pageNumber: number = 10;
 	let tempPosts: any;
 	let tempItems;
 
@@ -85,7 +85,6 @@
 			<Masonry
 				{items}
 				{minColWidth}
-				console.log(tempItems[i]);
 				{maxColWidth}
 				{gap}
 				let:item
