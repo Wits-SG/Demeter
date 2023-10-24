@@ -1,6 +1,6 @@
 type Picture = {
-	picture_id: string;
-	post_id: string;
+	pictureId: string;
+	postId: string;
 	url: string;
 	title: string;
 	description: string;

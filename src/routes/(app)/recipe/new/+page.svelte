@@ -2,11 +2,15 @@
 	import { Icon } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
+	//@ts-ignore
 	import { v4 as uuidv4 } from 'uuid';
 	import { fb_storage } from '$lib/firebase';
 	import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+	import { userInfo } from '$lib/stores/user.store';
 
 	export let data: PageData;
+
+	let userId = $userInfo.userId;
 
 	let recipeName: string;
 	let description: string;
@@ -16,7 +20,6 @@
 
 	const onFileSelected = (e: any) => {
 		picture = e.target.files[0];
-		//console.log(picture instanceof File);
 		let reader = new FileReader();
 		reader.readAsDataURL(picture);
 		reader.onload = (e) => {
@@ -98,6 +101,8 @@
 
 			const imageUrl = await getDownloadURL(recipeImageRef);
 
+			const postId = uuidv4();
+
 			await fetch('/recipe/new', {
 				method: 'POST',
 				headers: {
@@ -105,6 +110,8 @@
 				},
 				body: JSON.stringify({
 					id: recipeId,
+					userId: userId,
+					postId: postId,
 					name: recipeName,
 					description: description,
 					servingSize: servingSize,
