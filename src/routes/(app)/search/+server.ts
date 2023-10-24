@@ -1,4 +1,4 @@
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 import type { Value } from '@libsql/client';
 import type { RequestEvent } from './$types';
 import { error, json } from '@sveltejs/kit';
@@ -38,7 +38,7 @@ export const GET = async ({ url }) => {
 	console.log(query);
 
 	try {
-		const recipesResult = await turso_client.execute({
+		const recipesResult = await tursoClient.execute({
 			sql: query,
 			args: []
 		});

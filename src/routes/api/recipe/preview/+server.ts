@@ -1,17 +1,18 @@
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 import { json, error } from '@sveltejs/kit';
 
 export const GET = async ({ url }) => {
-	const recipeID = url.searchParams.get('recipe_id');
+	const postID = url.searchParams.get('post_id');
 
 	try {
-		const recipe_res = await turso_client.execute({
-			sql: 'select name, description, image_url from recipes where recipe_id = ?',
-			args: [recipeID]
+		const recipe_res = await tursoClient.execute({
+			sql: 'select recipe_id, name, description, image_url from recipes where post_id = ?',
+			args: [postID]
 		});
 
 		return json({
 			recipe: {
+				recipeID: recipe_res.rows[0]['recipe_id'],
 				name: recipe_res.rows[0]['name'],
 				description: recipe_res.rows[0]['description'],
 				imageURL: recipe_res.rows[0]['image_url']

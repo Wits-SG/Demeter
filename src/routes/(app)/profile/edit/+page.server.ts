@@ -1,8 +1,8 @@
 import type { PageServerLoad } from './$types';
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 
 export const load = (async () => {
-	const pronounsRes = await turso_client.execute(
+	const pronounsRes = await tursoClient.execute(
 		'SELECT * FROM user_pronouns ORDER BY pronoun_id ASC'
 	);
 	let pronouns: Array<string> = [];

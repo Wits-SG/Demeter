@@ -1,4 +1,4 @@
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 import { error, json } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
@@ -7,7 +7,7 @@ import type { RequestEvent } from './$types';
  */
 export const GET = async (event: RequestEvent) => {
 	try {
-		const cookbooksResult = await turso_client.execute(
+		const cookbooksResult = await tursoClient.execute(
 			'select cookbook_id, name from cookbooks'
 		);
 		const returnedCookbooks = [];
@@ -31,7 +31,7 @@ export const GET = async (event: RequestEvent) => {
 export const POST = async (event: RequestEvent) => {
 	const addCookbook: { cookbookID: string; name: string } = await event.request.json();
 
-	const insertCookbook = await turso_client.execute({
+	const insertCookbook = await tursoClient.execute({
 		sql: 'INSERT INTO cookbooks (cookbook_id, name) values (?,?)',
 		args: [addCookbook.cookbookID, addCookbook.name]
 	});
@@ -47,12 +47,12 @@ export const DELETE = async (event: RequestEvent) => {
 		const { cookbook_id } = await event.request.json();
 
 		//Query to database to delete cookbook_id
-		const deleteRecipe = await turso_client.execute({
+		const deleteRecipe = await tursoClient.execute({
 			sql: 'delete from cookbook_recipes where cookbook_id = ?',
 			args: [cookbook_id]
 		});
 
-		const deleteCookBook = await turso_client.execute({
+		const deleteCookBook = await tursoClient.execute({
 			sql: 'DELETE FROM cookbooks where cookbook_id = ?',
 			args: [cookbook_id]
 		});

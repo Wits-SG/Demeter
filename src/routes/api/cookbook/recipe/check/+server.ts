@@ -1,5 +1,5 @@
 // Import necessary dependencies
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 import type { RequestEvent } from './$types';
 
 /**
@@ -10,7 +10,7 @@ export const POST = async (event: RequestEvent) => {
 		const { recipeId, cookbookId } = await event.request.json();
 
 		// Query the database to check if the recipe exists in the specified cookbook
-		const checkRecipeQuery = await turso_client.execute({
+		const checkRecipeQuery = await tursoClient.execute({
 			sql: 'SELECT 1 FROM cookbook_recipes WHERE cookbook_id = ? AND recipe_id = ? LIMIT 1',
 			args: [cookbookId, recipeId]
 		});

@@ -3,9 +3,23 @@
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			auth: import('lucia').AuthRequest;
+		}
 		// interface PageData {}
 		// interface Platform {}
+	}
+
+	namespace Lucia {
+		type Auth = import('$lib/server/lucia').Auth;
+		type DatabaseUserAttributes = {
+			username: string;
+			pronoun_id: number;
+			display_name: string;
+			biography: string;
+			picture_url: string;
+		};
+		type DatabaseSessionAttributes = {};
 	}
 }
 
