@@ -31,11 +31,12 @@ export const GET = async ({ url }) => {
  * @description Create a new cookbook for a user
  */
 export const POST = async (event: RequestEvent) => {
-	const addCookbook: { cookbookID: string; name: string } = await event.request.json();
+	const addCookbook: { cookbookID: string; name: string; userId: string } =
+		await event.request.json();
 
 	const insertCookbook = await tursoClient.execute({
-		sql: 'INSERT INTO cookbooks (cookbook_id, name) values (?,?)',
-		args: [addCookbook.cookbookID, addCookbook.name]
+		sql: 'INSERT INTO cookbooks (cookbook_id, name, user_id) values (?,?,?)',
+		args: [addCookbook.cookbookID, addCookbook.name, addCookbook.userId]
 	});
 
 	return new Response('Successful');
