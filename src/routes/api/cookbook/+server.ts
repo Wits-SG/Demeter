@@ -5,11 +5,13 @@ import type { RequestEvent } from './$types';
 /**
  * @description Fetch a list of all cookbooks for a user
  */
-export const GET = async (event: RequestEvent) => {
+export const GET = async ({ url }) => {
+	const userId = url.searchParams.get('user_id');
 	try {
-		const cookbooksResult = await tursoClient.execute(
-			'select cookbook_id, name from cookbooks'
-		);
+		const cookbooksResult = await tursoClient.execute({
+			sql: 'select cookbook_id, name from cookbooks where user_id=?',
+			args: [userId]
+		});
 		const returnedCookbooks = [];
 
 		for (let row of cookbooksResult.rows) {
