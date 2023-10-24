@@ -36,10 +36,20 @@ export const load = (async ({ params }) => {
 		ingredients.push(row['name']);
 	}
 
-	//console.log(ingredients);
-	//console.log(instructions);
+	// Post ID
+	const postId = recipe_res.rows[0]['post_id'];
+	// User ID and Display Name
+	const post_res = await tursoClient.execute({
+		sql: 'select users.id, users.display_name from users join posts on users.id = posts.user_id where posts.post_id = ?',
+		args: [postId]
+	});
 
 	return {
+		user: {
+			userID: post_res.rows[0]['id'],
+			displayName: post_res.rows[0]['display_name']
+		},
+
 		recipe: {
 			id: params.recipe_id,
 			name: recipe_res.rows[0]['name'],
@@ -49,7 +59,8 @@ export const load = (async ({ params }) => {
 			imageUrl: recipe_res.rows[0]['image_url'],
 			skillLevel: skill_level_res.rows[0]['name'],
 			instructions: instructions,
-			ingredients: ingredients
+			ingredients: ingredients,
+			postId: recipe_res.rows[0]['post_id']
 		} as Recipe
 	};
 }) satisfies PageServerLoad;
