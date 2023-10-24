@@ -1,10 +1,11 @@
 import { tursoClient } from '$lib/server/turso';
 import { error, json } from '@sveltejs/kit';
+//@ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 import type { RequestEvent } from './$types';
 
 /**
- * @description Add a new cookbook to a user
+ * @description Add a new menu to a user
  */
 export const POST = async (event: RequestEvent) => {
 	const menu: Menu = await event.request.json();
@@ -27,4 +28,40 @@ export const POST = async (event: RequestEvent) => {
 	}
 
 	return new Response('Successful');
+};
+
+export const DELETE = async (event: RequestEvent) => {
+	try {
+		const { menu_id } = await event.request.json();
+
+		// Query to database to delete menu_id
+		const deleteMenu = await tursoClient.execute({
+			sql: 'delete from menus where menu_id = ?',
+			args: [menu_id]
+		});
+		return new Response('Success');
+	} catch (e: any) {
+		throw error(400, 'Error deleting Menu!');
+	}
+};
+
+/**
+ * @description Fetch a list of all recipes for a user
+ */
+export const GET = async (event: RequestEvent) => {
+	try {
+		const recipeResult = await tursoClient.execute('select recipe_id, name from recipes');
+		const returnedRecipes = [];
+
+		for (let row of recipeResult.rows) {
+			returnedRecipes.push({
+				recipe_id: row['recipe_id'],
+				name: row['name']
+			});
+		}
+
+		return json(returnedRecipes);
+	} catch (e: any) {
+		throw error(500, 'Failed to fetch cookbooks');
+	}
 };

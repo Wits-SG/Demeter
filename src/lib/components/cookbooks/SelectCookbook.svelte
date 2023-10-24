@@ -3,7 +3,9 @@
 	import { fly } from 'svelte/transition';
 	import { Icon } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
+	import { userInfo } from '$lib/stores/user.store';
 
+	let userId = $userInfo.userId;
 	let cookbooks: Array<{ name: string; cookbook_id: string }> = [];
 	export let selectedCookbook: { name: string; cookbook_id: string } = {
 		name: '',
@@ -17,7 +19,7 @@
 
 	// Execute this code when the component is loaded into the DOM
 	onMount(async () => {
-		const fetchResult = await fetch('/api/cookbook');
+		const fetchResult = await fetch(`/api/cookbook?user_id=${userId}`);
 		cookbooks = await fetchResult.json();
 		selectedCookbook = cookbooks[0];
 	});

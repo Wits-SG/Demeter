@@ -4,9 +4,7 @@
 	import { onMount } from 'svelte';
 	//@ts-ignore
 	import { v4 as uuidv4 } from 'uuid';
-	import { userInfo } from '$lib/stores/user.store';
 
-	let userId = $userInfo.userId;
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
 		states: { open }
@@ -15,29 +13,30 @@
 	});
 
 	let cookbooks: Array<{ name: string; cookbook_id: string }> = [];
-	let cookbookTitle: string;
-	const cookbookID = uuidv4();
-
-	const createCookbook = async () => {
-		await fetch('/api/cookbook', {
+	let sectionName: string;
+	export let sectionID: number = 0;
+	export let menuId: string = '';
+	const createSection = async () => {
+		await fetch('/api/menu/section', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				cookbookID: cookbookID,
-				name: cookbookTitle,
-				userId: userId
+				sectionID: sectionID,
+				menuID: menuId,
+				name: sectionName
 			})
 		});
 	};
 </script>
 
-<!-- Add button on cookbook main page -->
 <button
 	use:melt={$trigger}
-	class="inline-flex items-center justify-center rounded-xl px-4 py-3
-  font-medium leading-none text-magnum-700 shadow hover:opacity-75">+</button>
+	class="inline-flex justify-start items-start rounded-md px-5 py-1
+   leading-none font-sans font-semibold italic"
+	>+ Section
+</button>
 
 <!--  -->
 <div use:melt={$portalled}>
@@ -49,22 +48,19 @@
               p-6 shadow-lg"
 			use:melt={$content}>
 			<h2 use:melt={$title} class="m-0 text-xl font-bold text-emerald-700 text-center">
-				Create New Cookbook
+				Create New Section
 			</h2>
-			<p use:melt={$description} class="mb-5 mt-2 leading-normal text-zinc-600">
-				Create new cookbook to save your recipes to.
-			</p>
 
 			<fieldset class="mb-4 flex items-center gap-5">
 				<label class="w-[90px] text-right text-emerald-600 font-bold" for="name">
-					Title
+					Section
 				</label>
 				<input
 					class="inline-flex h-8 w-full flex-1 items-center justify-center
                       rounded-sm border border-solid px-3 leading-none text-black"
 					id="name"
-					placeholder="Ashlea's Cookbook"
-					bind:value={cookbookTitle} />
+					placeholder="Mains"
+					bind:value={sectionName} />
 			</fieldset>
 			<div class="mt-6 flex justify-end gap-4">
 				<!-- Cancel Button -->
@@ -76,21 +72,13 @@
 				</button>
 				<!-- Create Button-->
 				<button
-					on:click={createCookbook}
+					on:click={createSection}
 					use:melt={$close}
 					class="inline-flex h-8 items-center rounded-sm
                       bg-emerald-100 px-4 font-medium leading-none text-emerald-700">
 					Create
 				</button>
 			</div>
-			<!-- <button
-          use:melt={$close}
-          aria-label="close"
-          class="absolute right-4 top-4 inline-flex h-6 w-6 appearance-none
-                  items-center justify-center rounded-full p-1 text-magnum-800
-                  hover:bg-magnum-100 focus:shadow-magnum-400"
-        >X
-        </button> -->
 		</div>
 	{/if}
 </div>

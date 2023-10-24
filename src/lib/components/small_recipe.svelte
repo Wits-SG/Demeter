@@ -6,7 +6,7 @@
 	import { crossfade } from 'svelte/transition';
 
 	export let recipeID: string = '';
-
+	//export let cookbook_id: string = '';
 	let smallRecipeData: any;
 
 	const {

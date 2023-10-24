@@ -2,7 +2,9 @@
 	import { createDialog, melt } from '@melt-ui/svelte';
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { goto, invalidateAll } from '$app/navigation';
+	import { userInfo } from '$lib/stores/user.store';
 
+	let userId = $userInfo.userId;
 	const dispatcher = createEventDispatcher();
 
 	const {
@@ -65,6 +67,7 @@
 			},
 			body: JSON.stringify({
 				name: inputName,
+				userID: userId,
 				sections: sectionList
 			})
 		});

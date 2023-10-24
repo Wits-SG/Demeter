@@ -5,11 +5,13 @@ import type { RequestEvent } from './$types';
 /**
  * @description Fetch a list of all cookbooks for a user
  */
-export const GET = async (event: RequestEvent) => {
+export const GET = async ({ url }) => {
+	const userId = url.searchParams.get('user_id');
 	try {
-		const cookbooksResult = await tursoClient.execute(
-			'select cookbook_id, name from cookbooks'
-		);
+		const cookbooksResult = await tursoClient.execute({
+			sql: 'select cookbook_id, name from cookbooks where user_id=?',
+			args: [userId]
+		});
 		const returnedCookbooks = [];
 
 		for (let row of cookbooksResult.rows) {
@@ -29,11 +31,12 @@ export const GET = async (event: RequestEvent) => {
  * @description Create a new cookbook for a user
  */
 export const POST = async (event: RequestEvent) => {
-	const addCookbook: { cookbookID: string; name: string } = await event.request.json();
+	const addCookbook: { cookbookID: string; name: string; userId: string } =
+		await event.request.json();
 
 	const insertCookbook = await tursoClient.execute({
-		sql: 'INSERT INTO cookbooks (cookbook_id, name) values (?,?)',
-		args: [addCookbook.cookbookID, addCookbook.name]
+		sql: 'INSERT INTO cookbooks (cookbook_id, name, user_id) values (?,?,?)',
+		args: [addCookbook.cookbookID, addCookbook.name, addCookbook.userId]
 	});
 
 	return new Response('Successful');

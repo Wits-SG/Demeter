@@ -2,7 +2,7 @@
 	import CreateCookbook from '$lib/components/cookbooks/createCookbook.svelte';
 	import type { PageData } from './$types';
 	import CreateMenu from '$lib/components/menu/CreateMenu.svelte';
-
+	import { userInfo } from '$lib/stores/user.store';
 	import { createSeparator, type CreateSeparatorProps, melt } from '@melt-ui/svelte';
 	export let data: PageData;
 
@@ -13,22 +13,24 @@
 	} = createSeparator({
 		orientation
 	});
+	let userId = $userInfo.userId;
 </script>
 
-<div class=" flex flex-col h-screen w-screen justify-center items-center gap-2 overflow-x-scroll">
+<div class=" flex flex-col h-screen w-screen justify-center items-center gap-2">
 	<div class="flex flex-col w-full h-1/2 justify-center gap-2">
 		<div class="flex flex-col items-start justify-center">
 			<h1 class="text-3xl p-3">COOKBOOKS</h1>
 		</div>
 
-		<div class="px-10 flex flex-row align-center h-full w-full items-center gap-10">
+		<div
+			class="px-10 flex flex-row align-center h-full w-full items-center gap-10 overflow-x-scroll">
 			<button
 				class="rounded-md border-2 w-32 h-40 text-4xl text-emerald-700 border-emerald-700 dark:text-emerald-300 darkborder-emerald-300"
 				><CreateCookbook /></button>
 			<div class="flex flex-row items-center gap-10 text-center h-full w-auto">
 				{#each data.cookbooks as cookbook}
 					<a
-						class="flex justify-center items-center text-black h-2/3 w-full bg-contain"
+						class="flex justify-center items-center text-black w-32 h-36 w-full bg-contain"
 						style="background-image: url('/src/lib/assets/images/cookbook.jpeg')"
 						href="/cookbook/{cookbook.id}">{cookbook.name}</a>
 				{/each}
@@ -43,7 +45,8 @@
 			<h1 class="text-3xl p-3">MENUS</h1>
 		</div>
 
-		<div class="px-10 flex flex-row align-center h-full w-full items-center gap-10">
+		<div
+			class="px-10 flex flex-row align-center h-full w-full items-center gap-10 overflow-x-scroll">
 			<div>
 				<CreateMenu />
 			</div>
@@ -52,7 +55,7 @@
 					<a
 						class="flex justify-center items-center text-black w-32 h-48 bg-contain"
 						style="background-image: url('/src/lib/assets/images/cookbook_cover_image.jpeg')"
-						href="/cookbook/{menu.menuID}">{menu.name}</a>
+						href="/menu/{menu.menuID}">{menu.name}</a>
 				{/each}
 			</div>
 		</div>
