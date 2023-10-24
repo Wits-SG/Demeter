@@ -21,7 +21,7 @@
 	};
 </script>
 
-<div class="w-full h-full flex flex-col items-center justify-center">
+<div class="w-full max-h-[70vh] flex flex-col items-center justify-center overflow-y-auto">
 	{#await loadComments()}
 		<div class="w-full h-full flex flex-col justify-center items-center">
 			<svg
@@ -80,7 +80,7 @@
 	{/await}
 
 	<div
-		class="w-full h-12 p-2 border-t-2 dark:border-white border-black flex flex-row items-center justify-evenly">
+		class="w-full h-12 p-2 border-t-2 dark:border-white border-black flex flex-row items-center justify-evenly sticky bottom-0 bg-zinc-100 dark:bg-zinc-800">
 		{#if showResponseText}
 			<input
 				class="p-1 w-full text-black rounded-md focuse:outline-none focus:outline-2 focus:outline-emerald-500"
