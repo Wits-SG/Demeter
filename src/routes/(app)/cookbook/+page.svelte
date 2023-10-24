@@ -16,13 +16,14 @@
 	let userId = $userInfo.userId;
 </script>
 
-<div class=" flex flex-col h-screen w-screen justify-center items-center gap-2 overflow-x-scroll">
+<div class=" flex flex-col h-screen w-screen justify-center items-center gap-2">
 	<div class="flex flex-col w-full h-1/2 justify-center gap-2">
 		<div class="flex flex-col items-start justify-center">
 			<h1 class="text-3xl p-3">COOKBOOKS</h1>
 		</div>
 
-		<div class="px-10 flex flex-row align-center h-full w-full items-center gap-10">
+		<div
+			class="px-10 flex flex-row align-center h-full w-full items-center gap-10 overflow-x-scroll">
 			<button
 				class="rounded-md border-2 w-32 h-40 text-4xl text-emerald-700 border-emerald-700 dark:text-emerald-300 darkborder-emerald-300"
 				><CreateCookbook /></button>
@@ -44,7 +45,8 @@
 			<h1 class="text-3xl p-3">MENUS</h1>
 		</div>
 
-		<div class="px-10 flex flex-row align-center h-full w-full items-center gap-10">
+		<div
+			class="px-10 flex flex-row align-center h-full w-full items-center gap-10 overflow-x-scroll">
 			<div>
 				<CreateMenu />
 			</div>
