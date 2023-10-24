@@ -1,16 +1,16 @@
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 import { error, json } from '@sveltejs/kit';
 
 export const GET = async ({ url }) => {
 	const recipeID = url.searchParams.get('recipe_id');
 
 	try {
-		const recipe_res = await turso_client.execute({
+		const recipe_res = await tursoClient.execute({
 			sql: 'select name, description, image_url, serving_size, cooking_time from recipes where recipe_id = ?',
 			args: [recipeID]
 		});
 
-		const ingredients_res = await turso_client.execute({
+		const ingredients_res = await tursoClient.execute({
 			sql: 'select name from ingredients where recipe_id = ?',
 			args: [recipeID]
 		});
@@ -19,7 +19,7 @@ export const GET = async ({ url }) => {
 		for (let row of ingredients_res.rows) {
 			ingredients.push(row['name']);
 		}
-		const instructions_res = await turso_client.execute({
+		const instructions_res = await tursoClient.execute({
 			sql: 'select name from instructions where recipe_id = ?',
 			args: [recipeID]
 		});

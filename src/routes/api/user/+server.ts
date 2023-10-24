@@ -1,4 +1,4 @@
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 import { error, json } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 import type { User } from '$lib/types/user.type';
@@ -7,7 +7,7 @@ export const GET = async ({ url }) => {
 	try {
 		const userId = url.searchParams.get('user_id');
 
-		const result = await turso_client.execute({
+		const result = await tursoClient.execute({
 			sql: 'SELECT * FROM users WHERE user_id = ? LIMIT 1',
 			args: [userId]
 		});
@@ -33,7 +33,7 @@ export const POST = async (event: RequestEvent) => {
 		const data: { userId: string; pictureUrl: string; userName: string } =
 			await event.request.json();
 
-		const checkResult = await turso_client.execute({
+		const checkResult = await tursoClient.execute({
 			sql: 'SELECT * FROM users WHERE user_id = ? LIMIT 1',
 			args: [data.userId]
 		});
@@ -41,7 +41,7 @@ export const POST = async (event: RequestEvent) => {
 		if (checkResult.rows.length > 0) {
 			return new Response('Account already exists');
 		} else {
-			await turso_client.execute({
+			await tursoClient.execute({
 				sql: 'INSERT INTO users (user_id, display_name, picture_url, pronoun_id, user_name) VALUES (?, ?, ?, 1, ?)',
 				args: [data.userId, data.userName, data.pictureUrl, data.userId]
 			});
@@ -67,7 +67,7 @@ export const PUT = async (event: RequestEvent) => {
 			pronounsId: number;
 		} = await event.request.json();
 
-		await turso_client.execute({
+		await tursoClient.execute({
 			sql: 'UPDATE users SET pronoun_id = ?, picture_url = ?, display_name = ?, user_name = ?, biography = ? WHERE user_id = ?',
 			args: [
 				data.pronounsId,
