@@ -24,6 +24,10 @@
 					{data.picture.title}
 				</h1>
 			</section>
+			<a
+				href={`/profile/${data.user.userID}`}
+				class="text-lg font-thin italic underline underline-offset-1"
+				>by {data.user.displayName}</a>
 			<section class="container sm:mx-auto w-1/2">
 				<img alt="" src={data.picture.url} class="object-cover rounded-xl" />
 			</section>
