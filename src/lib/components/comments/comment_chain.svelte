@@ -8,6 +8,8 @@
 	export let commentId = 0;
 	export let depth = 0;
 	export let maxDepth = 1;
+	const initialMaxDepth = maxDepth; // save the initial max depth to bused for updaiting max depth on reveal / hide children
+
 	let children: Array<number> = [];
 	let userId: string = '';
 	let displayName: string = '';
@@ -15,9 +17,12 @@
 
 	let showResponseText: boolean = false;
 
-	const loadComment = async () => {
-		// Fetch a comment
+	// Children Management
+	let showChildren: boolean = true;
+	$: maxDepth = showChildren ? initialMaxDepth : 0;
+	const extendDepthAmount = 5;
 
+	const loadComment = async () => {
 		const result = await fetch(`/api/comments?comment_id=${commentId}`);
 		const json = await result.json();
 
@@ -31,22 +36,22 @@
 </script>
 
 <div
-	class="w-full h-full flex flex-col bg-zinc-200 dark:bg-neutral-800 border-l-2 rounded-md p-2 gap-2"
-	class:border-red-500={depth == 0}
-	class:border-green-500={depth == 1}
-	class:border-blue-500={depth == 2}
-	class:border-purple-500={depth == 3}
-	class:border-yellow-500={depth == 4}
-	class:border-orange-500={depth == 5}
-	class:border-amber-500={depth == 6}
-	class:border-lime-500={depth == 7}
-	class:border-teal-500={depth == 8}
-	class:border-cyan-500={depth == 9}
-	class:border-sky-500={depth == 10}
-	class:border-indigo-500={depth == 11}
-	class:border-pink-500={depth == 12}
-	class:border-rose-500={depth == 13}
-	class:border-fuschia-500={depth == 14}>
+	class="w-full h-fit flex flex-col bg-neutral-200 dark:bg-neutral-800 border-l-2 rounded-md p-2 gap-2"
+	class:border-red-500={depth % 15 == 0}
+	class:border-green-500={depth % 15 == 1}
+	class:border-blue-500={depth % 15 == 2}
+	class:border-purple-500={depth % 15 == 3}
+	class:border-yellow-500={depth % 15 == 4}
+	class:border-orange-500={depth % 15 == 5}
+	class:border-amber-500={depth % 15 == 6}
+	class:border-lime-500={depth % 15 == 7}
+	class:border-teal-500={depth % 15 == 8}
+	class:border-cyan-500={depth % 15 == 9}
+	class:border-sky-500={depth % 15 == 10}
+	class:border-indigo-500={depth % 15 == 11}
+	class:border-pink-500={depth % 15 == 12}
+	class:border-rose-500={depth % 15 == 13}
+	class:border-fuschia-500={depth % 15 == 14}>
 	<!--Main Comment-->
 	{#await loadComment()}
 		<div class="w-full h-full flex flex-col justify-center items-start">
@@ -92,7 +97,7 @@
 			</svg>
 		</div>
 	{:then undefined}
-		<div class="w-full h-full flex flex-col justify-center items-start">
+		<div class="w-full flex flex-col justify-center items-start">
 			<a href={`/profile/${userId}`} class="text-sm font-thin italic">{displayName}</a>
 			<p class="">{content}</p>
 
@@ -131,6 +136,16 @@
 						on:click={() => {
 							showResponseText = true;
 						}}><Icon name="reply-outline" class="h-4 w-4" /> Reply</button>
+					{#if children.length > 0}
+						<button
+							class="flex flex-row justify-start items-center gap-1 dark:hover:bg-neutral-700 rounded-md p-1"
+							on:click={() => {
+								showChildren = !showChildren;
+							}}
+							><Icon name="messages-outline" class="h-4 w-4" />{showChildren
+								? 'Hide comments'
+								: 'Show comments'}</button>
+					{/if}
 				{/if}
 			</section>
 		</div>
@@ -139,8 +154,12 @@
 		<div class="w-full pl-2">
 			{#if depth < maxDepth}
 				{#each children as child}
-					<svelte:self commentId={child} depth={depth + 1} {postId} />
+					<svelte:self commentId={child} depth={depth + 1} {maxDepth} {postId} />
 				{/each}
+			{:else if showChildren}
+				<button
+					class="flex flex-row justify-start items-center gap-1 dark:hover:bg-neutral-700 rounded-md p-1"
+					on:click={() => (maxDepth += extendDepthAmount)}>Show more comments</button>
 			{/if}
 		</div>
 	{:catch _}
