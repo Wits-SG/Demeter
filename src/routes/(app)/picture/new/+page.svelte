@@ -1,12 +1,14 @@
 <script lang="ts">
-	import { Icon } from 'flowbite-svelte-icons';
-	import type { PageData } from './$types';
 	import { goto } from '$app/navigation';
+	//@ts-ignore
 	import { v4 as uuidv4 } from 'uuid';
 	import { fb_storage } from '$lib/firebase';
 	import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+	import { userInfo } from '$lib/stores/user.store';
 
-	let caption: string;
+	let userId = $userInfo.userId;
+
+	let description: string;
 	let title: string;
 
 	let picture: File;
@@ -14,7 +16,6 @@
 
 	const onFileSelected = (e: any) => {
 		picture = e.target.files[0];
-		//console.log(picture instanceof File);
 		let reader = new FileReader();
 		reader.readAsDataURL(picture);
 		reader.onload = (e) => {
@@ -26,7 +27,7 @@
 	let hasError: boolean = false;
 
 	function validateForm(): boolean {
-		if (!caption || !picture || !title) {
+		if (!description || !picture || !title) {
 			errorMessage = 'Please fill in all required fields.';
 			hasError = true;
 			return false;
@@ -42,10 +43,11 @@
 			const pictureId = uuidv4();
 			const pictureImageRef = ref(fb_storage, `images/picture/${pictureId}.jpeg`);
 
+			const postId = uuidv4();
+
 			await uploadBytes(pictureImageRef, picture);
 
-			const imageUrl = await getDownloadURL(pictureImageRef);
-
+			const url = await getDownloadURL(pictureImageRef);
 			await fetch('/picture/new', {
 				method: 'POST',
 				headers: {
@@ -53,9 +55,11 @@
 				},
 				body: JSON.stringify({
 					id: pictureId,
+					postId: postId,
+					userId: userId,
 					title: title,
-					description: caption,
-					imageUrl: imageUrl
+					description: description,
+					url: url
 				})
 			});
 
@@ -77,10 +81,8 @@
 		<!-- this is the start of the first column, which includes the title, description, photo-->
 		<section class="flex flex-col items-center w-1/2 gap-5">
 			<label class="text-lg font-bold" for="picture"> Select image: </label>
-			<section class="container md:mx-auto w-3/4">
-				<img class="w-fit w-fit" src={pictureLocalUrl} alt="None found" />
-			</section>
 
+			<img class="w-fit w-fit" src={pictureLocalUrl} alt="None found" />
 			<input
 				type="file"
 				id="picture"
@@ -99,10 +101,10 @@
 				type="text"
 				placeholder="Write a title..." />
 
-			<label class="text-lg font-bold" for="caption"> Caption </label>
+			<label class="text-lg font-bold" for="description"> Caption </label>
 
 			<textarea
-				bind:value={caption}
+				bind:value={description}
 				class="block w-full h-fit dark:text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
 				id="decription"
 				rows="4"
