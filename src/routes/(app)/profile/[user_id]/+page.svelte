@@ -3,38 +3,35 @@
 	import type { PageData } from './$types';
 	import { fb_auth } from '$lib/firebase';
 	import { goto } from '$app/navigation';
-	import RecipePreview from '$lib/components/recipe_preview.svelte';
+	import PostPreview from '$lib/components/posts/post_preview.svelte';
 	//@ts-ignore
 	import Masonry from 'svelte-bricks';
-	import { Icon } from 'flowbite-svelte-icons';
 	import IntersectionObserver from 'svelte-intersection-observer';
-	import { onMount } from 'svelte';
 
 	export let data: PageData;
-
-	let itemsList: any[] = [];
-	let items: any[] = new Array(0);
-	//items = [];
+	let itemsList: Array<{ id: string; type: number }>;
+	itemsList = data.posts;
+	let items: Array<{ id: string; type: number }>;
 	$: items = itemsList;
-	//itemsList = data.recipes;
 	let [minColWidth, maxColWidth, gap] = [280, 350, 30];
 	let width: number;
 	let height: number;
-	let listView: boolean = false;
-	let listIconName: String = 'list-outline';
-	let gridIconName: String = 'grid-solid';
 	let element: any;
-	let intersecting;
 	let pageNumber: number = 1;
-	let tempRecipeList: any;
+	let tempPosts: any;
 	let tempItems;
+
+	let userID = $userInfo.userId;
 
 	const getMorePosts = async (pageNum: Number) => {
 		try {
 			let strPageNum: string = pageNum.toString();
-			const recipeIDs = await fetch(`/?page_num=${strPageNum}`, {
-				method: 'GET'
-			});
+			const recipeIDs = await fetch(
+				`/api/user/posts?page_num=${strPageNum}&user_id=${userID}`,
+				{
+					method: 'GET'
+				}
+			);
 
 			const recipe_ids: JSON = await recipeIDs.json();
 			return recipe_ids;
@@ -88,18 +85,19 @@
 			<Masonry
 				{items}
 				{minColWidth}
+				console.log(tempItems[i]);
 				{maxColWidth}
 				{gap}
 				let:item
 				bind:masonryHeight={height}
 				bind:masonryWidth={width}>
-				<RecipePreview recipeID={item} />
+				<PostPreview postID={item.id} postType={item.type} />
 			</Masonry>
 			<IntersectionObserver
 				{element}
 				on:intersect={async (e) => {
-					tempRecipeList = await getMorePosts(pageNumber);
-					tempItems = tempRecipeList.recipes;
+					tempPosts = await getMorePosts(pageNumber);
+					tempItems = tempPosts.posts;
 					itemsList = [...itemsList, ...tempItems];
 					pageNumber = pageNumber + 5;
 				}}>

@@ -18,8 +18,21 @@ export const load = (async ({ locals, params }) => {
 			args: [params.user_id]
 		});
 
+		const userPostsResult = await tursoClient.execute({
+			sql: 'SELECT post_id, type FROM posts WHERE user_id = ? ORDER BY upload_date LIMIT 10 ',
+			args: [params.user_id]
+		});
+
+		let postsList: Array<{ id: string; type: number }> = [];
+		for (let row of userPostsResult.rows) {
+			if (row['post_id'] != null) {
+				postsList.push({ id: row['post_id'] as string, type: row['type'] as number });
+			}
+		}
+
 		return {
 			isLoggedIn: loggedIn,
+			posts: postsList,
 			user: {
 				userId: params.user_id,
 				pronouns: userResult.rows[0]['pronouns'],
@@ -45,3 +58,16 @@ export const actions: Actions = {
 		throw redirect(302, '/');
 	}
 };
+
+/*const userPostsResult = await tursoClient.execute({
+			sql:'SELECT post_id, type FROM posts ORDER BY upload_date LIMIT 10 where user_id = ? ',
+			args: [params.user_id]
+		});*/
+
+/*let postsList: Array<{ id: string; type: number }> = [];
+		for (let row of userPostsResult.rows) {
+			if (row['post_id'] != null) {
+				postsList.push({ id: row['post_id'] as string, type: row['type'] as number });
+			}
+		}*/
+//posts: postsList,
