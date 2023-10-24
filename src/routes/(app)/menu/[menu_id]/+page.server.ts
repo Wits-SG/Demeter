@@ -1,17 +1,17 @@
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params }) => {
-	const menu_name = await turso_client.execute({
+	const menu_name = await tursoClient.execute({
 		sql: 'select name from menus where menu_id = ?',
 		args: [params.menu_id]
 	});
 
-	const menu_section = await turso_client.execute({
+	const menu_section = await tursoClient.execute({
 		sql: 'select * from menu_sections where menu_id=?',
 		args: [params.menu_id]
 	});
-	const menu_recipe_res = await turso_client.execute({
+	const menu_recipe_res = await tursoClient.execute({
 		sql: 'select * from menu_recipes where menu_id=?',
 		args: [params.menu_id]
 	});
@@ -29,7 +29,7 @@ export const load = (async ({ params }) => {
 	for (let i = 0; i < section_ids.length; i++) {
 		const sectionRecipes = []; // Create a new array for each section
 
-		const recipe_sections = await turso_client.execute({
+		const recipe_sections = await tursoClient.execute({
 			sql: 'select recipes.* from menu_recipes  join recipes on menu_recipes.recipe_id = recipes.recipe_id where menu_recipes.menu_id = ? AND menu_recipes.section_id =?',
 
 			args: [params.menu_id, i]

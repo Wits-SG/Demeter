@@ -1,4 +1,4 @@
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 import { error, json } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
 
@@ -10,7 +10,7 @@ export const POST = async (event: RequestEvent) => {
 		await event.request.json();
 
 	try {
-		await turso_client.execute({
+		await tursoClient.execute({
 			sql: 'insert into menu_recipes(menu_id,recipe_id,  section_id) values(?, ?, ?)',
 			args: [addedRecipe.menuID, addedRecipe.recipeID, addedRecipe.sectionID]
 		});
@@ -29,7 +29,7 @@ export const DELETE = async (event: RequestEvent) => {
 		await event.request.json();
 
 	try {
-		await turso_client.execute({
+		await tursoClient.execute({
 			sql: 'delete from menu_recipes where recipe_id = ? and menu_id = ? and section_id =?',
 			args: [removedRecipe.recipeID, removedRecipe.menuID, removedRecipe.sectionID]
 		});

@@ -2,7 +2,7 @@
 	import CreateCookbook from '$lib/components/cookbooks/createCookbook.svelte';
 	import type { PageData } from './$types';
 	import CreateMenu from '$lib/components/menu/CreateMenu.svelte';
-
+	import { userInfo } from '$lib/stores/user.store';
 	import { createSeparator, type CreateSeparatorProps, melt } from '@melt-ui/svelte';
 	export let data: PageData;
 
@@ -13,6 +13,7 @@
 	} = createSeparator({
 		orientation
 	});
+	let userId = $userInfo.userId;
 </script>
 
 <div class=" flex flex-col h-screen w-screen justify-center items-center gap-2 overflow-x-scroll">

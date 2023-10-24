@@ -35,7 +35,7 @@ export const DELETE = async (event: RequestEvent) => {
 		const { menu_id } = await event.request.json();
 
 		// Query to database to delete menu_id
-		const deleteMenu = await turso_client.execute({
+		const deleteMenu = await tursoClient.execute({
 			sql: 'delete from menus where menu_id = ?',
 			args: [menu_id]
 		});
@@ -50,7 +50,7 @@ export const DELETE = async (event: RequestEvent) => {
  */
 export const GET = async (event: RequestEvent) => {
 	try {
-		const recipeResult = await turso_client.execute('select recipe_id, name from recipes');
+		const recipeResult = await tursoClient.execute('select recipe_id, name from recipes');
 		const returnedRecipes = [];
 
 		for (let row of recipeResult.rows) {
