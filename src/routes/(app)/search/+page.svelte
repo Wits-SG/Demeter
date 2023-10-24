@@ -1,5 +1,5 @@
 <script lang="ts">
-	import RecipePreview from '$lib/components/posts/recipe_preview.svelte';
+	import PostPreview from '$lib/components/posts/post_preview.svelte';
 	//@ts-ignore
 	import Masonry from 'svelte-bricks';
 	import { Icon } from 'flowbite-svelte-icons';
@@ -7,20 +7,24 @@
 	import { getElementByMeltId } from '@melt-ui/svelte/internal/helpers';
 	import { list } from 'firebase/storage';
 
-	let itemsList: any[] = [];
+	let itemsList: Array<{ id: string; type: number }>;
+	let items: Array<{ id: string; type: number }>;
+	itemsList = [];
 	$: items = itemsList;
 	let [minColWidth, maxColWidth, gap] = [280, 350, 30];
 	let width: number;
 	let height: number;
 	let element: any;
-	let pageNumber: number = 10;
+	let pageNumber: number = 0;
 	let tempRecipeList: any;
+	let tempPosts: any;
 	let tempItems;
 
 	let searchValue: string = '';
 
-	const Search = async (pageNum: Number, searchValue: string, e?: any) => {
+	const Search = async (pageNum: Number, searchValue: string) => {
 		try {
+			console.log(pageNum);
 			let strPageNum: string = pageNum.toString();
 			const recipeIDs = await fetch(
 				`/search?search_value=${searchValue}&page_num=${strPageNum}`,
@@ -47,13 +51,12 @@
 	<Icon
 		name="search-outline"
 		class="h-6 w-6 p-1"
-		on:click={async (e) => {
+		on:click={async () => {
 			pageNumber = 0;
 			items = [];
-			tempRecipeList = await Search(pageNumber, searchValue, e);
+			tempRecipeList = await Search(pageNumber, searchValue);
 			tempItems = tempRecipeList.recipes;
 			itemsList = tempItems;
-			pageNumber = pageNumber + 10;
 		}} />
 </div>
 
@@ -68,21 +71,15 @@
 				let:item
 				bind:masonryHeight={height}
 				bind:masonryWidth={width}>
-				<RecipePreview recipeID={item} />
+				<PostPreview postID={item.id} postType={item.type} />
 			</Masonry>
 			<IntersectionObserver
 				{element}
-				on:intersect={async (e) => {
-					pageNumber = pageNumber + 10;
-					tempRecipeList = await Search(pageNumber, searchValue, e);
-					tempItems = tempRecipeList.recipes;
-					for (let i = 0; i < itemsList.length; i++) {
-						for (let z = 0; z < tempItems.length; z++) {
-							if (itemsList[i] != tempItems[z]) {
-								itemsList.push(tempItems[z]);
-							}
-						}
-					}
+				on:intersect={async () => {
+					pageNumber = pageNumber + 5;
+					tempPosts = await Search(pageNumber, searchValue);
+					tempItems = tempPosts.recipes;
+					itemsList = [...itemsList, ...tempItems];
 				}}>
 				<div bind:this={element} />
 			</IntersectionObserver>
