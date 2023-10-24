@@ -47,19 +47,10 @@
 				class="flex flex-row justify-center items-center gap-5"
 				use:melt={$item}
 				on:click={() => {
-					selectedRecipes.push(recipe);
+					selectedRecipes = [...selectedRecipes, recipe];
 				}}>
 				{recipe.name}
 			</button>
-			<div class="flex items-start justify-start gap-10 pl-10">
-				<ul class="list-disc list-inside">
-					{#each selectedRecipes as section}
-						<li class="mb-2 text-zinc-900">
-							{section.name}
-						</li>
-					{/each}
-				</ul>
-			</div>
 		{/each}
 	</div>
 {/if}

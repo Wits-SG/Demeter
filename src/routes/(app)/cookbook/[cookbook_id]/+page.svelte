@@ -8,7 +8,6 @@
 
 	console.log('Recipes', data.recipes);
 
-	let cookbookID: string = '';
 	let noRecipe = data.recipes.length == 0;
 	let currentRecipeIndex: number = 0;
 	let currentRecipeID: string = '';
@@ -44,7 +43,7 @@
 		}
 	}
 
-	let cookbookName: string = data.cookbook_info.name;
+	let cookbookName: string = data.cookbook_info.name as string;
 
 	let cookbookID: string = data.cookbook_info.id;
 
