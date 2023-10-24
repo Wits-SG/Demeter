@@ -1,8 +1,8 @@
 import type { PageServerLoad } from './$types';
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 
 export const load = (async () => {
-	const skillLevelsResult = await turso_client.execute(
+	const skillLevelsResult = await tursoClient.execute(
 		'select * from skill_levels order by skill_level_id asc'
 	);
 	let skillLevels: Array<string> = [];

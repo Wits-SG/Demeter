@@ -41,6 +41,7 @@
 			console.error('Failed to fetch recipe');
 		}
 	};
+
 	let recipeTitle = '';
 	let recipeImageURL = '';
 	let Description = '';
@@ -52,6 +53,7 @@
 
 	const refreshRecipe = async () => {
 		smallRecipeData = await getSmallRecipeData();
+
 		recipeTitle = smallRecipeData.recipe.name;
 		Description = smallRecipeData.recipe.description;
 		recipeImageURL = smallRecipeData.recipe.imageURL;

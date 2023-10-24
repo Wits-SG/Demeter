@@ -1,37 +1,46 @@
-import { error } from '@sveltejs/kit';
 import type { RequestEvent } from './$types';
-import { turso_client } from '$lib/turso';
+import { tursoClient } from '$lib/server/turso';
 
 export const POST = async (event: RequestEvent) => {
-	const recipe: Recipe = await event.request.json();
-	//recipe.id = uuidv4();
+	const body = await event.request.json();
 
-	const recipeInsertResult = await turso_client.execute({
-		sql: 'INSERT INTO recipes VALUES(?, ?, ?, ?, ?, ?, ?)',
+	const recipeInsertResult = await tursoClient.execute({
+		sql: 'INSERT INTO recipes(recipe_id, post_id, name, description, serving_size, cooking_time, image_url, skill_level_id) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
 		args: [
-			recipe.id,
-			recipe.name,
-			recipe.description,
-			recipe.servingSize,
-			recipe.cookingTime,
-			recipe.imageUrl,
-			recipe.skillLevel
+			body.id,
+			body.postId,
+			body.name,
+			body.description,
+			body.servingSize,
+			body.cookingTime,
+			body.imageUrl,
+			body.skillLevel
 		]
 	});
 
-	for (let instruction of recipe.instructions) {
-		await turso_client.execute({
+	const uploadDate = Math.floor(Date.now() / 1000);
+	const postInsertResult = await tursoClient.execute({
+		//type id for recipe is 0 -- last value
+		sql: 'INSERT INTO posts(post_id, user_id, upload_date, likes, type) VALUES(?, ?, ?, 0, 0)',
+		args: [body.postId, body.userId, uploadDate]
+	});
+
+	for (let instruction of body.instructions) {
+		await tursoClient.execute({
 			sql: 'INSERT INTO instructions(name, recipe_id) VALUES(?,?)',
-			args: [instruction, recipe.id]
+			args: [instruction, body.id]
 		});
 	}
 
-	for (let ingredient of recipe.ingredients) {
-		await turso_client.execute({
+	for (let ingredient of body.ingredients) {
+		await tursoClient.execute({
 			sql: 'INSERT INTO ingredients(name, recipe_id) VALUES(?,?)',
-			args: [ingredient, recipe.id]
+			args: [ingredient, body.id]
 		});
 	}
 
 	return new Response('Successful');
 };
+function uuidv4() {
+	throw new Error('Function not implemented.');
+}
