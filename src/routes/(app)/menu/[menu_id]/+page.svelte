@@ -80,10 +80,10 @@
 		</h1>
 
 		<!-- This will contain all sections and recipes -->
-		<div class="flex flex-col justify-center items-center">
+		<div class="flex flex-col justify-center items-center py-5">
 			{#each data.menu_info.section as section, i}
 				<h2
-					class="text-4xl text-emerald-800 dark:text-emerald-400 px-5 font-sans italic font-semibold justify-center items-center">
+					class="text-4xl text-emerald-800 dark:text-emerald-400 px-5 font-sans italic font-semibold justify-center items-center py-2">
 					{section}
 				</h2>
 				<!-- Displaying recipes under their sections -->
@@ -130,7 +130,7 @@
 		</div>
 		<div
 			class="flex flex-row text-emerald-700 dark:text-emerald-300 justify-center items-center text-xl py-1">
-			<a href="/cookbook/">Exit</a>
+			<a href="/cookbook/">Back</a>
 		</div>
 
 		<div class="flex flex-col justify-center items-center py-5">
