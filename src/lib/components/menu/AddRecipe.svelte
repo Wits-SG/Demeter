@@ -5,7 +5,7 @@
 	//@ts-ignore
 	import { v4 as uuidv4 } from 'uuid';
 	import SelectRecipes from './SelectRecipe.svelte';
-	import RecipePreview from '../recipe_preview.svelte';
+	//import RecipePreview from '../recipe_preview.svelte';
 
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
