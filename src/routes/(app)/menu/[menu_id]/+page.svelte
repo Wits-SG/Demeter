@@ -78,6 +78,7 @@
 			class="flex flex-col text-emerald-700 dark:text-emerald-300 text-6xl text-center font-serif italic font-bold outline-dotted">
 			{data.menu_info.name}
 		</h1>
+
 		<!-- This will contain all sections and recipes -->
 		<div class="flex flex-col justify-center items-center">
 			{#each data.menu_info.section as section, i}
@@ -124,14 +125,18 @@
 				</div>
 			{/each}
 			<button
-				class=" justify-start rounded-md text-4xl text-emerald-800 border-emerald-700 dark:text-emerald-400">
+				class=" py-5 justify-start rounded-md text-4xl text-emerald-800 border-emerald-700 dark:text-emerald-400">
 				<CreateSection sectionID={lastSectionIndex + 1} menuId={menuID} /></button>
 		</div>
+		<div
+			class="flex flex-row text-emerald-700 dark:text-emerald-300 justify-center items-center text-xl py-1">
+			<a href="/cookbook/">Exit</a>
+		</div>
 
-		<div class="flex flex-col justify-center items-center p-1">
+		<div class="flex flex-col justify-center items-center py-5">
 			<button
 				on:click={deleteMenu}
-				class="rounded-md border-2 w-40 h-10 border-emerald-700 text-emerald-700 dark:text-emerald-300 text-lg font-semibold">
+				class=" rounded-md border-2 w-40 h-10 border-emerald-700 text-emerald-700 dark:text-emerald-300 text-lg font-semibold">
 				Delete Menu
 			</button>
 		</div>
