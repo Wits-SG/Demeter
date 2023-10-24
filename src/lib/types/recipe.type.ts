@@ -1,5 +1,6 @@
 type Recipe = {
 	id: string;
+	postId: string;
 	name: string;
 	description: string;
 	servingSize: number;
