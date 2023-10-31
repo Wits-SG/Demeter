@@ -45,7 +45,7 @@
 	};
 </script>
 
-<main class="grid grid-cols-1 grid-rows-[90px_1fr] h-full w-full overflow-x-hidden">
+<main class="grid grid-cols-1 grid-rows-[90px_1fr] h-full w-full overflow-hidden">
 	<div
 		class="row-start-1 row-span-1 sticky top-0 w-full h-full flex justify-center items-center bg-zinc-100 dark:bg-neutral-800 border-b-2 border-emerald-500 z-40 p-2">
 		<nav
