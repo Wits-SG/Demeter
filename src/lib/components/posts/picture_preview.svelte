@@ -46,7 +46,7 @@
 			src={pictureImageURL}
 			alt="Dish" />
 
-		<div class="flex flex-col justify-center items-center p-4 gap-2">
+		<div class="flex flex-col justify-center items-start p-4 gap-2">
 			<section class="h-fit w-full flex justify-between items-center">
 				<a href="/profile/{userId}" class="italic text-sm text-neutral-500"
 					>{userDisplayName}</a>

@@ -10,12 +10,26 @@ export const GET = async ({ url }) => {
 			args: [postID]
 		});
 
+		const postRes = await tursoClient.execute({
+			sql: 'SELECT user_id FROM posts WHERE post_id = ? LIMIT 1',
+			args: [postID]
+		});
+
+		const userResult = await tursoClient.execute({
+			sql: 'SELECT display_name FROM users WHERE id = ? LIMIT 1',
+			args: [postRes.rows[0]['user_id']]
+		});
+
 		return json({
 			recipe: {
 				recipeID: recipe_res.rows[0]['recipe_id'],
 				name: recipe_res.rows[0]['name'],
 				description: recipe_res.rows[0]['description'],
 				imageURL: recipe_res.rows[0]['image_url']
+			},
+			user: {
+				id: postRes.rows[0]['user_id'],
+				displayName: userResult.rows[0]['display_name']
 			}
 		});
 	} catch (e: any) {
