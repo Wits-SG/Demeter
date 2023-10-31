@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { createDialog, melt } from '@melt-ui/svelte';
-	import { Icon } from 'flowbite-svelte-icons';
+	import { Star, X } from 'lucide-svelte';
 	import { createSeparator, type CreateSeparatorProps } from '@melt-ui/svelte';
 
 	const {
@@ -49,10 +49,9 @@
 
 <button
 	use:melt={$trigger}
-	class="inline-flex items-center justify-center rounded-lg bg-emerald-700 px-4 py-3
-    leading-none text-white shadow hover:opacity-75">
-	<span class="mr-2">Recipe of the Day</span>
-	<Icon name="star-outline" class="h-4 w-4" />
+	class="p-2 h-9 gap-1 flex flex-row justify-center items-center dark:bg-emerald-700 border-emerald-500 border-2 bg-emerald-100 hover:bg-emerald-300 dark:hover:bg-emerald-800 rounded-lg">
+	<Star />
+	Recipe of the Day
 </button>
 
 <div use:melt={$portalled}>
@@ -101,7 +100,7 @@
 					use:melt={$close}
 					class="inline-flex h-8 items-center justify-center rounded-sm
                       bg-teal-600 px-4 font-medium leading-none text-zinc-50 hover:bg-emerald-600">
-					<Icon name="close-outline" class="h-4 w-4" />
+					<X />
 				</button>
 			</div>
 		</div>

@@ -2,7 +2,8 @@
 	import { createDropdownMenu, melt } from '@melt-ui/svelte';
 	import { goto } from '$app/navigation';
 	import { fly } from 'svelte/transition';
-	import { Icon } from 'flowbite-svelte-icons';
+	// import { Icon } from 'flowbite-svelte-icons';
+	import { Plus } from 'lucide-svelte';
 
 	interface AddNav {
 		name: string;
@@ -20,8 +21,10 @@
 	} = createDropdownMenu({ forceVisible: true });
 </script>
 
-<button use:melt={$trigger} class="p-1 h-fit w-fit bg-zinc-200 rounded-lg">
-	<Icon name="plus-outline" class="h-6 w-6 " />
+<button
+	use:melt={$trigger}
+	class="h-9 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300">
+	<Plus /> New Post
 </button>
 
 {#if $open}
