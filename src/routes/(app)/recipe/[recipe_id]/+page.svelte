@@ -39,7 +39,7 @@
 </script>
 
 <div
-	class="w-full h-full bg-zinc-100 dark:bg-zinc-800 flex flex-col justify-center items-center gap-20 pt-6">
+	class="w-full h-fit max-h-[90vh] overflow-y-auto bg-zinc-100 dark:bg-zinc-800 flex flex-col justify-center items-center gap-20 pt-6">
 	<div class="flex flex-row justify start items-start gap-1">
 		<section class="flex flex-col items-center justify-center w-1/2 gap-10 pt-5">
 			<section class="container md:mx-auto w-2/3">
