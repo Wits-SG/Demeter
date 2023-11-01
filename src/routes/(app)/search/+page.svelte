@@ -2,10 +2,8 @@
 	import PostPreview from '$lib/components/posts/post_preview.svelte';
 	//@ts-ignore
 	import Masonry from 'svelte-bricks';
-	import { Icon } from 'flowbite-svelte-icons';
+	import { Search } from 'lucide-svelte';
 	import IntersectionObserver from 'svelte-intersection-observer';
-	import { getElementByMeltId } from '@melt-ui/svelte/internal/helpers';
-	import { list } from 'firebase/storage';
 
 	let itemsList: Array<{ id: string; type: number }>;
 	let items: Array<{ id: string; type: number }>;
@@ -22,7 +20,7 @@
 
 	let searchValue: string = '';
 
-	const Search = async (pageNum: Number, searchValue: string) => {
+	const getSearch = async (pageNum: Number, searchValue: string) => {
 		try {
 			let strPageNum: string = pageNum.toString();
 			const recipeIDs = await fetch(
@@ -39,9 +37,9 @@
 	};
 </script>
 
-<div class=" p-10 flex flex-row justify-center justify-items-center items-center">
+<div class=" p-10 flex flex-row justify-center justify-items-center items-center gap-5">
 	<input
-		class="p-2 text-black h-8 w-64 min-w-fit rounded-lg bg-zinc-200 flex justify-center items-center p-1 outline-none focus:outline-2 focus:outline-emerald-500"
+		class="p-2 text-black h-8 w-64 min-w-fit rounded-lg bg-neutral-200 flex justify-center items-center outline-none focus:outline-2 focus:outline-emerald-500 text-lg"
 		type="search"
 		placeholder="search"
 		name="q"
@@ -51,21 +49,22 @@
 			if (event.key == 'Enter') {
 				pageNumber = 0;
 				items = [];
-				tempRecipeList = await Search(pageNumber, searchValue);
+				tempRecipeList = await getSearch(pageNumber, searchValue);
 				tempItems = tempRecipeList.recipes;
 				itemsList = tempItems;
 			}
 		}} />
-	<Icon
-		name="search-outline"
-		class="h-6 w-6 p-1"
+	<button
+		class="dark:bg-neutral-700 bg-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-300 p-2 rounded-lg"
 		on:click={async () => {
 			pageNumber = 0;
 			items = [];
-			tempRecipeList = await Search(pageNumber, searchValue);
+			tempRecipeList = await getSearch(pageNumber, searchValue);
 			tempItems = tempRecipeList.recipes;
 			itemsList = tempItems;
-		}} />
+		}}>
+		<Search size={20} />
+	</button>
 </div>
 
 {#if items.length != 0}
@@ -85,7 +84,7 @@
 				{element}
 				on:intersect={async () => {
 					pageNumber = pageNumber + 5;
-					tempPosts = await Search(pageNumber, searchValue);
+					tempPosts = await getSearch(pageNumber, searchValue);
 					tempItems = tempPosts.recipes;
 					itemsList = [...itemsList, ...tempItems];
 				}}>
