@@ -80,8 +80,8 @@
 			{/if}
 		</div>
 	</div>
-	<div class="flex justify-center h-fit w-full">
-		<div class="p-8 md:w-4/5 z-0">
+	<div class="flex justify-center h-fit max-h-[55vh] w-full">
+		<div class="p-8 md:w-4/5 z-0 overflow-y-auto gap-5">
 			<Masonry
 				{items}
 				{minColWidth}
@@ -100,7 +100,7 @@
 					itemsList = [...itemsList, ...tempItems];
 					pageNumber = pageNumber + 5;
 				}}>
-				<div bind:this={element} />
+				<hr class="w-full border-white" bind:this={element} />
 			</IntersectionObserver>
 		</div>
 	</div>
