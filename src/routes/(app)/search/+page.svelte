@@ -69,8 +69,8 @@
 </div>
 
 {#if items.length != 0}
-	<div class="flex justify-center h-fit w-full">
-		<div class="p-8 md:w-4/5 z-0">
+	<div class="flex justify-center h-fit w-full max-h-[70vh]">
+		<div class="p-8 md:w-4/5 z-0 overflow-y-auto">
 			<Masonry
 				{items}
 				{minColWidth}
@@ -89,7 +89,7 @@
 					tempItems = tempPosts.recipes;
 					itemsList = [...itemsList, ...tempItems];
 				}}>
-				<div bind:this={element} />
+				<hr class="w-full border-white" bind:this={element} />
 			</IntersectionObserver>
 		</div>
 	</div>
