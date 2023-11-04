@@ -8,9 +8,11 @@ export const GET = async ({ url }) => {
 		const userId = url.searchParams.get('user_id');
 
 		const result = await tursoClient.execute({
-			sql: 'SELECT * FROM users WHERE user_id = ? LIMIT 1',
+			sql: 'SELECT * FROM users JOIN user_pronouns ON users.pronoun_id = user_pronouns.pronoun_id WHERE id = ?',
 			args: [userId]
 		});
+
+		console.log(result);
 
 		return json({
 			userId: userId,
@@ -21,6 +23,7 @@ export const GET = async ({ url }) => {
 			pronounId: result.rows[0]['pronoun_id']
 		});
 	} catch (e: any) {
+		console.log(e);
 		throw error(500, 'Failed to fetch user information');
 	}
 };
@@ -60,27 +63,22 @@ export const PUT = async (event: RequestEvent) => {
 	try {
 		const data: {
 			userId: string;
-			userName: string;
 			displayName: string;
 			pictureUrl: string;
 			biography: string;
 			pronounsId: number;
 		} = await event.request.json();
 
+		console.log(data);
+
 		await tursoClient.execute({
-			sql: 'UPDATE users SET pronoun_id = ?, picture_url = ?, display_name = ?, user_name = ?, biography = ? WHERE user_id = ?',
-			args: [
-				data.pronounsId,
-				data.pictureUrl,
-				data.displayName,
-				data.userName,
-				data.biography,
-				data.userId
-			]
+			sql: 'UPDATE users SET pronoun_id = ?, picture_url = ?, display_name = ?, biography = ? WHERE id = ?',
+			args: [data.pronounsId, data.pictureUrl, data.displayName, data.biography, data.userId]
 		});
 
 		return new Response('Successful');
 	} catch (e: any) {
+		console.log(e);
 		throw error(500, e);
 	}
 };

@@ -2,15 +2,27 @@
 	import { userInfo } from '$lib/stores/user.store';
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
+	//@ts-ignore
+	import { v4 as uuidv4 } from 'uuid';
+	import { fb_storage } from '$lib/firebase';
+	import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 	export let data: PageData;
 
-	let username: string;
-	let name: string;
-	let bio: string;
+	let userID: string = $userInfo.userId;
+	//@ts-ignore
+	let username: string = data.user.userName;
+	//@ts-ignore
+	let name: string = data.user.displayName;
+	//@ts-ignore
+	let bio: string = data.user.biography;
+
 	let picture: File;
+
+	//@ts-ignore
 	let pictureLocalUrl: any;
-	let pronounsId: number;
+	//@ts-ignore
+	let pronounsId: number = data.user.pronounID - 1; // Database indexes count from 1, array's count from 0 => offset everything by -1
 
 	const onFileSelected = (e: any) => {
 		picture = e.target.files[0];
@@ -22,32 +34,31 @@
 	};
 
 	// The onmount value loading should be in a +page file but it wouldn't work with the store
-	onMount(async () => {
-		const result = await fetch(`/api/user?user_id=${$userInfo.userId}`);
-		try {
-			const json = await result.json();
-
-			username = json['userName'];
-			name = json['displayName'];
-			bio = json['biography'];
-			pictureLocalUrl = json['pictureUrl'];
-			pronounsId = json['pronounId'];
-		} catch (e: any) {
-			console.error(e);
-		}
+	onMount(() => {
+		//@ts-ignore
+		fetch(data.user.pictureUrl)
+			.then((res) => res.blob())
+			.then((blob) => (picture = new File([blob], 'original picture')));
 	});
 
 	const handleSave = async () => {
 		try {
+			const pictureId = uuidv4();
+			const pictureImageRef = ref(fb_storage, `images/picture/${pictureId}.jpeg`);
+
+			await uploadBytes(pictureImageRef, picture);
+
+			const url = await getDownloadURL(pictureImageRef);
+			console.log(pronounsId);
 			await fetch('/api/user', {
 				method: 'PUT',
 				body: JSON.stringify({
-					userId: $userInfo.userId,
+					userId: data.user.userId,
 					userName: username,
 					displayName: name,
 					biography: bio,
-					pictureUrl: '',
-					pronounsId: pronounsId
+					pictureUrl: url,
+					pronounsId: pronounsId + 1 // Database indexes count from 1, array's count from 0 => offset everything by -1
 				})
 			});
 		} catch (e: any) {

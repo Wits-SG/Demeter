@@ -70,7 +70,7 @@
 				<form method="post" action="?/logout">
 					<a
 						href="/profile/edit"
-						class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black">
+						class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black p-3">
 						Edit Profile
 					</a>
 					<button class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black">
