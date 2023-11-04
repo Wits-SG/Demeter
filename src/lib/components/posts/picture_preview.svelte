@@ -23,6 +23,8 @@
 	let pictureImageURL =
 		'https://previews.123rf.com/images/solarus/solarus2112/solarus211200026/178493166-default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-a0pp-no-photo-available.jpg';
 	let pictureDescription = 'NONE';
+	let userId = 'NONE';
+	let userDisplayName = 'NONE';
 
 	onMount(async () => {
 		picturePreviewData = await getPreviewData();
@@ -30,28 +32,36 @@
 		pictureTitle = picturePreviewData.picture.name;
 		pictureDescription = picturePreviewData.picture.description;
 		pictureImageURL = picturePreviewData.picture.imageURL;
+		userId = picturePreviewData.user.id;
+		userDisplayName = picturePreviewData.user.displayName;
 	});
 </script>
 
 <!--replace with page path-->
 <a href="/picture/{pictureID}" class="w-full">
 	<div
-		class="w-full h-full rounded-md shadow-md shadow-zinc-600 dark:shadow-zinc-300 overflow-hidden md:w-full md:h-full">
-		<div class="md:flex md:flex-col">
-			<img
-				class="h-full w-full md:h-full md:w-full object-cover"
-				src={pictureImageURL}
-				alt="Dish" />
-			<div class="p-4 h-2/5">
-				<div
-					class="mb-2 flex flex-row items-center uppercase text-sm text-zinc-800 dark:text-zinc-100 font-semibold">
-					<Icon name="image-outline" class="h-8 w-8 p-2" />
+		class="w-full h-full rounded-md shadow-md shadow-zinc-600 dark:shadow-zinc-300 overflow-hidden flex flex-col gap-1">
+		<img
+			class="h-full w-full md:h-full md:w-full object-cover border-b-8 border-blue-500"
+			src={pictureImageURL}
+			alt="Dish" />
+
+		<div class="flex flex-col justify-center items-start p-4 gap-2">
+			<section class="h-fit w-full flex justify-between items-center">
+				<a href="/profile/{userId}" class="italic text-sm text-neutral-500"
+					>{userDisplayName}</a>
+				<p class="italic text-sm text-neutral-500">Picture</p>
+			</section>
+
+			<section class="h-fit gap-2 flex flex-col justify-center items-start">
+				<p
+					class="flex flex-row items-center uppercase text-sm text-black dark:text-white font-semibold">
 					{pictureTitle}
-				</div>
-				<p class="line-clamp-2 mt-2 text-zinc-500 dark:text-zinc-300 text-sm">
+				</p>
+				<p class="line-clamp-2 text-zinc-500 dark:text-zinc-300 text-sm">
 					{pictureDescription}
 				</p>
-			</div>
+			</section>
 		</div>
 	</div>
 </a>

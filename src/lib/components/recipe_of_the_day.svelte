@@ -1,15 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { createDialog, melt } from '@melt-ui/svelte';
-	import { Icon } from 'flowbite-svelte-icons';
+	import { Star, X } from 'lucide-svelte';
 	import { createSeparator, type CreateSeparatorProps } from '@melt-ui/svelte';
-
-	const {
-		elements: { root: horizontal }
-	} = createSeparator({
-		orientation: 'horizontal',
-		decorative: true
-	});
 
 	const {
 		elements: { trigger, overlay, content, title, description, close, portalled },
@@ -22,6 +15,9 @@
 	let recipeName: string;
 	let recipeDescription: string;
 	let recipeImg: string;
+
+	let userId: string;
+	let userDisplayname: string;
 
 	let recipeData: any;
 
@@ -44,15 +40,16 @@
 		recipeName = recipeData.recipe.name;
 		recipeDescription = recipeData.recipe.description;
 		recipeImg = recipeData.recipe.imageUrl;
+		userId = recipeData.user.id;
+		userDisplayname = recipeData.user.displayName;
 	});
 </script>
 
 <button
 	use:melt={$trigger}
-	class="inline-flex items-center justify-center rounded-lg bg-emerald-700 px-4 py-3
-    leading-none text-white shadow hover:opacity-75">
-	<span class="mr-2">Recipe of the Day</span>
-	<Icon name="star-outline" class="h-4 w-4" />
+	class="p-2 h-9 gap-1 flex flex-row justify-center items-center dark:bg-emerald-700 border-emerald-500 border-2 bg-emerald-100 hover:bg-emerald-300 dark:hover:bg-emerald-800 rounded-lg">
+	<Star />
+	Recipe of the Day
 </button>
 
 <div use:melt={$portalled}>
@@ -60,48 +57,45 @@
 		<div use:melt={$overlay} class="fixed inset-0 z-50 bg-black/50" />
 		<div
 			class="fixed left-[50%] top-[50%] z-50 max-h-[85vh] w-[90vw]
-              max-w-[700px] translate-x-[-50%] translate-y-[-50%] rounded-xl bg-white
+              max-w-[700px] translate-x-[-50%] translate-y-[-50%] rounded-xl bg-neutral-100 dark:bg-neutral-800
               p-6 shadow-lg flex flex-col"
 			use:melt={$content}>
-			<div class="flex flex-row justify-center items-center gap-5">
-				<h2 use:melt={$title} class="text-3xl font-medium text-emerald-700">
-					RECIPE OF THE DAY
-				</h2>
-			</div>
+			<h2
+				use:melt={$title}
+				class="text-4xl w-full text-center border-b-4 pb-4 border-emerald-500 font-medium text-black dark:text-white">
+				RECIPE OF THE DAY
+			</h2>
 
-			<div
-				use:melt={$horizontal}
-				class="mt-4 items-center justify-center h-[3px] w-full bg-teal-600 dark:bg-teal-400" />
+			<section class="flex flex-row justify-center items-start gap-3 p-5">
+				<img alt="" src={recipeImg} class="object-cover rounded-md w-full h-full" />
 
-			<section class="flex flex-row justify-center items-center gap-10 p-5">
-				<div class="flex flex-col justify-center items-center w-1/2">
-					<section class="container md:mx-auto w-full">
-						<img alt="" src={recipeImg} class="object-cover rounded-md" />
-					</section>
-				</div>
-				<section class="flex flex-col justify-center items-center gap-10 w-1/2">
-					<div class="text-xl font-semibold font-small text-black">
+				<div class="flex flex-col justify-start items-start gap-2 w-full">
+					<h2 class="text-2xl font-semibold font-small text-black dark:text-white">
 						{recipeName}
-					</div>
-					<div class="text-xl font-small text-black">
+					</h2>
+
+					<a href="/profile/{userId}" class="italic text-neutral-500"
+						>{userDisplayname}</a>
+
+					<p class="text-md font-small text-black dark:text-white">
 						{recipeDescription}
-					</div>
-				</section>
+					</p>
+				</div>
 			</section>
 
-			<div class="mt-6 flex justify-end items-end gap-4">
+			<div class="flex justify-end items-end gap-4">
 				<a
 					use:melt={$close}
 					href="/recipe/{recipeID}"
 					class="inline-flex h-8 items-center justify-center rounded-sm
-                    bg-teal-600 px-4 font-medium leading-none text-zinc-50 hover:bg-emerald-600">
+                    px-4 font-medium leading-none dark:text-white text-black border-2 border-emerald-500 bg-emerald-100 hover:bg-emerald-300 dark:bg-emerald-700 dark:hover:bg-emerald-900">
 					View Recipe
 				</a>
 				<button
 					use:melt={$close}
 					class="inline-flex h-8 items-center justify-center rounded-sm
-                      bg-teal-600 px-4 font-medium leading-none text-zinc-50 hover:bg-emerald-600">
-					<Icon name="close-outline" class="h-4 w-4" />
+                      px-4 font-medium leading-none dark:text-white text-black hover:bg-red-400 bg-red-300 border-2 border-red-500">
+					<X />
 				</button>
 			</div>
 		</div>
