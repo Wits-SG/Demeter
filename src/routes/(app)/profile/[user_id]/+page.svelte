@@ -67,13 +67,16 @@
 			</section>
 
 			{#if data.isLoggedIn}
-				<form method="post" action="?/logout">
+				<form method="post" action="?/logout" class="flex flex-row gap-5">
 					<a
 						href="/profile/edit"
-						class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black p-3">
+						class="inline-flex h-8 items-center justify-center rounded-sm
+						px-4 font-medium leading-none dark:text-white text-black border-2 border-emerald-500 bg-emerald-100 hover:bg-emerald-300 dark:bg-emerald-700 dark:hover:bg-emerald-900">
 						Edit Profile
 					</a>
-					<button class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black">
+					<button
+						class="inline-flex h-8 items-center justify-center rounded-sm
+                    px-4 font-medium leading-none dark:text-white text-black border-2 border-emerald-500 bg-emerald-100 hover:bg-emerald-300 dark:bg-emerald-700 dark:hover:bg-emerald-900">
 						Logout
 					</button>
 				</form>

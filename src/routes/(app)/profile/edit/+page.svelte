@@ -132,9 +132,13 @@
 			</section>
 
 			<section>
-				<button class="w-40 h-8 rounded-md bg-emerald-300" on:click={handleSave}>
+				<a
+					href="/profile/{data.userId}"
+					class="inline-flex h-8 items-center justify-center rounded-sm
+				px-4 font-medium leading-none dark:text-white text-black border-2 border-emerald-500 bg-emerald-100 hover:bg-emerald-300 dark:bg-emerald-700 dark:hover:bg-emerald-900"
+					on:click={handleSave}>
 					Save
-				</button>
+				</a>
 			</section>
 		</div>
 	</div>
