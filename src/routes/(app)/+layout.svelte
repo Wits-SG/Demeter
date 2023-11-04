@@ -82,16 +82,18 @@
 				class="h-9 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300">
 				<SunMoon />
 			</button>
-			{#if $userSignedIn}
-				<Avatar.Root>
-					<Avatar.Image src={$userInfo.pictureUrl} />
-					<Avatar.Fallback>
-						<div
-							class="w-16 h-16 rounded-full border-2 border-emerald-500 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-900 flex items-center justify-center">
-							<User2 size={48} />
-						</div>
-					</Avatar.Fallback>
-				</Avatar.Root>
+			{#if data.userSignedIn}
+				<a href="/profile/{data.userId}/">
+					<Avatar.Root>
+						<Avatar.Image src={data.pictureUrl} />
+						<Avatar.Fallback>
+							<div
+								class="w-16 h-16 rounded-full border-2 border-emerald-500 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-900 flex items-center justify-center">
+								<User2 size={48} />
+							</div>
+						</Avatar.Fallback>
+					</Avatar.Root>
+				</a>
 			{:else}
 				<a
 					href="/login/"

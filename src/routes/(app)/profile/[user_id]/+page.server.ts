@@ -43,7 +43,6 @@ export const load = (async ({ locals, params }) => {
 			} as User
 		};
 	} catch (e: any) {
-		console.log(e);
 		throw error(404, 'User not found');
 	}
 }) satisfies PageServerLoad;
