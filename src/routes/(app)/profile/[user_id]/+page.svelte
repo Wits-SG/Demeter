@@ -51,11 +51,11 @@
 
 		<div class="flex flex-col items-start justify-start w-1/2 gap-3">
 			<section>
-				<p class="text-3xl">{data.user.userName}</p>
+				<p class="text-3xl">{data.user.displayName}</p>
 			</section>
 
 			<section>
-				<p class="font-bold text-lg">{data.user.displayName}</p>
+				<p class="font-bold text-lg">{data.user.userName}</p>
 			</section>
 
 			<section>
@@ -70,7 +70,7 @@
 				<form method="post" action="?/logout">
 					<a
 						href="/profile/edit"
-						class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black p-3">
+						class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black">
 						Edit Profile
 					</a>
 					<button class="w-40 h-8 rounded-md bg-emerald-300 dark:text-black">
