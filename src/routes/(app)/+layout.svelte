@@ -59,17 +59,17 @@
 				href="/"
 				class="h-9 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300"
 				><Home /> Home</a>
-			{#if $userSignedIn}
+			{#if data.userSignedIn}
 				<a
-					href="/cookbook/"
+					href="/collections/cookbooks/"
 					class="h-9 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300"
-					><BookMarked /> Items</a>
+					><BookMarked />Collections</a>
 			{/if}
 			<a
 				href="/search/"
 				class="h-9 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300"
 				><Search /> Search</a>
-			{#if $userSignedIn}
+			{#if data.userSignedIn}
 				<AddNav />
 			{/if}
 		</nav>
