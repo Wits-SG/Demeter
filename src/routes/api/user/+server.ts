@@ -12,8 +12,6 @@ export const GET = async ({ url }) => {
 			args: [userId]
 		});
 
-		console.log(result);
-
 		return json({
 			userId: userId,
 			pictureUrl: result.rows[0]['picture_url'],
@@ -23,7 +21,6 @@ export const GET = async ({ url }) => {
 			pronounId: result.rows[0]['pronoun_id']
 		});
 	} catch (e: any) {
-		console.log(e);
 		throw error(500, 'Failed to fetch user information');
 	}
 };
@@ -69,8 +66,6 @@ export const PUT = async (event: RequestEvent) => {
 			pronounsId: number;
 		} = await event.request.json();
 
-		console.log(data);
-
 		await tursoClient.execute({
 			sql: 'UPDATE users SET pronoun_id = ?, picture_url = ?, display_name = ?, biography = ? WHERE id = ?',
 			args: [data.pronounsId, data.pictureUrl, data.displayName, data.biography, data.userId]
@@ -78,7 +73,6 @@ export const PUT = async (event: RequestEvent) => {
 
 		return new Response('Successful');
 	} catch (e: any) {
-		console.log(e);
 		throw error(500, e);
 	}
 };
