@@ -18,12 +18,13 @@ export const GET = async ({ url }) => {
 		throw error(404, 'No search terms specified');
 	}
 
-	const searchValueArr: string[] = searchValue.split(' ');
+	const searchValueArr: string[] = searchValue.split('and');
 	for (let i = 0; i < searchValueArr.length; i++) {
 		if (searchValueArr[i].length === 0) {
 			searchValueArr.splice(i, 1);
 			i = i - 1;
 		}
+		searchValueArr[i] = searchValueArr[i].trim();
 	}
 
 	let query: string = `SELECT posts.post_id FROM posts join recipes on recipes.post_id = posts.post_id WHERE`;
