@@ -71,9 +71,9 @@
 	//need a refresh of data
 </script>
 
-<div class="flex justify-center items-center h-full justify-evenly">
+<div class="flex justify-center items-center h-full">
 	<div
-		class="flex flex-col justify-evenly border-8 w-full max-w-[95vh] h-full border-4 border-emerald-700 dark:border-emerald-300">
+		class="flex flex-col justify-evenly w-full max-w-[95vh] h-full border-4 border-emerald-700 dark:border-emerald-300">
 		<h1
 			class="flex flex-col text-emerald-700 dark:text-emerald-300 text-6xl text-center font-serif italic font-bold outline-dotted">
 			{data.menu_info.name}

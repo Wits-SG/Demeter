@@ -102,5 +102,5 @@
 			{/if}
 		</section>
 	</div>
-	<div class="row-start-2 row-span-1 col-span-1"><slot /></div>
+	<div class="row-start-2 row-span-1 col-span-1 max-h-[90vh] overflow-y-auto"><slot /></div>
 </main>
