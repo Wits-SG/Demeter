@@ -5,8 +5,7 @@
 
 <div
 	class="w-full h-fit min-h-screen overflow-y-auto flex flex-row justify-start items-start gap-5 p-2">
-	<div
-		class="border-r-2 border-emerald-500 w-2/12 min-w-fit h-screen flex flex-col justify-start items-center p-2">
+	<div class="w-2/12 min-w-fit h-screen flex flex-col justify-start items-center p-2">
 		{#if onCookbooks}
 			<a
 				href="/collections/cookbooks/"
