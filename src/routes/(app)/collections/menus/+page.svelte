@@ -1,43 +1,22 @@
 <script lang="ts">
 	import { Plus, Trash, Pen, Save, X, MenuSquare } from 'lucide-svelte';
+	import type { PageData } from './$types';
+	//@ts-ignore
+	import { v4 as uuid } from 'uuid';
 
-	let menus = [
-		{
-			name: 'Menu 1',
-			description:
-				'This is a menu with a very large description. The intent is that each description holds some cool info'
-		},
-		{
-			name: 'Menu 2',
-			description:
-				'This is a menu with a very large description. The intent is that each description holds some cool info'
-		}
-		// { name: 'Menu 3', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-		// { name: 'Menu 4', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-		// { name: 'Menu 5', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-		// { name: 'Menu 6', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-		// { name: 'Menu 7', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-		// { name: 'Menu 8', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-		// { name: 'Menu 9', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-		// { name: 'Menu 10', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-		// { name: 'Menu 11', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-		// { name: 'Menu 12', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-		// { name: 'Menu 13', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-		// { name: 'Menu 14', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-		// { name: 'Menu 15', description: 'This is a menu with a very large description. The intent is that each description holds some cool info' },
-	];
+	export let data: PageData;
+	let menus = data.menus;
 
-	const recentMenus: Array<{ name: string }> = [];
-	// TEMP CODE
-	for (let i = 0; i < 5; ++i) {
-		const random = Math.floor(Math.random() * menus.length);
-		recentMenus.push(menus[random]);
-	}
-	// TEMP CODE END
-
-	let currentMenu: { name: string; description: string } =
-		menus.length > 0 ? menus[0] : { name: 'No Menu', description: 'No Description' };
-	let uneditedMenu: { name: string; description: string } = currentMenu;
+	let currentMenu: Menu =
+		menus.length > 0
+			? menus[0]
+			: ({
+					menuID: 'NONE',
+					name: 'No Menu',
+					description: 'No Description',
+					sections: [] as Array<string>
+			  } as Menu);
+	let uneditedMenu: Menu = currentMenu;
 
 	let editMenu: boolean = false;
 </script>
@@ -45,10 +24,21 @@
 <div class="w-full h-fit max-h-[95vh] flex flex-col gap-4 p-5">
 	<div class="w-full h-44 flex flex-row gap-2">
 		<button
-			on:click={() => {
-				currentMenu = { name: 'New Menu', description: '' };
+			on:click={async () => {
+				//@ts-ignore
+				currentMenu = {
+					menuID: uuid(),
+					name: 'New Menu',
+					description: '',
+					userID: data.userId
+				};
 				menus.push(currentMenu);
 				editMenu = true;
+
+				await fetch('/api/menu', {
+					method: 'POST',
+					body: JSON.stringify(currentMenu)
+				});
 			}}
 			class="w-1/5 h-full rounded-md border-2 border-amber-500 hover:bg-neutral-200 dark:hover:bg-neutral-900 flex justify-center items-center">
 			<Plus size={32} />
@@ -56,35 +46,57 @@
 		<div class="w-1 h-full rounded-lg bg-emerald-400" />
 		<section class="w-full flex flex-col gap-2">
 			{#if !editMenu}
-				<h2 class="text-xl">{currentMenu.name}</h2>
-				<p class="text-md w-1/3">{currentMenu.description}</p>
+				<div class="w-full flex flex-row justify-start items-start gap-10">
+					<section class="w-1/3 h-44 overflow-y-auto">
+						<h2 class="text-xl">{currentMenu.name}</h2>
+						<p class="text-md w-full overflow-y-auto">{currentMenu.description}</p>
+					</section>
+
+					<section
+						class="w-1/6 h-44 flex flex-col justify-start items-start overflow-y-auto gap-2">
+						<h2 class="text-lg sticky top-0 w-full dark:bg-zinc-800 bg-zinc-100">
+							Sections
+						</h2>
+						{#each currentMenu.sections as s}
+							<p class="text-center w-full p-1 border-amber-500 border-b-2">
+								{s}
+							</p>
+						{/each}
+					</section>
+				</div>
 			{:else}
 				<div class="w-full h-full flex flex-col gap-2">
-					<section class="w-full h-full flex flex-row justify-center items-start">
-						<span class="w-1/3 flex flex-col justify-start items-start gap-2">
+					<section
+						class="w-full h-full flex flex-row justify-start items-start gap-4 min-w-fit">
+						<span class="w-1/4 flex flex-col justify-start items-start gap-2">
 							<label for="menu-title" class="text-xl p-1">Menu Title</label>
 							<input
 								bind:value={currentMenu.name}
 								name="menu-title"
-								class="text-md h-8 w-4/5 rounded-md outline-none border-2 border-white hover:border-emerald-500 text-black px-1" />
+								class="text-md h-8 w-full rounded-md outline-none border-2 border-white hover:border-emerald-500 text-black px-1" />
 						</span>
 
-						<span class="flex flex-col w-full justify-start items-start gap-2">
+						<span class="flex flex-col w-1/4 justify-start items-start gap-2">
 							<label for="menu-description" class="text-xl p-1"
 								>Menu Description</label>
 							<textarea
 								rows="3"
 								bind:value={currentMenu.description}
 								name="menu-description"
-								class="text-md w-1/3 h-fit rounded-md outline-none border-2 border-white hover:border-emerald-500 text-black px-1" />
+								class="text-md w-full h-fit rounded-md outline-none border-2 border-white hover:border-emerald-500 text-black px-1" />
 						</span>
 					</section>
 
 					<span class="flex flex-row justify-start items-start gap-2">
 						<button
-							on:click={() => {
+							on:click={async () => {
 								editMenu = false;
 								menus = menus; // force a redraw of the table with the new title
+
+								await fetch('/api/menu', {
+									method: 'PUT',
+									body: JSON.stringify(currentMenu)
+								});
 							}}
 							class="items-center justify-center flex flex-row rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-1 dark:hover:bg-emerald-800 hover:bg-emerald-300"
 							><Save /></button>
@@ -116,8 +128,14 @@
 						<td class="pl-2" on:click={() => (currentMenu = m)}>{m.name}</td>
 						<td class="w-10 p-1">
 							<button
-								on:click={() => {
-									menus = menus.splice(i, 1);
+								on:click={async () => {
+									menus.splice(i, 1);
+									menus = menus;
+
+									await fetch('/api/menu', {
+										method: 'DELETE',
+										body: JSON.stringify({ menuId: m.menuID })
+									});
 								}}
 								class="w-full p-1 rounded-md flex flex-row justify-center items-center hover: dark:text-white text-black hover:bg-red-300 bg-red-400 border-2 border-red-600">
 								<Trash />
@@ -134,10 +152,11 @@
 							</button>
 						</td>
 						<td class="w-20">
-							<button
+							<a
+								href="/menu/{m.menuID}"
 								class="w-full items-center justify-center flex flex-row rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-1 dark:hover:bg-emerald-800 hover:bg-emerald-300">
 								View
-							</button>
+							</a>
 						</td>
 					</tr>
 				{/each}

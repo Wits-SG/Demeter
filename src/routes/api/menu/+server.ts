@@ -11,10 +11,14 @@ export const POST = async (event: RequestEvent) => {
 	const menu: Menu = await event.request.json();
 
 	try {
-		menu.menuID = uuidv4();
 		await tursoClient.execute({
-			sql: 'insert into menus(menu_id, user_id, name) values (?, ?, ?)',
-			args: [menu.menuID, menu.userID !== undefined ? menu.userID : '', menu['name']]
+			sql: 'insert into menus(menu_id, user_id, name, description) values (?, ?, ?)',
+			args: [
+				menu.menuID,
+				menu.userID !== undefined ? menu.userID : '',
+				menu['name'],
+				menu['description']
+			]
 		});
 
 		for (let section of menu.sections) {
@@ -32,16 +36,31 @@ export const POST = async (event: RequestEvent) => {
 
 export const DELETE = async (event: RequestEvent) => {
 	try {
-		const { menu_id } = await event.request.json();
+		const { menuId } = await event.request.json();
 
 		// Query to database to delete menu_id
 		const deleteMenu = await tursoClient.execute({
 			sql: 'delete from menus where menu_id = ?',
-			args: [menu_id]
+			args: [menuId]
 		});
 		return new Response('Success');
 	} catch (e: any) {
 		throw error(400, 'Error deleting Menu!');
+	}
+};
+
+export const PUT = async ({ request }) => {
+	try {
+		const { menuID, name, description } = await request.json();
+
+		await tursoClient.execute({
+			sql: 'UPDATE menus SET name = ?, description = ? WHERE menu_id = ?',
+			args: [name, description, menuID]
+		});
+
+		return new Response('Success');
+	} catch (e: any) {
+		throw error(500, 'Error updating menu');
 	}
 };
 
