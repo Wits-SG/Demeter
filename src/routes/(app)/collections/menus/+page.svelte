@@ -30,7 +30,7 @@
 					menuID: uuid(),
 					name: 'New Menu',
 					description: '',
-					userID: data.userId
+					userID: data.userId ? data.userId : ''
 				};
 				menus.push(currentMenu);
 				editMenu = true;
@@ -125,7 +125,12 @@
 				{#each menus as m, i}
 					<tr
 						class="h-10 dark:hover:bg-neutral-900 hover:bg-neutral-200 cursor-pointer border-l-2 border-amber-500">
-						<td class="pl-2" on:click={() => (currentMenu = m)}>{m.name}</td>
+						<td
+							class="pl-2"
+							on:click={() => {
+								currentMenu = m;
+								uneditedMenu = m;
+							}}>{m.name}</td>
 						<td class="w-10 p-1">
 							<button
 								on:click={async () => {

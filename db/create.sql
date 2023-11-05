@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS blogs ( blog_id text primary key unique not null, post_id text unique, url text not null, title text not null, foreign key (post_id) references posts(post_id) );
 CREATE TABLE IF NOT EXISTS comments ( comment_id integer primary key autoincrement, post_id text not null, user_id text not null, parent_id integer, root integer not null, foreign key (post_id) references posts(post_id) );
-CREATE TABLE IF NOT EXISTS cookbooks ( cookbook_id text primary key, user_id text, name text );
+CREATE TABLE IF NOT EXISTS cookbooks ( cookbook_id text primary key, user_id text, name text, description text );
 CREATE TABLE IF NOT EXISTS cookbook_recipes ( cookbook_id text not null, recipe_id text not null, foreign key (cookbook_id) references cookbooks(cookbook_id) );
 CREATE TABLE IF NOT EXISTS ingredients ( ingredient_id integer primary key autoincrement, recipe_id text not null, name text not null, foreign key (recipe_id) references recipes(recipe_id) );
 CREATE TABLE IF NOT EXISTS instructions ( instruction_id integer primary key autoincrement, recipe_id text not null, name text not null, foreign key (recipe_id) references recipes(recipe_id) );
