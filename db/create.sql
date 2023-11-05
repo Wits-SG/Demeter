@@ -1,12 +1,12 @@
 CREATE TABLE IF NOT EXISTS blogs ( blog_id text primary key unique not null, post_id text unique, url text not null, title text not null, foreign key (post_id) references posts(post_id) );
 CREATE TABLE IF NOT EXISTS comments ( comment_id integer primary key autoincrement, post_id text not null, user_id text not null, parent_id integer, root integer not null, foreign key (post_id) references posts(post_id) );
-CREATE TABLE IF NOT EXISTS cookbooks ( cookbook_id text primary key, user_id text, name text );
+CREATE TABLE IF NOT EXISTS cookbooks ( cookbook_id text primary key, user_id text, name text, description text );
 CREATE TABLE IF NOT EXISTS cookbook_recipes ( cookbook_id text not null, recipe_id text not null, foreign key (cookbook_id) references cookbooks(cookbook_id) );
 CREATE TABLE IF NOT EXISTS ingredients ( ingredient_id integer primary key autoincrement, recipe_id text not null, name text not null, foreign key (recipe_id) references recipes(recipe_id) );
 CREATE TABLE IF NOT EXISTS instructions ( instruction_id integer primary key autoincrement, recipe_id text not null, name text not null, foreign key (recipe_id) references recipes(recipe_id) );
 CREATE TABLE IF NOT EXISTS menu_sections ( section_id integer not null, menu_id text not null, name text, foreign key (menu_id) references menus(menu_id) );
 CREATE TABLE IF NOT EXISTS menu_recipes ( menu_id text not null, recipe_id text not null, section_id integer not null, foreign key (menu_id) references menus(menu_id) );
-CREATE TABLE IF NOT EXISTS menus ( menu_id text primary key, user_id text not null, name text not null );
+CREATE TABLE IF NOT EXISTS menus ( menu_id text primary key, user_id text not null, name text not null, description text );
 CREATE TABLE IF NOT EXISTS pictures ( picture_id text primary key unique not null, post_id text, url text not null, title text not null, description text, foreign key (post_id) references posts(post_id) );
 CREATE TABLE IF NOT EXISTS posts ( post_id text primary key, user_id text not null, upload_date integer not null, likes integer, foreign key (user_id) references users(id) );
 CREATE TABLE IF NOT EXISTS recipe_of_the_day (recipe_id text not null, date integer, foreign key (recipe_id) references recipes(recipe_id));

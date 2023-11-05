@@ -31,15 +31,29 @@ export const GET = async ({ url }) => {
  * @description Create a new cookbook for a user
  */
 export const POST = async (event: RequestEvent) => {
-	const addCookbook: { cookbookID: string; name: string; userId: string } =
-		await event.request.json();
+	const addCookbook: Cookbook = await event.request.json();
 
 	const insertCookbook = await tursoClient.execute({
 		sql: 'INSERT INTO cookbooks (cookbook_id, name, user_id) values (?,?,?)',
-		args: [addCookbook.cookbookID, addCookbook.name, addCookbook.userId]
+		args: [addCookbook.id, addCookbook.name, addCookbook.userID]
 	});
 
 	return new Response('Successful');
+};
+
+export const PUT = async ({ request }) => {
+	try {
+		const { id, name, description } = await request.json();
+
+		await tursoClient.execute({
+			sql: 'UPDATE cookbooks SET name = ?, description = ? WHERE cookbook_id = ?',
+			args: [name, description, id]
+		});
+
+		return new Response('Success');
+	} catch (e: any) {
+		throw error(500, 'Failed to update cookbook');
+	}
 };
 
 /**
@@ -47,17 +61,17 @@ export const POST = async (event: RequestEvent) => {
  */
 export const DELETE = async (event: RequestEvent) => {
 	try {
-		const { cookbook_id } = await event.request.json();
+		const { cookbookId } = await event.request.json();
 
 		//Query to database to delete cookbook_id
 		const deleteRecipe = await tursoClient.execute({
 			sql: 'delete from cookbook_recipes where cookbook_id = ?',
-			args: [cookbook_id]
+			args: [cookbookId]
 		});
 
 		const deleteCookBook = await tursoClient.execute({
 			sql: 'DELETE FROM cookbooks where cookbook_id = ?',
-			args: [cookbook_id]
+			args: [cookbookId]
 		});
 		return new Response('Success');
 	} catch (e: any) {
