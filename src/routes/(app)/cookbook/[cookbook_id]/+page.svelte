@@ -107,7 +107,7 @@
 					}}>{recipe.name}</button>
 			{/each}
 
-			<a href="/cookbook/">Back</a>
+			<a href="/collections/cookbooks">Back</a>
 			<button on:click={deleteCookbook}>Delete</button>
 		</div>
 	</div>
