@@ -40,8 +40,12 @@
 	function addIngredients() {
 		// This is how to update an array in svelte and to trigger a html redraw
 		// i.e. for it to actually update the view
-		ingredientsList = [...ingredientsList, inputIngredient];
-		inputIngredient = '';
+		if (inputIngredient != null) {
+			ingredientsList = [...ingredientsList, inputIngredient];
+			inputIngredient = '';
+		} else {
+			alert('Cannot add an empty ingredient');
+		}
 	}
 
 	let editingIngredient: number | null = null;
@@ -55,8 +59,12 @@
 	}
 
 	function addInstructions() {
-		instructionList = [...instructionList, inputInstruction];
-		inputInstruction = '';
+		if (inputInstruction != null) {
+			instructionList = [...instructionList, inputInstruction];
+			inputInstruction = '';
+		} else {
+			alert('Cannot add an empty instruction');
+		}
 	}
 
 	let editingInstruction: number | null = null;
