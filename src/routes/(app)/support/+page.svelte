@@ -102,7 +102,7 @@
 	<div
 		class="w-full h-full row-start-2 row-span-1 col-start-1 col-span-1 max-h-full overflow-y-auto flex flex-col justify-start items-start gap-5">
 		{#each items as item}
-			<h1 class="font-bold underline underline-offset-1">{item.title}</h1>
+			<h1 class="font-bold underline underline-offset-1 text-emerald-500">{item.title}</h1>
 			<p class="pl-5">{item.description}</p>
 		{/each}
 	</div>
