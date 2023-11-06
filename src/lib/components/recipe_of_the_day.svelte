@@ -66,8 +66,11 @@
 				RECIPE OF THE DAY
 			</h2>
 
-			<section class="flex flex-row justify-center items-start gap-3 p-5">
-				<img alt="" src={recipeImg} class="object-cover rounded-md w-full h-full" />
+			<section class="flex flex-row justify-center items-start gap-3 p-2">
+				<img
+					alt=""
+					src={recipeImg}
+					class="object-cover rounded-md max-w-[70vh] max-h-[65vh]" />
 
 				<div class="flex flex-col justify-start items-start gap-2 w-full">
 					<h2 class="text-2xl font-semibold font-small text-black dark:text-white">
