@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { userInfo } from '$lib/stores/user.store';
+	import { userInfo, userSignedIn } from '$lib/stores/user.store';
 	import CommentChain from './comment_chain.svelte';
 	import { Icon } from 'flowbite-svelte-icons';
 
 	let currentUserId = $userInfo.userId;
+	let signedIn: boolean = $userSignedIn;
 
 	export let postId: string;
 	let rootComments: Array<number>;
@@ -17,6 +18,7 @@
 	const loadComments = async () => {
 		const result = await fetch(`/api/comments/post?post_id=${postId}`);
 		const data = await result.json();
+		console.log(data);
 		rootComments = data;
 	};
 </script>
@@ -117,11 +119,13 @@
 				><Icon name="messages-outline" class="h-6 w-6" />{showComments
 					? 'Hide comments'
 					: 'Show comments'}</button>
-			<button
-				class="flex flex-row justify-start items-center gap-1 dark:hover:bg-neutral-700 rounded-md p-1"
-				on:click={() => {
-					showResponseText = true;
-				}}><Icon name="reply-outline" class="h-6 w-6" />Leave a comment</button>
+			{#if signedIn}
+				<button
+					class="flex flex-row justify-start items-center gap-1 dark:hover:bg-neutral-700 rounded-md p-1"
+					on:click={() => {
+						showResponseText = true;
+					}}><Icon name="reply-outline" class="h-6 w-6" />Leave a comment</button>
+			{/if}
 		{/if}
 	</div>
 </div>
