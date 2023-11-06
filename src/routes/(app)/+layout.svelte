@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Home, BookMarked, Search, User2, Salad, SunMoon } from 'lucide-svelte';
+	import { Home, BookMarked, Search, User2, Salad, SunMoon, HelpCircle } from 'lucide-svelte';
 	import type { LayoutData } from './$types';
 	import AddNav from '$lib/components/navigation/add_nav.svelte';
 	import ROTD from '$lib/components/recipe_of_the_day.svelte';
@@ -77,6 +77,10 @@
 		<section
 			class="w-full h-full flex flex-row justify-end items-center gap-3 dark:text-white text-black">
 			<ROTD />
+			<a
+				href="/support/"
+				class="h-9 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300"
+				><HelpCircle /> Support</a>
 			<button
 				on:click={darkClick}
 				class="h-9 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300">
