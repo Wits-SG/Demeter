@@ -112,7 +112,7 @@
 				placeholder="Write a caption..." />
 
 			<button
-				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
+				class="h-10 w-48 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300"
 				on:click={postPicture}>
 				Post
 			</button>

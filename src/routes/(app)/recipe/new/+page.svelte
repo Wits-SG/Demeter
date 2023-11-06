@@ -40,8 +40,12 @@
 	function addIngredients() {
 		// This is how to update an array in svelte and to trigger a html redraw
 		// i.e. for it to actually update the view
-		ingredientsList = [...ingredientsList, inputIngredient];
-		inputIngredient = '';
+		if (inputIngredient != null) {
+			ingredientsList = [...ingredientsList, inputIngredient];
+			inputIngredient = '';
+		} else {
+			alert('Cannot add an empty ingredient');
+		}
 	}
 
 	let editingIngredient: number | null = null;
@@ -55,8 +59,12 @@
 	}
 
 	function addInstructions() {
-		instructionList = [...instructionList, inputInstruction];
-		inputInstruction = '';
+		if (inputInstruction != null) {
+			instructionList = [...instructionList, inputInstruction];
+			inputInstruction = '';
+		} else {
+			alert('Cannot add an empty instruction');
+		}
 	}
 
 	let editingInstruction: number | null = null;
@@ -263,7 +271,7 @@
 				type="text"
 				placeholder="Insert an ingredient" />
 			<button
-				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
+				class="h-10 w-48 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300"
 				on:click={addIngredients}>
 				Add ingredients
 			</button>
@@ -271,7 +279,7 @@
 
 		<section class="flex flex-col items-center w-1/3 gap-5">
 			<button
-				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
+				class="h-10 w-48 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300"
 				on:click={postRecipe}>
 				Post
 			</button>
@@ -286,7 +294,7 @@
 				maxlength="1024"
 				placeholder="type a step of your instruction and click add to start the next" />
 			<button
-				class="w-72 h-12 rounded-md bg-emerald-500 hover:bg-emerald-400 dark:hover:bg-emerald-600"
+				class="h-10 w-48 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300"
 				on:click={addInstructions}>
 				Add instruction
 			</button>
