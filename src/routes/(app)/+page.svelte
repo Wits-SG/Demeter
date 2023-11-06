@@ -40,9 +40,11 @@
 	let listButton: HTMLButtonElement;
 </script>
 
-<div class="w-full h-full flex flex-row justify-center items-start overflow-hidden gap-5 p-5">
+<div
+	class="w-full h-full flex flex-col sm:flex-row justify-center items-start overflow-hidden gap-5 p-5">
 	<div class="w-72 flex flex-col items-start justify-center gap-4">
-		<section class="w-full h-fit flex flex-row justify-evenly items-center">
+		<section
+			class="w-full h-full sm:h-fit pt-10 sm:p-2 flex flex-row justify-evenly items-center">
 			<button
 				bind:this={gridButton}
 				on:click={() => {
