@@ -27,7 +27,6 @@ export const load = (async ({ locals }) => {
 				userId: session.user.userId,
 				pronounID: userResult.rows[0]['pronoun_id'],
 				pictureUrl: userResult.rows[0]['picture_url'],
-				userName: userResult.rows[0]['username'],
 				displayName: userResult.rows[0]['display_name'],
 				biography: userResult.rows[0]['biography']
 			}

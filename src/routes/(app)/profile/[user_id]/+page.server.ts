@@ -57,16 +57,3 @@ export const actions: Actions = {
 		throw redirect(302, '/');
 	}
 };
-
-/*const userPostsResult = await tursoClient.execute({
-			sql:'SELECT post_id, type FROM posts ORDER BY upload_date LIMIT 10 where user_id = ? ',
-			args: [params.user_id]
-		});*/
-
-/*let postsList: Array<{ id: string; type: number }> = [];
-		for (let row of userPostsResult.rows) {
-			if (row['post_id'] != null) {
-				postsList.push({ id: row['post_id'] as string, type: row['type'] as number });
-			}
-		}*/
-//posts: postsList,
