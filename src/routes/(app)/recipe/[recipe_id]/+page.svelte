@@ -39,7 +39,7 @@
 </script>
 
 <div
-	class="w-full h-fit max-h-[90vh] overflow-y-auto bg-zinc-100 dark:bg-zinc-800 flex flex-col justify-center items-center gap-20 pt-6">
+	class="w-full h-fit overflow-y-auto bg-zinc-100 dark:bg-zinc-800 flex flex-col justify-center items-center gap-20 pt-6">
 	<div class="flex flex-row justify start items-start gap-1">
 		<section class="flex flex-col items-center justify-center w-1/2 gap-5 pt-5">
 			<section class="container md:mx-auto w-2/3">
@@ -85,7 +85,7 @@
 				use:melt={$horizontal}
 				class="items-center justify-center h-[3px] w-3/5 bg-teal-600 dark:bg-teal-400" />
 
-			<div class="w-3/5">
+			<div class="w-3/5 pb-5">
 				<PostComments postId={data.recipe.postId} />
 			</div>
 		</section>
@@ -101,7 +101,8 @@
 				<p class="text-lg">{data.recipe.description}</p>
 			</section>
 
-			<section class="flex flex-col h-2/3 w-5/6 justify-center items-center overflow-hidden">
+			<section
+				class="flex flex-col h-2/3 w-5/6 justify-center items-center overflow-hidden pb-5">
 				<div class="w-5/6">
 					{#each items as { id, title }, i}
 						<div
