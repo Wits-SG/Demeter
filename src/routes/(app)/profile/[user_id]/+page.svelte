@@ -55,10 +55,6 @@
 			</section>
 
 			<section>
-				<p class="font-bold text-lg">{data.user.userName}</p>
-			</section>
-
-			<section>
 				<p class="text-lg md:max-w-lg">{data.user.biography}</p>
 			</section>
 

@@ -11,8 +11,6 @@
 
 	let userID: string = $userInfo.userId;
 	//@ts-ignore
-	let username: string = data.user.userName;
-	//@ts-ignore
 	let name: string = data.user.displayName;
 	//@ts-ignore
 	let bio: string = data.user.biography;
@@ -54,7 +52,6 @@
 				method: 'PUT',
 				body: JSON.stringify({
 					userId: data.user.userId,
-					userName: username,
 					displayName: name,
 					biography: bio,
 					pictureUrl: url,
@@ -84,17 +81,6 @@
 		</div>
 
 		<div class="flex flex-col items-start justify-start w-1/2 gap-3">
-			<section class="w-1/2">
-				<label class="text-lg" for="username"> Username </label>
-
-				<input
-					bind:value={username}
-					class="p-1 w-full text-black rounded-md focus:outline-none focus:outline-2 focus:outline-emerald-500"
-					maxlength="32"
-					type="text"
-					placeholder="username" />
-			</section>
-
 			<section class="w-1/2">
 				<label class="text-lg" for="name"> Name </label>
 
