@@ -47,7 +47,6 @@
 			await uploadBytes(pictureImageRef, picture);
 
 			const url = await getDownloadURL(pictureImageRef);
-			console.log(pronounsId);
 			await fetch('/api/user', {
 				method: 'PUT',
 				body: JSON.stringify({

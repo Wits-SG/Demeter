@@ -79,7 +79,7 @@
 			{/if}
 		</div>
 	</div>
-	<div class="flex justify-center h-fit] w-full">
+	<div class="flex justify-center h-fit w-full">
 		<div class="p-8 md:w-4/5 z-0 overflow-y-auto gap-5">
 			<Masonry
 				{items}
