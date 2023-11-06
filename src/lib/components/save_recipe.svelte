@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createDialog, melt } from '@melt-ui/svelte';
 	import SelectCookbook from './cookbooks/SelectCookbook.svelte';
+	import { Save } from 'lucide-svelte';
 
 	export let recipeID: string = '';
 	let selectedCookbook: { name: string; cookbook_id: string } = {
@@ -20,9 +21,8 @@
 
 <button
 	use:melt={$trigger}
-	class="inline-flex items-center justify-center rounded-xl bg-teal-600 px-4 py-3
-    font-medium leading-none text-zinc-50 shadow hover:opacity-75">
-	Save Recipe
+	class="w-48 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300">
+	<Save /> Save Recipe
 </button>
 
 <div use:melt={$portalled}>
@@ -41,8 +41,7 @@
 			<div class="mt-6 flex justify-end gap-4">
 				<button
 					use:melt={$close}
-					class="inline-flex h-8 items-center justify-center rounded-sm
-                      bg-teal-600 px-4 font-medium leading-none text-zinc-50 hover:bg-emerald-600">
+					class="h-10 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300">
 					Cancel
 				</button>
 				<button
@@ -83,8 +82,7 @@
 						}
 					}}
 					use:melt={$close}
-					class="inline-flex h-8 items-center justify-center rounded-sm
-					bg-teal-600 px-4 font-medium leading-none text-zinc-50 hover:bg-emerald-600">
+					class="h-10 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300">
 					Save
 				</button>
 			</div>
