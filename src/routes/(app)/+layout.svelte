@@ -47,9 +47,9 @@
 
 <main class="grid grid-cols-1 grid-rows-[90px_1fr] h-full w-full overflow-hidden">
 	<div
-		class="row-start-1 row-span-1 sticky top-0 w-full h-full flex justify-center items-center bg-zinc-100 dark:bg-neutral-800 border-b-2 border-emerald-500 z-40 p-2">
+		class="overflow-x-auto overflow-y-hidden row-start-1 row-span-1 sticky top-0 w-full h-full flex justify-center items-center bg-zinc-100 dark:bg-neutral-800 border-b-2 border-emerald-500 z-40 p-2">
 		<nav
-			class="w-full h-full flex flex-row justify-start items-center gap-3 dark:text-white text-black">
+			class="overflow-x-auto overflow-y-hidden w-full h-full flex flex-row justify-start items-center gap-3 dark:text-white text-black">
 			<a
 				href="/"
 				class="w-16 h-16 rounded-full border-2 border-black bg-white text-black flex justify-center items-center"
