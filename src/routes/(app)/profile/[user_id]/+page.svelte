@@ -41,7 +41,7 @@
 	};
 </script>
 
-<div class="w-full h-full flex flex-col gap-12 p-6">
+<div class="w-full h-full max-h-[90vh] flex flex-col gap-12 p-6 overflow-y-auto">
 	<div class="flex flex-row gap-20">
 		<div class="flex flex-col items-end justify-end w-1/3 gap-10">
 			<section class="w-64 h-64 rounded-full overflow-hidden">
@@ -79,7 +79,7 @@
 			{/if}
 		</div>
 	</div>
-	<div class="flex justify-center h-fit max-h-[55vh] w-full">
+	<div class="flex justify-center h-fit] w-full">
 		<div class="p-8 md:w-4/5 z-0 overflow-y-auto gap-5">
 			<Masonry
 				{items}
