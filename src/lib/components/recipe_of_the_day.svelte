@@ -70,7 +70,7 @@
 				<img
 					alt=""
 					src={recipeImg}
-					class="object-cover rounded-md max-w-[65vh] max-h-[60vh] h-fit w-fit" />
+					class="object-cover rounded-md max-w-[70vh] max-h-[65vh]" />
 
 				<div class="flex flex-col justify-start items-start gap-2 w-full">
 					<h2 class="text-2xl font-semibold font-small text-black dark:text-white">
