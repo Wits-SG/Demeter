@@ -30,7 +30,8 @@
 					menuID: uuid(),
 					name: 'New Menu',
 					description: '',
-					userID: data.userId ? data.userId : ''
+					userID: data.userId ? data.userId : '',
+					sections: []
 				};
 				menus.push(currentMenu);
 				editMenu = true;

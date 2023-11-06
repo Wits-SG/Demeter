@@ -53,10 +53,10 @@
 					<section
 						class="w-full h-full flex flex-row justify-start items-start gap-4 min-w-fit">
 						<span class="w-1/4 flex flex-col justify-start items-start gap-2">
-							<label for="menu-title" class="text-xl p-1">Menu Title</label>
+							<label for="cookbook-title" class="text-xl p-1">Cookbook Title</label>
 							<input
 								bind:value={currentCookbook.name}
-								name="menu-title"
+								name="cookbook-title"
 								class="text-md h-8 w-full rounded-md outline-none border-2 border-white hover:border-emerald-500 text-black px-1" />
 						</span>
 
