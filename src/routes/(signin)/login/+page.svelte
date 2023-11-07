@@ -1,10 +1,13 @@
 <script lang="ts">
-	import { Icon } from 'flowbite-svelte-icons';
 	import { enhance } from '$app/forms';
+	import { page } from '$app/stores';
+
+	$: console.log($page.status);
+	// h-9 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300
 </script>
 
 <div
-	class="bg-zinc-100 dark:bg-zinc-800 w-1/3 h-screen -skew-x-6 -translate-x-20 border-r-8 border-emerald-500 flex flex-col justify-center items-center">
+	class="bg-zinc-100 dark:bg-zinc-800 w-fit px-32 h-screen -skew-x-6 -translate-x-20 border-r-8 border-emerald-500 flex flex-col justify-center items-center">
 	<div class="skew-x-6 translate-x-8 flex flex-col justify-center items-center gap-10">
 		<h1 class="font-serif text-7xl">Welcome</h1>
 
