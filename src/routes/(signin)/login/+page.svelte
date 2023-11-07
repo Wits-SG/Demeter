@@ -2,9 +2,6 @@
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import { XCircle } from 'lucide-svelte';
-
-	$: console.log($page.status);
-	// h-9 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300
 </script>
 
 <div
