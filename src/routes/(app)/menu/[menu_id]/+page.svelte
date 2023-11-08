@@ -9,8 +9,8 @@
 	import { fade } from 'svelte/transition';
 	import { Trash, MoveLeft, X, Plus, Check } from 'lucide-svelte';
 	import * as Select from '$lib/components/ui/select';
-	//@ts-ignore
-	import { v4 as uuid } from 'uuid';
+	import SelectRecipe from '$lib/components/menu/SelectRecipe.svelte';
+	import { onMount } from 'svelte';
 
 	const {
 		elements: { trigger, content, arrow },
@@ -74,10 +74,30 @@
 	const lastSectionIndex: number = data.menu_info.section_id.length - 1;
 	//need a refresh of data
 
+	let menuSections = data.menu_info.section;
+	let menuRecipes = data.recipe;
+	let addedRecipe: { name: string; recipe_id: string }; // This is a binding for the recipe selected by the dropdown
+
 	let menuCookbooks = data.menuCookbooks;
 	let userCookbooks = data.userCookbooks;
 	let addCookbookFlag: boolean = false;
 	let selectedCookbook: any;
+
+	let addRecipeSectionFlag: Array<boolean> = [];
+	for (let _ of menuSections) {
+		addRecipeSectionFlag.push(false);
+	}
+
+	let cookbookRecipes: Array<Array<{ name: string; recipe_id: string }>> = [];
+	onMount(async () => {
+		for (let mcb of menuCookbooks) {
+			const result = await fetch(`/api/menu?cookbook_id=${mcb.id}`);
+			const newRecipes = await result.json();
+			cookbookRecipes.push(newRecipes);
+		}
+	});
+
+	$: console.log(cookbookRecipes);
 </script>
 
 <div class="w-full h-fit grid grid-rows-1 grid-cols-[minmax(250px,_20%)_1fr] p-2">
@@ -91,6 +111,8 @@
 					<button
 						on:click={async () => {
 							const removedCookbook = menuCookbooks.splice(i, 1)[0];
+							cookbookRecipes.splice(i, 1); // remove the removed cookbook's recipes
+							cookbookRecipes = cookbookRecipes;
 							menuCookbooks = menuCookbooks;
 
 							fetch('/api/menu/cookbook', {
@@ -128,7 +150,7 @@
 					</Select.Root>
 
 					<button
-						on:click={() => {
+						on:click={async () => {
 							addCookbookFlag = false;
 							const newMenuCookbook = {
 								//@ts-ignore
@@ -140,13 +162,20 @@
 								menuCookbooks.push(newMenuCookbook);
 								menuCookbooks = menuCookbooks;
 
-								fetch('/api/menu/cookbook', {
+								await fetch('/api/menu/cookbook', {
 									method: 'POST',
 									body: JSON.stringify({
 										menuId: menuID,
 										cookbookId: newMenuCookbook.id
 									})
 								});
+
+								const result = await fetch(
+									`/api/menu?cookbook_id=${newMenuCookbook.id}`
+								);
+								const newRecipes = await result.json();
+								cookbookRecipes.push(newRecipes);
+								cookbookRecipes = cookbookRecipes;
 							}
 						}}
 						class="text-md text-green-500 flex justify-center items-center">
@@ -187,14 +216,14 @@
 
 		<!-- This will contain all sections and recipes -->
 		<div class="flex flex-col justify-center items-center w-9/12">
-			{#each data.menu_info.section as section, i}
+			{#each menuSections as section, i}
 				<h2
 					class="text-4xl text-emerald-800 dark:text-emerald-400 text-center w-full px-5 font-sans italic font-semibold justify-center items-center py-2 border-b-2 dark:border-sky-200 border-sky-800">
 					{section}
 				</h2>
 				<!-- Displaying recipes under their sections -->
 				<div class="flex flex-col w-full items-start">
-					{#each data.recipe[i] as recipe}
+					{#each menuRecipes[i] as recipe}
 						<div class="flex flex-col w-full">
 							<div class="flex flex-row justify-between">
 								<button class="text-2xl px-10 font-sans font-medium">
@@ -228,10 +257,66 @@
 						</div>
 					{/each}
 
-					<button class="px-5"> <AddRecipe {menuID} sectionID={i} /></button>
+					{#if !addRecipeSectionFlag[i]}
+						<button
+							on:click={() => (addRecipeSectionFlag[i] = true)}
+							class="px-5 text-md hover:bg-neutral-900 text-emerald-500"
+							>+ Recipe</button>
+					{:else}
+						<span
+							class="w-1/3 py-2 px-1 flex flex-row justify-between items-center gap-2">
+							<SelectRecipe
+								recipes={cookbookRecipes.flat()}
+								bind:selectedRecipes={addedRecipe} />
+
+							<button
+								on:click={async () => {
+									addRecipeSectionFlag[i] = false;
+
+									// If the recipe already exists, in the section then don't add it
+									if (
+										!menuRecipes[i].some(
+											(val) => val.id == addedRecipe.recipe_id
+										)
+									) {
+										menuRecipes[i].push({
+											id: addedRecipe.recipe_id,
+											name: addedRecipe.name,
+											postId: '',
+											description: '',
+											servingSize: 0,
+											cookingTime: 0,
+											skillLevel: '',
+											instructions: [],
+											ingredients: [],
+											imageUrl: ''
+										});
+										menuRecipes[i] = menuRecipes[i];
+
+										await fetch('/api/menu/section/recipes', {
+											method: 'POST',
+											body: JSON.stringify({
+												recipeID: addedRecipe.recipe_id,
+												menuID: menuID,
+												sectionID: i
+											})
+										});
+									}
+								}}
+								class="text-md text-green-500 flex justify-center items-center">
+								<Check />
+							</button>
+							<button
+								on:click={() => (addRecipeSectionFlag[i] = false)}
+								class="text-md text-red-500 flex justify-center items-center">
+								<X />
+							</button>
+						</span>
+					{/if}
 				</div>
 			{/each}
 			<button
+				on:click={() => addRecipeSectionFlag.push(false)}
 				class=" py-5 justify-start rounded-md text-4xl text-emerald-800 border-emerald-700 dark:text-emerald-400">
 				<CreateSection sectionID={lastSectionIndex + 1} menuId={menuID} /></button>
 		</div>

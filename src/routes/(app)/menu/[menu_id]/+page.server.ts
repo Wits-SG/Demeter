@@ -38,7 +38,7 @@ export const load = (async ({ locals, params }) => {
 	});
 
 	const menu_section = await tursoClient.execute({
-		sql: 'select * from menu_sections where menu_id=?',
+		sql: 'select * from menu_sections where menu_id=? ORDER BY section_id ASC',
 		args: [params.menu_id]
 	});
 	const menu_recipe_res = await tursoClient.execute({
@@ -60,7 +60,7 @@ export const load = (async ({ locals, params }) => {
 		const sectionRecipes = []; // Create a new array for each section
 
 		const recipe_sections = await tursoClient.execute({
-			sql: 'select recipes.* from menu_recipes  join recipes on menu_recipes.recipe_id = recipes.recipe_id where menu_recipes.menu_id = ? AND menu_recipes.section_id =?',
+			sql: 'select recipes.* from menu_recipes join recipes on menu_recipes.recipe_id = recipes.recipe_id where menu_recipes.menu_id = ? AND menu_recipes.section_id =?',
 
 			args: [params.menu_id, i]
 		});
