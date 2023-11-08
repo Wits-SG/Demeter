@@ -96,14 +96,14 @@
 			cookbookRecipes.push(newRecipes);
 		}
 	});
-
-	$: console.log(cookbookRecipes);
 </script>
 
 <div class="w-full h-fit grid grid-rows-1 grid-cols-[minmax(250px,_20%)_1fr] p-2">
 	<div
 		class="w-full h-fit col-start-1 flex flex-col justify-center items-center gap-5 place-self-stretch">
 		<section class="flex flex-col justify-center items-start gap-2 w-5/6 min-w-[100px] py-2">
+			<h2 class="text-2xl border-b-2 border-sky-500">Cookbooks</h2>
+
 			{#each menuCookbooks as mcb, i}
 				<p
 					class="w-full border-sky-500 border-b-2 text-lg flex flex-row justify-between items-center">
@@ -112,7 +112,6 @@
 						on:click={async () => {
 							const removedCookbook = menuCookbooks.splice(i, 1)[0];
 							cookbookRecipes.splice(i, 1); // remove the removed cookbook's recipes
-							cookbookRecipes = cookbookRecipes;
 							menuCookbooks = menuCookbooks;
 
 							fetch('/api/menu/cookbook', {
@@ -175,7 +174,6 @@
 								);
 								const newRecipes = await result.json();
 								cookbookRecipes.push(newRecipes);
-								cookbookRecipes = cookbookRecipes;
 							}
 						}}
 						class="text-md text-green-500 flex justify-center items-center">
@@ -279,13 +277,17 @@
 											(val) => val.id == addedRecipe.recipe_id
 										)
 									) {
+										const res = await fetch(
+											`/api/recipe?recipe_id=${addedRecipe.recipe_id}`
+										);
+										const { recipe: recipeJson } = await res.json();
 										menuRecipes[i].push({
 											id: addedRecipe.recipe_id,
 											name: addedRecipe.name,
-											postId: '',
-											description: '',
-											servingSize: 0,
-											cookingTime: 0,
+											postId: recipeJson.postId,
+											description: recipeJson.description,
+											servingSize: recipeJson.servingSize,
+											cookingTime: recipeJson.cookingTime,
 											skillLevel: '',
 											instructions: [],
 											ingredients: [],
