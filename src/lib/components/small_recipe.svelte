@@ -90,7 +90,7 @@
 
 		<div class=" flex flex-col h-4/5 justify-center">
 			<h1
-				class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-semi-bold font-serif p-5 dark: text-emerald-300">
+				class="text-3xl text-bold text-emerald-700 dark:text-emerald-300 font-semi-bold font-serif p-5 dark:">
 				DESCRIPTION
 			</h1>
 			<p class="font-serif text-xl text-black dark:text-white">{Description}</p>
