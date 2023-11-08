@@ -225,10 +225,13 @@
 				<div class="flex flex-col w-full items-start">
 					{#each menuRecipes[i] as recipe, recipeIdx}
 						<div class="flex flex-col w-full">
-							<div class="flex flex-row justify-between">
-								<button class="text-2xl px-10 font-sans font-medium">
-									<DisplayRecipe recipeID={recipe.id} recipeName={recipe.name} />
-								</button>
+							<div
+								class="flex flex-row justify-between italic dark:text-emerald-300 text-emerald-800">
+								<a
+									href="/recipe/{recipe.id}"
+									class="text-2xl px-10 font-sans font-medium">
+									{recipe.name}
+								</a>
 								<!-- <a href="/recipe/{recipe.id}" class="text-2xl px-10 font-sans font-medium">{recipe.name}</a> -->
 								<div class="flex flex-row items-center justify-center gap-1">
 									<Icon name="clock-outline" class="h-5 w-5" />
