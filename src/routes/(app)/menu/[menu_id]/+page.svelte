@@ -48,7 +48,7 @@
 			console.error('An error occurred while deleting the menu:', error);
 		}
 	};
-	async function deleteRecipe(sectionID: number, recipeID: string) {
+	async function deleteRecipe(sectionID: number, recipeID: string, recipeIdx: number) {
 		try {
 			const response = await fetch('/api/menu/section/recipes', {
 				method: 'DELETE',
@@ -57,6 +57,8 @@
 				},
 				body: JSON.stringify({ recipeID: recipeID, menuID: menuID, sectionID: sectionID })
 			});
+
+			menuRecipes[sectionID].splice(recipeIdx, 1);
 
 			if (response.ok) {
 				// Recipe deleted successfully
@@ -221,7 +223,7 @@
 				</h2>
 				<!-- Displaying recipes under their sections -->
 				<div class="flex flex-col w-full items-start">
-					{#each menuRecipes[i] as recipe}
+					{#each menuRecipes[i] as recipe, recipeIdx}
 						<div class="flex flex-col w-full">
 							<div class="flex flex-row justify-between">
 								<button class="text-2xl px-10 font-sans font-medium">
@@ -235,7 +237,7 @@
 									</p>
 									<button
 										use:melt={$trigger}
-										on:click={() => deleteRecipe(i, recipe.id)}
+										on:click={() => deleteRecipe(i, recipe.id, recipeIdx)}
 										class="text-md px-5 text-red-500 flex justify-center items-center"
 										><X /></button>
 									{#if $open}
