@@ -90,8 +90,16 @@
 					{mcb.name}
 					<button
 						on:click={async () => {
-							menuCookbooks.splice(i, 1);
+							const removedCookbook = menuCookbooks.splice(i, 1)[0];
 							menuCookbooks = menuCookbooks;
+
+							fetch('/api/menu/cookbook', {
+								method: 'DELETE',
+								body: JSON.stringify({
+									menuId: menuID,
+									cookbookId: removedCookbook.id
+								})
+							});
 						}}
 						class="text-md text-red-500 flex justify-center items-center">
 						<X /></button>
@@ -125,12 +133,20 @@
 							const newMenuCookbook = {
 								//@ts-ignore
 								name: userCookbooks[selectedCookbook.value].name,
-								id: uuid()
+								id: userCookbooks[selectedCookbook.value].id
 							};
 
 							if (!menuCookbooks.some((val) => val.name == newMenuCookbook.name)) {
 								menuCookbooks.push(newMenuCookbook);
 								menuCookbooks = menuCookbooks;
+
+								fetch('/api/menu/cookbook', {
+									method: 'POST',
+									body: JSON.stringify({
+										menuId: menuID,
+										cookbookId: newMenuCookbook.id
+									})
+								});
 							}
 						}}
 						class="text-md text-green-500 flex justify-center items-center">
