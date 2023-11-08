@@ -12,7 +12,7 @@ export const POST = async (event: RequestEvent) => {
 
 	try {
 		await tursoClient.execute({
-			sql: 'insert into menus(menu_id, user_id, name, description) values (?, ?, ?)',
+			sql: 'insert into menus(menu_id, user_id, name, description) values (?, ?, ?, ?)',
 			args: [
 				menu.menuID,
 				menu.userID !== undefined ? menu.userID : '',
