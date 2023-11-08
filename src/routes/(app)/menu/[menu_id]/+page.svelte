@@ -7,7 +7,10 @@
 	import DisplayRecipe from '$lib/components/menu/DisplayRecipe.svelte';
 	import { createTooltip, melt } from '@melt-ui/svelte';
 	import { fade } from 'svelte/transition';
-	import { Trash, MoveLeft, X } from 'lucide-svelte';
+	import { Trash, MoveLeft, X, Plus, Check } from 'lucide-svelte';
+	import * as Select from '$lib/components/ui/select';
+	//@ts-ignore
+	import { v4 as uuid } from 'uuid';
 
 	const {
 		elements: { trigger, content, arrow },
@@ -70,10 +73,78 @@
 
 	const lastSectionIndex: number = data.menu_info.section_id.length - 1;
 	//need a refresh of data
+
+	let menuCookbooks = data.menuCookbooks;
+	let userCookbooks = data.userCookbooks;
+	let addCookbookFlag: boolean = false;
+	let selectedCookbook: any;
 </script>
 
 <div class="w-full h-fit grid grid-rows-1 grid-cols-[minmax(250px,_20%)_1fr] p-2">
-	<div class="w-full h-fit col-start-1 flex flex-col justify-center items-center gap-2">
+	<div
+		class="w-full h-fit col-start-1 flex flex-col justify-center items-center gap-5 place-self-stretch">
+		<section class="flex flex-col justify-center items-start gap-2 w-5/6 min-w-[100px] py-2">
+			{#each menuCookbooks as mcb, i}
+				<p
+					class="w-full border-sky-500 border-b-2 text-lg flex flex-row justify-between items-center">
+					{mcb.name}
+					<button
+						on:click={async () => {
+							menuCookbooks.splice(i, 1);
+							menuCookbooks = menuCookbooks;
+						}}
+						class="text-md text-red-500 flex justify-center items-center">
+						<X /></button>
+				</p>
+			{/each}
+
+			{#if !addCookbookFlag}
+				<button
+					on:click={() => (addCookbookFlag = true)}
+					class="w-full border-sky-500 hover:bg-neutral-200 dark:hover:bg-neutral-900 border-b-2 text-lg flex flex-row justify-between items-center">
+					Add a Cookbook
+					<Plus />
+				</button>
+			{:else}
+				<span
+					class="w-full py-2 border-sky-500 border-b-2 flex flex-row justify-between items-center gap-2">
+					<Select.Root bind:selected={selectedCookbook}>
+						<Select.Trigger>
+							<Select.Value placeholder="Select cookbook" />
+						</Select.Trigger>
+						<Select.Content>
+							{#each userCookbooks as ucb, i}
+								<Select.Item value={i}>{ucb.name}</Select.Item>
+							{/each}
+						</Select.Content>
+					</Select.Root>
+
+					<button
+						on:click={() => {
+							addCookbookFlag = false;
+							const newMenuCookbook = {
+								//@ts-ignore
+								name: userCookbooks[selectedCookbook.value].name,
+								id: uuid()
+							};
+
+							if (!menuCookbooks.some((val) => val.name == newMenuCookbook.name)) {
+								menuCookbooks.push(newMenuCookbook);
+								menuCookbooks = menuCookbooks;
+							}
+						}}
+						class="text-md text-green-500 flex justify-center items-center">
+						<Check />
+					</button>
+					<button
+						on:click={() => (addCookbookFlag = false)}
+						class="text-md text-red-500 flex justify-center items-center">
+						<X />
+					</button>
+				</span>
+			{/if}
+		</section>
+
 		<section class="flex flex-col justify-center items-start gap-2 w-1/2 min-w-[100px]">
 			<a
 				class="w-full items-center justify-start flex flex-row rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 py-1 px-2 dark:hover:bg-emerald-800 hover:bg-emerald-300 text-lg gap-2"
