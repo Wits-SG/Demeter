@@ -9,7 +9,8 @@
 
 	export let data: PageData;
 
-	let userID: string = $userInfo.userId;
+	//@ts-ignore
+	let userID: string = data.userId;
 	//@ts-ignore
 	let name: string = data.user.displayName;
 	//@ts-ignore

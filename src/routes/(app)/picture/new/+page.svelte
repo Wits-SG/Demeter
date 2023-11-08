@@ -5,8 +5,11 @@
 	import { fb_storage } from '$lib/firebase';
 	import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 	import { userInfo } from '$lib/stores/user.store';
+	import type { PageData } from './$types';
 
-	let userId = $userInfo.userId;
+	export let data: PageData;
+
+	let userId = data.userId;
 
 	let description: string;
 	let title: string;
