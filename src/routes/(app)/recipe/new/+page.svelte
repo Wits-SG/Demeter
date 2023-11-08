@@ -10,7 +10,7 @@
 
 	export let data: PageData;
 
-	let userId = $userInfo.userId;
+	let userId = data.userId;
 
 	let recipeName: string;
 	let description: string;
