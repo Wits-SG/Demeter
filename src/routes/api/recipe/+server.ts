@@ -6,7 +6,7 @@ export const GET = async ({ url }) => {
 
 	try {
 		const recipe_res = await tursoClient.execute({
-			sql: 'select name, description, image_url, serving_size, cooking_time from recipes where recipe_id = ?',
+			sql: 'select name, post_id, description, image_url, serving_size, cooking_time from recipes where recipe_id = ?',
 			args: [recipeID]
 		});
 
@@ -32,6 +32,7 @@ export const GET = async ({ url }) => {
 		return json({
 			recipe: {
 				name: recipe_res.rows[0]['name'],
+				post_id: recipe_res.rows[0]['post_id'],
 				description: recipe_res.rows[0]['description'],
 				imageURL: recipe_res.rows[0]['image_url'],
 				servingSize: recipe_res.rows[0]['serving_size'],

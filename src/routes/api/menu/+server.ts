@@ -67,9 +67,14 @@ export const PUT = async ({ request }) => {
 /**
  * @description Fetch a list of all recipes for a user
  */
-export const GET = async (event: RequestEvent) => {
+export const GET = async ({ url }) => {
 	try {
-		const recipeResult = await tursoClient.execute('select recipe_id, name from recipes');
+		const cookbookId = url.searchParams.get('cookbook_id');
+
+		const recipeResult = await tursoClient.execute({
+			sql: 'SELECT recipes.recipe_id, recipes.name FROM recipes JOIN cookbook_recipes ON cookbook_recipes.recipe_id = recipes.recipe_id WHERE cookbook_recipes.cookbook_id = ?',
+			args: [cookbookId]
+		});
 		const returnedRecipes = [];
 
 		for (let row of recipeResult.rows) {

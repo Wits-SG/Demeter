@@ -85,7 +85,7 @@
 		<section class="flex flex-col items-center w-1/2 gap-5">
 			<label class="text-lg font-bold" for="picture"> Select image: </label>
 
-			<img class="w-fit w-fit" src={pictureLocalUrl} alt="None found" />
+			<img class="w-fit" src={pictureLocalUrl} alt="None found" />
 			<input
 				type="file"
 				id="picture"
