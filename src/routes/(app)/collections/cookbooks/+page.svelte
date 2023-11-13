@@ -3,8 +3,11 @@
 	import type { PageData } from './$types';
 	//@ts-ignore
 	import { v4 as uuid } from 'uuid';
+	import DeleteCollection from '$lib/components/delete_collection.svelte';
 
 	export let data: PageData;
+
+	let confirmDelete = false;
 
 	let cookbooks: Array<Cookbook> = data.cookbooks;
 	let currentCookbook: Cookbook =
@@ -18,6 +21,26 @@
 
 	let editCookbook: boolean = false;
 	let uneditedCookbook: Cookbook = currentCookbook;
+
+	let cTemp: any;
+	let iTemp: number;
+
+	async function deleteCookbook(i: number, c: any) {
+		cookbooks.splice(i, 1);
+		cookbooks = cookbooks;
+
+		await fetch('/api/cookbook', {
+			method: 'DELETE',
+			body: JSON.stringify({ cookbookId: c.id })
+		});
+	}
+
+	$: if (confirmDelete == true) {
+		console.log('werr');
+		deleteCookbook(iTemp, cTemp);
+		console.log('juhyh');
+		confirmDelete = false;
+	}
 </script>
 
 <div class="w-full h-fit max-h-[95vh] overflow-y-auto flex flex-col gap-4 p-5">
@@ -109,15 +132,20 @@
 						<td
 							class="pl-2"
 							on:click={() => {
+								console.log('in html');
+								console.log(c);
 								currentCookbook = c;
 								uneditedCookbook = c;
+								cTemp = c;
+								iTemp = i;
 							}}>{c.name}</td>
 						<td class="w-10 p-1">
+							<!-- Add your delete logic here 
 							<button
 								on:click={async () => {
 									cookbooks.splice(i, 1);
 									cookbooks = cookbooks;
-
+									
 									await fetch('/api/cookbook', {
 										method: 'DELETE',
 										body: JSON.stringify({ cookbookId: c.id })
@@ -126,6 +154,8 @@
 								class="w-full p-1 rounded-md flex flex-row justify-center items-center hover: dark:text-white text-black hover:bg-red-300 bg-red-400 border-2 border-red-600">
 								<Trash />
 							</button>
+							-->
+							<DeleteCollection bind:confirmDelete />
 						</td>
 						<td class="w-10 p-1">
 							<button
