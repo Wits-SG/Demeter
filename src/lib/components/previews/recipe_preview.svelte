@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { useDeviceLanguage } from 'firebase/auth';
-	import { Icon } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
 
 	export let postID: string;

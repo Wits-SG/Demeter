@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Icon } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
 
 	export let postID: string;

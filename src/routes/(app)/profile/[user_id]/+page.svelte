@@ -3,7 +3,7 @@
 	import type { PageData } from './$types';
 	import { fb_auth } from '$lib/firebase';
 	import { goto } from '$app/navigation';
-	import PostPreview from '$lib/components/posts/post_preview.svelte';
+	import PostPreview from '$lib/components/previews/post_preview.svelte';
 	//@ts-ignore
 	import Masonry from 'svelte-bricks';
 	import IntersectionObserver from 'svelte-intersection-observer';
