@@ -117,13 +117,18 @@
 				</select>
 			</section>
 
-			<section>
+			<section class="flex flex-row gap-2">
 				<a
 					href="/profile/{data.userId}"
-					class="inline-flex h-8 items-center justify-center rounded-sm
-				px-4 font-medium leading-none dark:text-white text-black border-2 border-emerald-500 bg-emerald-100 hover:bg-emerald-300 dark:bg-emerald-700 dark:hover:bg-emerald-900"
+					class="w-20 p-1 rounded-md flex flex-row justify-center items-center dark:text-white text-black border-2 border-emerald-500 bg-emerald-100 hover:bg-emerald-300 dark:bg-emerald-700 dark:hover:bg-emerald-900"
 					on:click={handleSave}>
 					Save
+				</a>
+
+				<a
+					href="/profile/{data.userId}"
+					class="w-20 p-1 rounded-md flex flex-row justify-center items-center dark:text-white text-black hover:bg-red-300 bg-red-400 border-2 border-red-600">
+					Cancel
 				</a>
 			</section>
 		</div>
