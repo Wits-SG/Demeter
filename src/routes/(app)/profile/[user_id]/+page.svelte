@@ -21,7 +21,7 @@
 	let tempPosts: any;
 	let tempItems;
 
-	let userID = $userInfo.userId;
+	let userID = data.user.userId;
 
 	const getMorePosts = async (pageNum: Number) => {
 		try {
