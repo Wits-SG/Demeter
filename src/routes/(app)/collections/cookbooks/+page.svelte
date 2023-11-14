@@ -3,12 +3,10 @@
 	import type { PageData } from './$types';
 	//@ts-ignore
 	import { v4 as uuid } from 'uuid';
-	import { stringify } from 'postcss';
 
 	export let data: PageData;
 
 	let cookbooks: Array<Cookbook> = data.cookbooks;
-
 	let currentCookbook: Cookbook =
 		cookbooks.length > 0
 			? cookbooks[0]
@@ -20,6 +18,7 @@
 
 	let editCookbook: boolean = false;
 	let uneditedCookbook: Cookbook = currentCookbook;
+	let newCookbook: boolean = false;
 </script>
 
 <div class="w-full h-fit max-h-[95vh] overflow-y-auto flex flex-col gap-4 p-5">
@@ -34,6 +33,7 @@
 				};
 				cookbooks.push(currentCookbook);
 				editCookbook = true;
+				newCookbook = true;
 
 				await fetch('/api/cookbook', {
 					method: 'POST',
@@ -78,7 +78,7 @@
 							on:click={async () => {
 								editCookbook = false;
 								cookbooks = cookbooks; // force a redraw of the table with the new title
-
+								newCookbook = false;
 								await fetch('/api/cookbook', {
 									method: 'PUT',
 									body: JSON.stringify(currentCookbook)
@@ -88,12 +88,19 @@
 							><Save /></button>
 						<button
 							on:click={async () => {
-								currentCookbook = uneditedCookbook;
+								// console.log(uneditedCookbook);
+								// currentCookbook = uneditedCookbook;
+								console.log(newCookbook);
 
-								if (!editCookbook) {
+								if (newCookbook) {
+									await fetch('/api/cookbook', {
+										method: 'DELETE',
+										body: JSON.stringify({ cookbookId: currentCookbook.id })
+									});
 									const index = cookbooks.indexOf(currentCookbook);
 									cookbooks.splice(index, 1);
 								}
+								currentCookbook = uneditedCookbook;
 								editCookbook = false;
 							}}
 							class="p-1 rounded-md flex flex-row justify-center items-center hover: dark:text-white text-black hover:bg-red-300 bg-red-400 border-2 border-red-600"
@@ -118,6 +125,7 @@
 							on:click={() => {
 								currentCookbook = c;
 								uneditedCookbook = c;
+								newCookbook = false;
 							}}>{c.name}</td>
 						<td class="w-10 p-1">
 							<button
