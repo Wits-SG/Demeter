@@ -104,17 +104,16 @@
 							><Save /></button>
 						<button
 							on:click={async () => {
-								currentMenu = uneditedMenu;
-								editMenu = false;
-
 								if (newMenu) {
-									await fetch('/api/cookbook', {
+									await fetch('/api/menu', {
 										method: 'DELETE',
-										body: JSON.stringify({ cookbookId: currentMenu.menuID })
+										body: JSON.stringify({ menuId: currentMenu.menuID })
 									});
 									const index = menus.indexOf(currentMenu);
 									menus.splice(index, 1);
 								}
+								currentMenu = uneditedMenu;
+								editMenu = false;
 							}}
 							class="p-1 rounded-md flex flex-row justify-center items-center hover: dark:text-white text-black hover:bg-red-300 bg-red-400 border-2 border-red-600"
 							><X /></button>
@@ -160,6 +159,7 @@
 							<button
 								on:click={() => {
 									editMenu = true;
+									currentMenu = m;
 									uneditedMenu = currentMenu;
 								}}
 								class="w-full items-center justify-center flex flex-row rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-1 dark:hover:bg-emerald-800 hover:bg-emerald-300">
