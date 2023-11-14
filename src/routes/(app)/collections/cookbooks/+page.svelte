@@ -88,13 +88,15 @@
 							on:click={async () => {
 								currentCookbook = uneditedCookbook;
 								editCookbook = false;
-								const index = cookbooks.indexOf(currentCookbook);
-								cookbooks.splice(index, 1);
+								if (editCookbook) {
+									const index = cookbooks.indexOf(currentCookbook);
+									cookbooks.splice(index, 1);
 
-								await fetch('/api/cookbook', {
-									method: 'DELETE',
-									body: JSON.stringify({ cookbookId: currentCookbook.id })
-								});
+									await fetch('/api/cookbook', {
+										method: 'DELETE',
+										body: JSON.stringify({ cookbookId: currentCookbook.id })
+									});
+								}
 							}}
 							class="p-1 rounded-md flex flex-row justify-center items-center hover: dark:text-white text-black hover:bg-red-300 bg-red-400 border-2 border-red-600"
 							><X /></button>
