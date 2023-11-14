@@ -3,6 +3,7 @@
 	import type { PageData } from './$types';
 	//@ts-ignore
 	import { v4 as uuid } from 'uuid';
+	import DeleteCollection from '$lib/components/delete_collection.svelte';
 
 	export let data: PageData;
 
@@ -113,8 +114,9 @@
 								uneditedCookbook = c;
 							}}>{c.name}</td>
 						<td class="w-10 p-1">
-							<button
-								on:click={async () => {
+							<DeleteCollection
+								collection="Cookbook"
+								handleDelete={async () => {
 									cookbooks.splice(i, 1);
 									cookbooks = cookbooks;
 
@@ -122,10 +124,7 @@
 										method: 'DELETE',
 										body: JSON.stringify({ cookbookId: c.id })
 									});
-								}}
-								class="w-full p-1 rounded-md flex flex-row justify-center items-center hover: dark:text-white text-black hover:bg-red-300 bg-red-400 border-2 border-red-600">
-								<Trash />
-							</button>
+								}} />
 						</td>
 						<td class="w-10 p-1">
 							<button

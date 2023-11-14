@@ -3,6 +3,7 @@
 	import type { PageData } from './$types';
 	//@ts-ignore
 	import { v4 as uuid } from 'uuid';
+	import DeleteCollection from '$lib/components/delete_collection.svelte';
 
 	export let data: PageData;
 	let menus = data.menus;
@@ -133,8 +134,9 @@
 								uneditedMenu = m;
 							}}>{m.name}</td>
 						<td class="w-10 p-1">
-							<button
-								on:click={async () => {
+							<DeleteCollection
+								collection="Menu"
+								handleDelete={async () => {
 									menus.splice(i, 1);
 									menus = menus;
 
@@ -142,10 +144,7 @@
 										method: 'DELETE',
 										body: JSON.stringify({ menuId: m.menuID })
 									});
-								}}
-								class="w-full p-1 rounded-md flex flex-row justify-center items-center hover: dark:text-white text-black hover:bg-red-300 bg-red-400 border-2 border-red-600">
-								<Trash />
-							</button>
+								}} />
 						</td>
 						<td class="w-10 p-1">
 							<button
