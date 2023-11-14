@@ -18,7 +18,7 @@
 					sections: [] as Array<string>
 			  } as Menu);
 	let uneditedMenu: Menu = currentMenu;
-
+	let newMenu: boolean = false;
 	let editMenu: boolean = false;
 </script>
 
@@ -36,7 +36,7 @@
 				};
 				menus.push(currentMenu);
 				editMenu = true;
-
+				newMenu = true;
 				await fetch('/api/menu', {
 					method: 'POST',
 					body: JSON.stringify(currentMenu)
@@ -103,9 +103,18 @@
 							class="items-center justify-center flex flex-row rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-1 dark:hover:bg-emerald-800 hover:bg-emerald-300"
 							><Save /></button>
 						<button
-							on:click={() => {
+							on:click={async () => {
 								currentMenu = uneditedMenu;
 								editMenu = false;
+
+								if (newMenu) {
+									await fetch('/api/cookbook', {
+										method: 'DELETE',
+										body: JSON.stringify({ cookbookId: currentMenu.menuID })
+									});
+									const index = menus.indexOf(currentMenu);
+									menus.splice(index, 1);
+								}
 							}}
 							class="p-1 rounded-md flex flex-row justify-center items-center hover: dark:text-white text-black hover:bg-red-300 bg-red-400 border-2 border-red-600"
 							><X /></button>
@@ -132,6 +141,7 @@
 							on:click={() => {
 								currentMenu = m;
 								uneditedMenu = m;
+								newMenu = false;
 							}}>{m.name}</td>
 						<td class="w-10 p-1">
 							<DeleteCollection
