@@ -9,7 +9,7 @@
 		forceVisible: true
 	});
 
-	export let confirmDelete: boolean;
+	export let handleDelete: () => Promise<void>;
 </script>
 
 <button
@@ -39,10 +39,10 @@
 				</button>
 
 				<button
-					on:click={() => {
-						confirmDelete = true; // Set this to true when the user confirms the deletion
+					on:click={async () => {
+						$open = false;
+						await handleDelete();
 					}}
-					use:melt={$close}
 					class="h-10 items-center justify-center flex flex-row gap-1 rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-2 dark:hover:bg-emerald-800 hover:bg-emerald-300">
 					Delete
 				</button>
