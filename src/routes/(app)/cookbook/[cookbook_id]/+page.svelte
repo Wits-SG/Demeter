@@ -4,6 +4,7 @@
 	import { Icon } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
+	import { redirect } from '@sveltejs/kit';
 	export let data: PageData;
 
 	console.log('Recipes', data.recipes);
@@ -74,16 +75,13 @@
 		try {
 			const response = await fetch('/api/cookbook', {
 				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ cookbook_id: cookbookID })
+				body: JSON.stringify({ cookbookId: cookbookID })
 			});
 
 			if (response.ok) {
 				// Recipe deleted successfully
 				// You can add additional logic here if needed
-				//invalidateAll();
+				invalidateAll();
 			} else {
 				const errorMessage = await response.text();
 				console.error(`Error deleting recipe: ${errorMessage}`);
@@ -108,7 +106,7 @@
 			{/each}
 
 			<a href="/collections/cookbooks">Back</a>
-			<button on:click={deleteCookbook}>Delete</button>
+			<!-- <button on:click={deleteCookbook}>Delete</button> -->
 		</div>
 	</div>
 	<!-- div for the small recipe box -->
