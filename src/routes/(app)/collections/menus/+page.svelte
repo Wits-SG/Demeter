@@ -18,7 +18,7 @@
 					sections: [] as Array<string>
 			  } as Menu);
 	let uneditedMenu: Menu = currentMenu;
-
+	let newMenu: boolean = false;
 	let editMenu: boolean = false;
 </script>
 
@@ -36,7 +36,7 @@
 				};
 				menus.push(currentMenu);
 				editMenu = true;
-
+				newMenu = true;
 				await fetch('/api/menu', {
 					method: 'POST',
 					body: JSON.stringify(currentMenu)
@@ -103,7 +103,15 @@
 							class="items-center justify-center flex flex-row rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-1 dark:hover:bg-emerald-800 hover:bg-emerald-300"
 							><Save /></button>
 						<button
-							on:click={() => {
+							on:click={async () => {
+								if (newMenu) {
+									await fetch('/api/menu', {
+										method: 'DELETE',
+										body: JSON.stringify({ menuId: currentMenu.menuID })
+									});
+									const index = menus.indexOf(currentMenu);
+									menus.splice(index, 1);
+								}
 								currentMenu = uneditedMenu;
 								editMenu = false;
 							}}
@@ -132,6 +140,7 @@
 							on:click={() => {
 								currentMenu = m;
 								uneditedMenu = m;
+								newMenu = false;
 							}}>{m.name}</td>
 						<td class="w-10 p-1">
 							<DeleteCollection
@@ -150,6 +159,7 @@
 							<button
 								on:click={() => {
 									editMenu = true;
+									currentMenu = m;
 									uneditedMenu = currentMenu;
 								}}
 								class="w-full items-center justify-center flex flex-row rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-1 dark:hover:bg-emerald-800 hover:bg-emerald-300">
