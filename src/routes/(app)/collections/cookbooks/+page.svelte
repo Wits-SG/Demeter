@@ -90,7 +90,6 @@
 							on:click={async () => {
 								// console.log(uneditedCookbook);
 								// currentCookbook = uneditedCookbook;
-								console.log(newCookbook);
 
 								if (newCookbook) {
 									await fetch('/api/cookbook', {
