@@ -7,6 +7,7 @@
 	export let data: PageData;
 
 	let cookbooks: Array<Cookbook> = data.cookbooks;
+	console.log(cookbooks);
 	let currentCookbook: Cookbook =
 		cookbooks.length > 0
 			? cookbooks[0]
@@ -85,18 +86,9 @@
 							class="items-center justify-center flex flex-row rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-1 dark:hover:bg-emerald-800 hover:bg-emerald-300"
 							><Save /></button>
 						<button
-							on:click={async () => {
+							on:click={() => {
 								currentCookbook = uneditedCookbook;
 								editCookbook = false;
-								if (editCookbook) {
-									const index = cookbooks.indexOf(currentCookbook);
-									cookbooks.splice(index, 1);
-
-									await fetch('/api/cookbook', {
-										method: 'DELETE',
-										body: JSON.stringify({ cookbookId: currentCookbook.id })
-									});
-								}
 							}}
 							class="p-1 rounded-md flex flex-row justify-center items-center hover: dark:text-white text-black hover:bg-red-300 bg-red-400 border-2 border-red-600"
 							><X /></button>
@@ -118,6 +110,7 @@
 						<td
 							class="pl-2"
 							on:click={() => {
+								console.log(c);
 								currentCookbook = c;
 								uneditedCookbook = c;
 							}}>{c.name}</td>

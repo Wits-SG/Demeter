@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 			for (let row of cookbooksRes.rows) {
 				cookbooks.push({
 					id: row['cookbook_id'],
-					userID: '',
+					userID: session.user.userId,
 					name: row['name'],
 					description: row['description']
 				} as Cookbook);
