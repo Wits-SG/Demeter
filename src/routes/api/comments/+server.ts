@@ -3,7 +3,7 @@ import { error, json } from '@sveltejs/kit';
 
 // Fetch the comments information
 export const GET = async ({ url }) => {
-	const commentId = url.searchParams.get('comment_id');
+	const commentId = Number(url.searchParams.get('comment_id'));
 
 	try {
 		const commentRes = await tursoClient.execute({
@@ -18,7 +18,7 @@ export const GET = async ({ url }) => {
 			args: [commentId]
 		});
 
-		const children: Array<number> = [];
+		let children: Array<number> = [];
 		for (let child of commentChildrenRes.rows) {
 			children.push(child['comment_id'] as number);
 		}
@@ -27,7 +27,12 @@ export const GET = async ({ url }) => {
 			sql: 'SELECT display_name FROM users WHERE id = ? LIMIT 1',
 			args: [userId]
 		});
-		const displayName = userRes.rows[0]['display_name'];
+		let displayName;
+		if (userRes.rows.length != 0) {
+			displayName = userRes.rows[0]['display_name'];
+		} else {
+			displayName = 'No User';
+		}
 
 		return json({
 			userId,
