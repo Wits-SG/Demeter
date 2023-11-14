@@ -18,10 +18,14 @@ export const load = (async ({ params }) => {
 	});
 
 	return {
-		user: {
-			userID: post_res.rows[0]['id'],
-			displayName: post_res.rows[0]['display_name']
-		},
+		user:
+			post_res.rows.length > 0
+				? {
+						userID: post_res.rows[0]['id'],
+						displayName: post_res.rows[0]['display_name']
+				  }
+				: { error: true },
+
 		picture: {
 			//picture_id: params.picture_id,
 			url: picture_res.rows[0]['url'],

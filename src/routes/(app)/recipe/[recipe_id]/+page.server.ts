@@ -45,10 +45,13 @@ export const load = (async ({ params }) => {
 	});
 
 	return {
-		user: {
-			userID: post_res.rows[0]['id'],
-			displayName: post_res.rows[0]['display_name']
-		},
+		user:
+			post_res.rows.length > 0
+				? {
+						userID: post_res.rows[0]['id'],
+						displayName: post_res.rows[0]['display_name']
+				  }
+				: { error: true },
 
 		recipe: {
 			id: params.recipe_id,
