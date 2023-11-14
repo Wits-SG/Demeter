@@ -115,6 +115,7 @@
 							}}>{c.name}</td>
 						<td class="w-10 p-1">
 							<DeleteCollection
+								collection="Cookbook"
 								handleDelete={async () => {
 									cookbooks.splice(i, 1);
 									cookbooks = cookbooks;

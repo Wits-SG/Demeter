@@ -9,6 +9,7 @@
 		forceVisible: true
 	});
 
+	export let collection: string;
 	export let handleDelete: () => Promise<void>;
 </script>
 
@@ -26,9 +27,9 @@
               max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-xl bg-white
               p-6 shadow-lg"
 			use:melt={$content}>
-			<h2 use:melt={$title} class=" text-lg font-medium text-black">Delete Cookbook</h2>
+			<h2 use:melt={$title} class=" text-lg font-medium text-black">Delete {collection}</h2>
 			<p use:melt={$description} class="mb-5 mt-2 leading-normal text-zinc-600">
-				Are you sure you want to delete this cookbook?
+				Are you sure you want to delete this {collection}?
 			</p>
 			<!-- Add your delete logic here -->
 			<div class="mt-6 flex justify-end gap-4">
