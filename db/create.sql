@@ -146,6 +146,12 @@ CREATE TABLE IF NOT EXISTS menus (
         FOREIGN KEY (cookbook_id) REFERENCES cookbooks(id) ON DELETE CASCADE
     );
 
+CREATE TABLE IF NOT EXISTS recipe_of_the_day (
+    id integer PRIMARY KEY NOT NULL,
+    recipe_id text,
+    date integer,
+    FOREIGN KEY (recipe_id) REFERENCES recipes(id) ON DELETE CASCADE
+);
 
 -- ENUM INSERTION
 

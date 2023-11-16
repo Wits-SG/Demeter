@@ -18,6 +18,7 @@ INSERT INTO posts (id, user_id, upload_date, likes, type) VALUES
     ("post_recipe_id_2", "user_id_1", 98500, 20, 1),
     ("post_recipe_id_3", "user_id_1", 99000, 25, 0),
     ("post_recipe_id_4", "user_id_1", 98500, 28, 0),
+    ("post_recipe_id_5", "user_id_1", 98500, 28, 0),
     ("post_recipe_id_6", "user_id_1", 86450, 12, 0),
     ("post_recipe_id_7", "user_id_1", 95000, 18, 1),
     ("post_recipe_id_8", "user_id_2", 90000, 15, 1),
@@ -46,12 +47,12 @@ INSERT INTO recipes (id, post_id, skill_level_id, title, description, image_url,
     ("recipe_id_7", "post_recipe_id_7", 1, "Recipe 7", "Test description for Recipe 7", "", 5, 35),
     ("recipe_id_8", "post_recipe_id_8", 2, "Recipe 8", "Test description for Recipe 8", "", 6, 40),
     ("recipe_id_9", "post_recipe_id_9", 1, "Recipe 9", "Test description for Recipe 9", "", 4, 30),
-    ("recipe_id_10", "post_recipe_id_1", 3, "Recipe 10", "Test description for Recipe 10", "", 3, 25),
-    ("recipe_id_11", "post_recipe_id_1", 2, "Recipe 11", "Test description for Recipe 11", "", 4, 30),
-    ("recipe_id_12", "post_recipe_id_1", 3, "Recipe 12", "Test description for Recipe 12", "", 6, 45),
-    ("recipe_id_13", "post_recipe_id_1", 1, "Recipe 13", "Test description for Recipe 13", "", 5, 40),
-    ("recipe_id_14", "post_recipe_id_1", 2, "Recipe 14", "Test description for Recipe 14", "", 8, 60),
-    ("recipe_id_15", "post_recipe_id_1", 3, "Recipe 15", "Test description for Recipe 15", "", 3, 25);
+    ("recipe_id_10", "post_recipe_id_10", 3, "Recipe 10", "Test description for Recipe 10", "", 3, 25),
+    ("recipe_id_11", "post_recipe_id_11", 2, "Recipe 11", "Test description for Recipe 11", "", 4, 30),
+    ("recipe_id_12", "post_recipe_id_12", 3, "Recipe 12", "Test description for Recipe 12", "", 6, 45),
+    ("recipe_id_13", "post_recipe_id_13", 1, "Recipe 13", "Test description for Recipe 13", "", 5, 40),
+    ("recipe_id_14", "post_recipe_id_14", 2, "Recipe 14", "Test description for Recipe 14", "", 8, 60),
+    ("recipe_id_15", "post_recipe_id_15", 3, "Recipe 15", "Test description for Recipe 15", "", 3, 25);
 
 INSERT INTO ingredients (recipe_id, content) VALUES
     ('recipe_id_1', 'Ingredient 1 for Recipe 1'),
@@ -147,12 +148,12 @@ INSERT INTO cookbooks (id, user_id, title, description) VALUES
     ('cookbook_id_3', 'user_id_1', 'Cookbook 3', 'Description for Cookbook 3');
 
 INSERT INTO cookbook_recipes (cookbook_id, recipe_id) VALUES
-    ('cookbook_id_1', 'recipie_id_1'),
-    ('cookbook_id_1', 'recipie_id_2'),
-    ('cookbook_id_2', 'recipie_id_3'),
-    ('cookbook_id_2', 'recipie_id_4'),
-    ('cookbook_id_3', 'recipie_id_5'),
-    ('cookbook_id_3', 'recipie_id_6');
+    ('cookbook_id_1', 'recipe_id_1'),
+    ('cookbook_id_1', 'recipe_id_2'),
+    ('cookbook_id_2', 'recipe_id_3'),
+    ('cookbook_id_2', 'recipe_id_4'),
+    ('cookbook_id_3', 'recipe_id_5'),
+    ('cookbook_id_3', 'recipe_id_6');
 
 INSERT INTO menus (id, user_id, title, description) VALUES
     ('menu_id_1', 'user_id_1', 'Menu 1', 'Description for Menu 1'),
