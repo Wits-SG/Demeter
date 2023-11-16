@@ -27,7 +27,7 @@ INSERT INTO posts (id, user_id, upload_date, likes, type) VALUES
     ("post_recipe_id_12", "user_id_3", 95000, 20, 0),
     ("post_recipe_id_13", "user_id_3", 100500, 22, 0),
     ("post_recipe_id_14", "user_id_4", 100000, 8, 1),
-    ("post_recipe_id_15", "user_id_4", 102500, 12, 0),
+    ("post_recipe_id_15", "user_id_4", 102500, 12, 0);
 
 INSERT INTO comments (post_id, user_id, parent_id, root, content) VALUES 
     ("post_recipe_id_1", "user_id_1", NULL, 1, "Example Root Comment"),
