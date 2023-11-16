@@ -32,59 +32,59 @@ export const load = (async ({ locals, params }) => {
 		});
 	}
 
-	const menu_name = await tursoClient.execute({
+	const menuName = await tursoClient.execute({
 		sql: 'select name from menus where menu_id = ?',
 		args: [params.menu_id]
 	});
 
-	const menu_section = await tursoClient.execute({
+	const menuSection = await tursoClient.execute({
 		sql: 'select * from menu_sections where menu_id=? ORDER BY section_id ASC',
 		args: [params.menu_id]
 	});
-	const menu_recipe_res = await tursoClient.execute({
+	const menuRecipeRes = await tursoClient.execute({
 		sql: 'select * from menu_recipes where menu_id=?',
 		args: [params.menu_id]
 	});
 
 	//Getting the section ids and putting into an array
 	const sections = [];
-	const section_ids: Array<string> = [];
-	for (let row of menu_section.rows) {
+	const sectionIds: Array<string> = [];
+	for (let row of menuSection.rows) {
 		sections.push(row['name']);
-		section_ids.push(row['section_id'] as string);
+		sectionIds.push(row['section_id'] as string);
 	}
 
 	//Adding the recipes to their sections for display
-	let section_recipes: Array<Array<Recipe>> = [[]];
-	for (let i = 0; i < section_ids.length; i++) {
-		const sectionRecipes = []; // Create a new array for each section
+	let sectionRecipes: Array<Array<Recipe>> = [[]];
+	for (let i = 0; i < sectionIds.length; i++) {
+		const sectionRecipesNew = []; // Create a new array for each section
 
-		const recipe_sections = await tursoClient.execute({
+		const recipeSections = await tursoClient.execute({
 			sql: 'select recipes.* from menu_recipes join recipes on menu_recipes.recipe_id = recipes.recipe_id where menu_recipes.menu_id = ? AND menu_recipes.section_id =?',
 
 			args: [params.menu_id, i]
 		});
 
-		for (let row of recipe_sections.rows) {
-			//this is an issue, its adding all the recipes to the recipes array before adding to section_recipes
-			sectionRecipes.push({
+		for (let row of recipeSections.rows) {
+			//this is an issue, its adding all the recipes to the recipes array before adding to sectionRecipes
+			sectionRecipesNew.push({
 				id: row['recipe_id'],
 				name: row['name'],
 				description: row['description'],
 				cookingTime: row['cooking_time']
 			} as Recipe);
 		}
-		section_recipes[i] = sectionRecipes; //Assign the section-specific array to section_recipes
+		sectionRecipes[i] = sectionRecipesNew; //Assign the section-specific array to sectionRecipes
 	}
-	//console.log(section_recipes);
+
 	return {
-		menu_info: {
+		menuInfo: {
 			id: params.menu_id,
-			name: menu_name.rows[0]['name'],
+			name: menuName.rows[0]['name'],
 			section: sections,
-			section_id: section_ids
+			section_id: sectionIds
 		},
-		recipe: section_recipes,
+		recipe: sectionRecipes,
 		menuCookbooks,
 		userCookbooks
 	};
