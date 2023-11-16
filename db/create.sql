@@ -137,6 +137,14 @@ CREATE TABLE IF NOT EXISTS menus (
         FOREIGN KEY (section_id) REFERENCES menu_sections(id) ON DELETE CASCADE,
     );
 
+    CREATE TABLE IF NOT EXISTS menu_cookbooks (
+        id integer PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+        menu_id text,
+        cookbook_id text,
+        FOREIGN KEY (menu_id) REFERENCES menus(id) ON DELETE CASCADE,
+        FOREIGN KEY (cookbook_id) REFERENCES cookbooks(id) ON DELETE CASCADE,
+    );
+
 
 -- ENUM INSERTION
 
