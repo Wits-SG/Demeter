@@ -15,25 +15,25 @@ INSERT INTO user_key (id, user_id, hashed_password) VALUES
 -- Creating some example posts and recipes
 INSERT INTO posts (id, user_id, upload_date, likes, type) VALUES
     ("post_recipe_id_1", "user_id_1", 86400, 10, 0),
-    ("post_recipe_id_2", "user_id_1", 98500, 20, 1),
+    ("post_recipe_id_2", "user_id_1", 98500, 20, 0),
     ("post_recipe_id_3", "user_id_1", 99000, 25, 0),
     ("post_recipe_id_4", "user_id_1", 98500, 28, 0),
     ("post_recipe_id_5", "user_id_1", 98500, 28, 0),
     ("post_recipe_id_6", "user_id_1", 86450, 12, 0),
-    ("post_recipe_id_7", "user_id_1", 95000, 18, 1),
-    ("post_recipe_id_8", "user_id_2", 90000, 15, 1),
-    ("post_recipe_id_9", "user_id_2", 97500, 30, 1),
+    ("post_recipe_id_7", "user_id_1", 95000, 18, 0),
+    ("post_recipe_id_8", "user_id_2", 90000, 15, 0),
+    ("post_recipe_id_9", "user_id_2", 97500, 30, 0),
     ("post_recipe_id_10", "user_id_2", 98000, 22, 0),
-    ("post_recipe_id_11", "user_id_3", 101000, 15, 1),
+    ("post_recipe_id_11", "user_id_3", 101000, 15, 0),
     ("post_recipe_id_12", "user_id_3", 95000, 20, 0),
     ("post_recipe_id_13", "user_id_3", 100500, 22, 0),
-    ("post_recipe_id_14", "user_id_4", 100000, 8, 1),
+    ("post_recipe_id_14", "user_id_4", 100000, 8, 0),
     ("post_recipe_id_15", "user_id_4", 102500, 12, 0);
 
 INSERT INTO comments (post_id, user_id, parent_id, root, content) VALUES 
     ("post_recipe_id_1", "user_id_1", NULL, 1, "Example Root Comment"),
         ("post_recipe_id_1", "user_id_2", 1, 0, "Example First Comment"),
-            ("post_recipe_id_1", "user_id_3", 1, 0, "Example Second Comment"),
+            ("post_recipe_id_1", "user_id_3", 2, 0, "Example Second Comment"),
         ("post_recipe_id_1", "user_id_3", 1, 0, "Example First Comment"),
     ("post_recipe_id_1", "user_id_4", NULL, 1, "Example Root Comment");
 
