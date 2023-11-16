@@ -9,15 +9,15 @@ export const GET = async ({ url }) => {
 	const userId = url.searchParams.get('user_id');
 	try {
 		const cookbooksResult = await tursoClient.execute({
-			sql: 'select cookbook_id, name from cookbooks where user_id=?',
+			sql: 'select id, title from cookbooks where user_id = ?',
 			args: [userId]
 		});
 		const returnedCookbooks = [];
 
 		for (let row of cookbooksResult.rows) {
 			returnedCookbooks.push({
-				cookbook_id: row['cookbook_id'],
-				name: row['name']
+				cookbook_id: row['id'],
+				name: row['title']
 			});
 		}
 
@@ -34,7 +34,7 @@ export const POST = async (event: RequestEvent) => {
 	const addCookbook: Cookbook = await event.request.json();
 
 	const insertCookbook = await tursoClient.execute({
-		sql: 'INSERT INTO cookbooks (cookbook_id, name, user_id) values (?,?,?)',
+		sql: 'INSERT INTO cookbooks (id, title, user_id) values (?,?,?)',
 		args: [addCookbook.id, addCookbook.name, addCookbook.userID]
 	});
 
@@ -46,7 +46,7 @@ export const PUT = async ({ request }) => {
 		const { id, name, description } = await request.json();
 
 		await tursoClient.execute({
-			sql: 'UPDATE cookbooks SET name = ?, description = ? WHERE cookbook_id = ?',
+			sql: 'UPDATE cookbooks SET title = ?, description = ? WHERE id = ?',
 			args: [name, description, id]
 		});
 
@@ -70,7 +70,7 @@ export const DELETE = async (event: RequestEvent) => {
 		});
 
 		const deleteCookBook = await tursoClient.execute({
-			sql: 'DELETE FROM cookbooks where cookbook_id = ?',
+			sql: 'DELETE FROM cookbooks where id = ?',
 			args: [cookbookId]
 		});
 		return new Response('Success');

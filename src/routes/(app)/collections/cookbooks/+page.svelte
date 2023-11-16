@@ -89,9 +89,6 @@
 							><Save /></button>
 						<button
 							on:click={async () => {
-								// console.log(uneditedCookbook);
-								// currentCookbook = uneditedCookbook;
-
 								if (newCookbook) {
 									await fetch('/api/cookbook', {
 										method: 'DELETE',

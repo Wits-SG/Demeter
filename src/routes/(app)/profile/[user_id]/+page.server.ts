@@ -14,19 +14,19 @@ export const load = (async ({ locals, params }) => {
 
 	try {
 		const userResult = await tursoClient.execute({
-			sql: 'SELECT * FROM users JOIN user_pronouns ON users.pronoun_id = user_pronouns.pronoun_id WHERE id = ? LIMIT 1',
+			sql: 'SELECT * FROM users JOIN user_pronouns ON users.pronoun_id = user_pronouns.id WHERE users.id = ? LIMIT 1',
 			args: [params.user_id]
 		});
 
 		const userPostsResult = await tursoClient.execute({
-			sql: 'SELECT post_id, type FROM posts WHERE user_id = ? ORDER BY upload_date LIMIT 10',
+			sql: 'SELECT id, type FROM posts WHERE user_id = ? ORDER BY upload_date LIMIT 10',
 			args: [params.user_id]
 		});
 
 		let postsList: Array<{ id: string; type: number }> = [];
 		for (let row of userPostsResult.rows) {
-			if (row['post_id'] != null) {
-				postsList.push({ id: row['post_id'] as string, type: row['type'] as number });
+			if (row['id'] != null) {
+				postsList.push({ id: row['id'] as string, type: row['type'] as number });
 			}
 		}
 
@@ -43,6 +43,7 @@ export const load = (async ({ locals, params }) => {
 			} as User
 		};
 	} catch (e: any) {
+		console.error(e);
 		throw error(404, 'User not found');
 	}
 }) satisfies PageServerLoad;

@@ -11,7 +11,7 @@ export const load = (async ({ locals }) => {
 		});
 
 		const pronounsRes = await tursoClient.execute(
-			'SELECT * FROM user_pronouns ORDER BY pronoun_id ASC'
+			'SELECT * FROM user_pronouns ORDER BY id ASC'
 		);
 		let pronouns: Array<string> = [];
 

@@ -3,24 +3,24 @@ import { error, json } from '@sveltejs/kit';
 
 // Fetch the comments information
 export const GET = async ({ url }) => {
-	const commentId = Number(url.searchParams.get('comment_id'));
+	let commentId = url.searchParams.get('comment_id');
 
 	try {
 		const commentRes = await tursoClient.execute({
-			sql: 'SELECT user_id, content FROM comments WHERE comment_id = ? LIMIT 1',
+			sql: 'SELECT user_id, content FROM comments WHERE id = ? LIMIT 1',
 			args: [commentId]
 		});
 		const userId = commentRes.rows[0]['user_id'];
 		const content = commentRes.rows[0]['content'];
 
 		const commentChildrenRes = await tursoClient.execute({
-			sql: 'SELECT comment_id FROM comments WHERE parent_id = ?',
+			sql: 'SELECT id FROM comments WHERE parent_id = ?',
 			args: [commentId]
 		});
 
 		let children: Array<number> = [];
 		for (let child of commentChildrenRes.rows) {
-			children.push(child['comment_id'] as number);
+			children.push(child['id'] as number);
 		}
 
 		const userRes = await tursoClient.execute({
@@ -40,7 +40,8 @@ export const GET = async ({ url }) => {
 			content,
 			children
 		});
-	} catch {
+	} catch (e: any) {
+		console.error(e);
 		throw error(400, 'Failed to fetch comments');
 	}
 };

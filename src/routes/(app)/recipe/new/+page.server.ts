@@ -3,13 +3,13 @@ import { tursoClient } from '$lib/server/turso';
 
 export const load = (async () => {
 	const skillLevelsResult = await tursoClient.execute(
-		'select * from skill_levels order by skill_level_id asc'
+		'select * from skill_levels order by id asc'
 	);
 	let skillLevels: Array<string> = [];
 
 	for (let row of skillLevelsResult.rows) {
-		if (row['name'] != null) {
-			skillLevels.push(row['name'] as string);
+		if (row['content'] != null) {
+			skillLevels.push(row['content'] as string);
 		}
 	}
 

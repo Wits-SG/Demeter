@@ -6,32 +6,32 @@ export const GET = async ({ url }) => {
 
 	try {
 		const recipe_res = await tursoClient.execute({
-			sql: 'select name, post_id, description, image_url, serving_size, cooking_time from recipes where recipe_id = ?',
+			sql: 'select title, post_id, description, image_url, serving_size, cooking_time from recipes where id = ?',
 			args: [recipeID]
 		});
 
 		const ingredients_res = await tursoClient.execute({
-			sql: 'select name from ingredients where recipe_id = ?',
+			sql: 'select content from ingredients where recipe_id = ?',
 			args: [recipeID]
 		});
 
 		const ingredients = [];
 		for (let row of ingredients_res.rows) {
-			ingredients.push(row['name']);
+			ingredients.push(row['content']);
 		}
 		const instructions_res = await tursoClient.execute({
-			sql: 'select name from instructions where recipe_id = ?',
+			sql: 'select content from instructions where recipe_id = ?',
 			args: [recipeID]
 		});
 
 		const instructions = [];
 		for (let row of instructions_res.rows) {
-			instructions.push(row['name']);
+			instructions.push(row['content']);
 		}
 
 		return json({
 			recipe: {
-				name: recipe_res.rows[0]['name'],
+				name: recipe_res.rows[0]['title'],
 				post_id: recipe_res.rows[0]['post_id'],
 				description: recipe_res.rows[0]['description'],
 				imageURL: recipe_res.rows[0]['image_url'],

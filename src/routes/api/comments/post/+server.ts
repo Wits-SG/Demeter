@@ -9,17 +9,18 @@ export const GET = async ({ url }) => {
 		// Restricting to only ten comments for now, this'll later have to be converted over to an infinite scroll
 		// and pageing system
 		const commentsRes = await tursoClient.execute({
-			sql: 'SELECT comment_id FROM comments WHERE post_id = ? AND root = 1 LIMIT 10',
+			sql: 'SELECT id FROM comments WHERE post_id = ? AND root = 1 LIMIT 10',
 			args: [postId]
 		});
 
 		const comments: Array<number> = [];
 		for (let id of commentsRes.rows) {
-			comments.push(id['comment_id'] as number);
+			comments.push(id['id'] as number);
 		}
 
 		return json(comments);
-	} catch {
+	} catch (e: any) {
+		console.error(e);
 		throw error(400, 'Failed to fetch comments');
 	}
 };

@@ -85,7 +85,7 @@
 				use:melt={$horizontal}
 				class="items-center justify-center h-[3px] w-3/5 bg-teal-600 dark:bg-teal-400" />
 
-			<div class="w-3/5 pb-5">
+			<div class="w-full pb-5">
 				<PostComments postId={data.recipe.postId} />
 			</div>
 		</section>

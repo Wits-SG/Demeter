@@ -16,7 +16,7 @@ export const GET = async ({ url }) => {
 			userId: userId,
 			pictureUrl: result.rows[0]['picture_url'],
 			displayName: result.rows[0]['display_name'],
-			userName: result.rows[0]['user_name'],
+			userName: result.rows[0]['username'],
 			biography: result.rows[0]['bio'],
 			pronounId: result.rows[0]['pronoun_id']
 		});
@@ -34,7 +34,7 @@ export const POST = async (event: RequestEvent) => {
 			await event.request.json();
 
 		const checkResult = await tursoClient.execute({
-			sql: 'SELECT * FROM users WHERE user_id = ? LIMIT 1',
+			sql: 'SELECT * FROM users WHERE id = ? LIMIT 1',
 			args: [data.userId]
 		});
 
@@ -42,7 +42,7 @@ export const POST = async (event: RequestEvent) => {
 			return new Response('Account already exists');
 		} else {
 			await tursoClient.execute({
-				sql: 'INSERT INTO users (user_id, display_name, picture_url, pronoun_id, user_name) VALUES (?, ?, ?, 1, ?)',
+				sql: 'INSERT INTO users (id, display_name, picture_url, pronoun_id, user_name) VALUES (?, ?, ?, 1, ?)',
 				args: [data.userId, data.userName, data.pictureUrl, data.userId]
 			});
 		}
@@ -67,7 +67,7 @@ export const PUT = async (event: RequestEvent) => {
 		} = await event.request.json();
 
 		await tursoClient.execute({
-			sql: 'UPDATE users SET pronoun_id = ?, picture_url = ?, display_name = ?, biography = ? WHERE id = ?',
+			sql: 'UPDATE users SET pronoun_id = ?, image_url = ?, display_name = ?, biography = ? WHERE id = ?',
 			args: [data.pronounsId, data.pictureUrl, data.displayName, data.biography, data.userId]
 		});
 
