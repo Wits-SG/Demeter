@@ -34,7 +34,6 @@ export const GET = async ({ url }) => {
 		});
 	} catch (e: any) {
 		console.error(e);
-
 		throw error(500, 'Failed to fetch picture preview');
 	}
 };

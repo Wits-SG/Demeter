@@ -60,6 +60,7 @@ export const GET = async ({ url }) => {
 			recipeIDs
 		});
 	} catch (e: any) {
+		console.error(e);
 		throw error(500, 'Failed to fetch recipe preview');
 	}
 };

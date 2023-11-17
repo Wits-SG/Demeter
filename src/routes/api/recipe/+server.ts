@@ -42,6 +42,7 @@ export const GET = async ({ url }) => {
 			}
 		});
 	} catch (e) {
+		console.error(e);
 		throw error(500, 'Failed to fetch recipe');
 	}
 };

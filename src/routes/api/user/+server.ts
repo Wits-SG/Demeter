@@ -21,6 +21,7 @@ export const GET = async ({ url }) => {
 			pronounId: result.rows[0]['pronoun_id']
 		});
 	} catch (e: any) {
+		console.error(e);
 		throw error(500, 'Failed to fetch user information');
 	}
 };
@@ -49,6 +50,7 @@ export const POST = async (event: RequestEvent) => {
 
 		return new Response('Successful');
 	} catch (e: any) {
+		console.error(e);
 		throw error(500, 'Failed to add new user');
 	}
 };
@@ -73,6 +75,7 @@ export const PUT = async (event: RequestEvent) => {
 
 		return new Response('Successful');
 	} catch (e: any) {
-		throw error(500, e);
+		console.error(e);
+		throw error(500, 'failed to up date user');
 	}
 };

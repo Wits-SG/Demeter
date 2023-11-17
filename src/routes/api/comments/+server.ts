@@ -64,7 +64,8 @@ export const POST = async ({ request }) => {
 		return json({
 			commentId: newCommentId
 		});
-	} catch {
+	} catch (e: any) {
+		console.error(e);
 		throw error(400, 'Failed to insert new comment');
 	}
 };

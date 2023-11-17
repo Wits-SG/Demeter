@@ -61,6 +61,7 @@ export const PUT = async ({ request }) => {
 
 		return new Response('Success');
 	} catch (e: any) {
+		console.error(e);
 		throw error(500, 'Error updating menu');
 	}
 };
