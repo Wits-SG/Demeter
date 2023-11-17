@@ -6,12 +6,12 @@ export const GET = async ({ url }) => {
 
 	try {
 		const recipeRes = await tursoClient.execute({
-			sql: 'select recipe_id, name, description, image_url from recipes where post_id = ?',
+			sql: 'select id, title, description, image_url from recipes where post_id = ?',
 			args: [postID]
 		});
 
 		const postRes = await tursoClient.execute({
-			sql: 'SELECT user_id FROM posts WHERE post_id = ? LIMIT 1',
+			sql: 'SELECT user_id FROM posts WHERE id = ? LIMIT 1',
 			args: [postID]
 		});
 
@@ -22,8 +22,8 @@ export const GET = async ({ url }) => {
 
 		return json({
 			recipe: {
-				recipeID: recipeRes.rows[0]['recipe_id'],
-				name: recipeRes.rows[0]['name'],
+				recipeID: recipeRes.rows[0]['id'],
+				name: recipeRes.rows[0]['title'],
 				description: recipeRes.rows[0]['description'],
 				imageURL: recipeRes.rows[0]['image_url']
 			},
@@ -33,6 +33,7 @@ export const GET = async ({ url }) => {
 			}
 		});
 	} catch (e: any) {
+		console.error(e);
 		throw error(500, 'Failed to fetch recipe preview');
 	}
 };

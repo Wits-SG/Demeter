@@ -27,11 +27,11 @@ export const GET = async ({ url }) => {
 		searchValueArr[i] = searchValueArr[i].trim();
 	}
 
-	let query: string = `SELECT posts.post_id FROM posts join recipes on recipes.post_id = posts.post_id WHERE`;
+	let query: string = `SELECT posts.id FROM posts join recipes on recipes.post_id = posts.id WHERE`;
 
 	let subQuery: string = '';
 	for (let val of searchValueArr) {
-		subQuery = subQuery + ` recipes.name LIKE '%${val}%' OR`;
+		subQuery = subQuery + ` recipes.title LIKE '%${val}%' OR`;
 	}
 	subQuery = subQuery.substring(0, subQuery.length - 3);
 	query =
@@ -39,7 +39,7 @@ export const GET = async ({ url }) => {
 		' (' +
 		subQuery +
 		')' +
-		` AND posts.post_id NOT IN ( SELECT posts.post_id FROM posts join recipes on recipes.post_id = posts.post_id WHERE${subQuery} ORDER BY posts.upload_date LIMIT ${strPageNum}) ORDER BY posts.upload_date LIMIT 5`;
+		` AND posts.id NOT IN ( SELECT posts.id FROM posts join recipes on recipes.post_id = posts.id WHERE${subQuery} ORDER BY posts.upload_date LIMIT ${strPageNum}) ORDER BY posts.upload_date LIMIT 5`;
 
 	try {
 		const recipesResult = await tursoClient.execute({
@@ -50,8 +50,8 @@ export const GET = async ({ url }) => {
 		let postsList: Array<{ id: string; type: number }> = [];
 
 		for (let row of recipesResult.rows) {
-			if (row['post_id'] != null) {
-				postsList.push({ id: row['post_id'] as string, type: 0 });
+			if (row['id'] != null) {
+				postsList.push({ id: row['id'] as string, type: 0 });
 			}
 		}
 

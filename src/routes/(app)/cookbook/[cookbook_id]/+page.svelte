@@ -16,11 +16,7 @@
 		cookbookID = data.cookbookInfo.id;
 		currentRecipeID = noRecipe ? '' : data.recipes[0].id;
 	});
-	// const refreshCookbook = async () => {
-	// 	cookbookID = data.cookbookInfo.id;
-	// 	currentRecipeID = noRecipe ? '' : data.recipes[0].id;
-	// 	console.log("Recipe id",currentRecipeID);
-	// };
+
 	$: cookbookID; //&& refreshCookbook();
 	function prevPress() {
 		if (data.recipes) currentRecipeIndex -= 1;

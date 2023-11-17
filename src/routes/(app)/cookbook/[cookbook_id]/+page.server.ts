@@ -12,27 +12,27 @@ export const load = (async ({ params }) => {
 	}
 
 	const recipeName = await tursoClient.execute({
-		sql: 'select recipes.* from cookbook_recipes join recipes on cookbook_recipes.recipe_id = recipes.recipe_id where cookbook_recipes.cookbook_id = ?',
+		sql: 'select recipes.* from cookbook_recipes join recipes on cookbook_recipes.recipe_id = recipes.id where cookbook_recipes.cookbook_id = ?',
 		args: [params.cookbook_id]
 	});
 
 	const cookbookRes = await tursoClient.execute({
-		sql: 'select name from cookbooks where cookbook_id = ?',
+		sql: 'select title from cookbooks where id = ?',
 		args: [params.cookbook_id]
 	});
 
 	const recipes: Array<Recipe> = [];
 	for (let row of recipeName.rows) {
 		recipes.push({
-			id: row['recipe_id'],
-			name: row['name']
+			id: row['id'],
+			name: row['title']
 		} as Recipe);
 	}
 
 	return {
 		cookbookInfo: {
 			id: params.cookbook_id,
-			name: cookbookRes.rows[0]['name']
+			name: cookbookRes.rows[0]['title']
 		},
 
 		recipes: recipes

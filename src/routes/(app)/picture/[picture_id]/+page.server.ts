@@ -5,7 +5,7 @@ export const load = (async ({ params }) => {
 	// Picture Posts
 
 	const pictureRes = await tursoClient.execute({
-		sql: 'select * from pictures where picture_id = ?',
+		sql: 'select * from pictures where id = ?',
 		args: [params.picture_id]
 	});
 
@@ -13,7 +13,7 @@ export const load = (async ({ params }) => {
 	const postID = pictureRes.rows[0]['post_id'];
 	// User ID and Display name
 	const postRes = await tursoClient.execute({
-		sql: 'select users.id, users.display_name from users join posts on users.id = posts.user_id where posts.post_id = ?',
+		sql: 'select users.id, users.display_name from users join posts on users.id = posts.user_id where posts.id = ?',
 		args: [postID]
 	});
 

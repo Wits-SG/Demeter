@@ -6,12 +6,12 @@ export const GET = async ({ url }) => {
 
 	try {
 		const pictureRes = await tursoClient.execute({
-			sql: 'select picture_id, title, description, url from pictures where post_id = ? LIMIT 1',
+			sql: 'select id, title, description, image_url from pictures where post_id = ? LIMIT 1',
 			args: [postID]
 		});
 
 		const postRes = await tursoClient.execute({
-			sql: 'SELECT user_id FROM posts WHERE post_id = ? LIMIT 1',
+			sql: 'SELECT user_id FROM posts WHERE id = ? LIMIT 1',
 			args: [postID]
 		});
 
@@ -22,7 +22,7 @@ export const GET = async ({ url }) => {
 
 		return json({
 			picture: {
-				pictureID: pictureRes.rows[0]['picture_id'],
+				pictureID: pictureRes.rows[0]['id'],
 				name: pictureRes.rows[0]['title'],
 				description: pictureRes.rows[0]['description'],
 				imageURL: pictureRes.rows[0]['url']
@@ -33,6 +33,8 @@ export const GET = async ({ url }) => {
 			}
 		});
 	} catch (e: any) {
+		console.error(e);
+
 		throw error(500, 'Failed to fetch picture preview');
 	}
 };
