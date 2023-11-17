@@ -23,8 +23,8 @@ export const POST = async (event: RequestEvent) => {
 
 		for (let section of menu.sections) {
 			await tursoClient.execute({
-				sql: 'insert into menu_sections(id, menu_id, name) values (?,?,?)',
-				args: [menu.sections.indexOf(section), menu.menuID, section]
+				sql: 'insert into menu_sections(menu_id, name) values (?,?,?)',
+				args: [menu.menuID, section]
 			});
 		}
 	} catch (e: any) {
@@ -87,6 +87,7 @@ export const GET = async ({ url }) => {
 
 		return json(returnedRecipes);
 	} catch (e: any) {
+		console.error(e);
 		throw error(500, 'Failed to fetch cookbooks');
 	}
 };

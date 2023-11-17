@@ -27,7 +27,7 @@ export const load = (async ({ locals, params }) => {
 	const menuCookbooks: Array<{ id: string; name: string }> = [];
 	for (let row of menuCookbooksRes.rows) {
 		menuCookbooks.push({
-			id: row['id'] as string,
+			id: row['cookbook_id'] as string,
 			name: row['title'] as string
 		});
 	}

@@ -25,7 +25,7 @@ export const GET = async ({ url }) => {
 				pictureID: pictureRes.rows[0]['id'],
 				name: pictureRes.rows[0]['title'],
 				description: pictureRes.rows[0]['description'],
-				imageURL: pictureRes.rows[0]['url']
+				imageURL: pictureRes.rows[0]['image_url']
 			},
 			user: {
 				id: postRes.rows[0]['user_id'],

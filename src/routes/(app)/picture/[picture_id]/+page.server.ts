@@ -28,7 +28,7 @@ export const load = (async ({ params }) => {
 
 		picture: {
 			//picture_id: params.picture_id,
-			url: pictureRes.rows[0]['url'],
+			url: pictureRes.rows[0]['image_url'],
 			title: pictureRes.rows[0]['title'],
 			description: pictureRes.rows[0]['description'],
 			postId: postID

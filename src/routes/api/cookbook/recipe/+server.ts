@@ -10,11 +10,12 @@ export const POST = async (event: RequestEvent) => {
 
 	try {
 		await tursoClient.execute({
-			sql: 'insert into cookbook_recipes values(?, ?)',
+			sql: 'insert into cookbook_recipes (cookbook_id, recipe_id) values(?, ?)',
 			args: [addedRecipe.cookbookId, addedRecipe.recipeId]
 		});
 	} catch (e: any) {
-		return error(500, 'Error inserting recipe into cookbook');
+		console.error(e);
+		throw error(500, 'Error inserting recipe into cookbook');
 	}
 
 	return new Response('Successful');

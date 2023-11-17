@@ -6,8 +6,8 @@ export const POST = async (event: RequestEvent) => {
 		await event.request.json();
 
 	await tursoClient.execute({
-		sql: 'INSERT INTO menu_sections (id, menu_id, name) values (?,?,?)',
-		args: [addSection.sectionID, addSection.menuID, addSection.name]
+		sql: 'INSERT INTO menu_sections (menu_id, name) values (?,?)',
+		args: [addSection.menuID, addSection.name]
 	});
 
 	return new Response('Successful');
