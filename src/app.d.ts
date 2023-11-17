@@ -17,7 +17,7 @@ declare global {
 			pronoun_id: number;
 			display_name: string;
 			biography: string;
-			picture_url: string;
+			image_url: string;
 		};
 		type DatabaseSessionAttributes = {};
 	}

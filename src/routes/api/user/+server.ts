@@ -14,7 +14,7 @@ export const GET = async ({ url }) => {
 
 		return json({
 			userId: userId,
-			pictureUrl: result.rows[0]['picture_url'],
+			pictureUrl: result.rows[0]['image_url'],
 			displayName: result.rows[0]['display_name'],
 			userName: result.rows[0]['username'],
 			biography: result.rows[0]['bio'],
@@ -43,7 +43,7 @@ export const POST = async (event: RequestEvent) => {
 			return new Response('Account already exists');
 		} else {
 			await tursoClient.execute({
-				sql: 'INSERT INTO users (id, display_name, picture_url, pronoun_id, user_name) VALUES (?, ?, ?, 1, ?)',
+				sql: 'INSERT INTO users (id, display_name, image_url, pronoun_id, user_name) VALUES (?, ?, ?, 1, ?)',
 				args: [data.userId, data.userName, data.pictureUrl, data.userId]
 			});
 		}
