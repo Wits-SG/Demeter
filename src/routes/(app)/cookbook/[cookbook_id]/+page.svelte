@@ -7,19 +7,17 @@
 	import { redirect } from '@sveltejs/kit';
 	export let data: PageData;
 
-	console.log('Recipes', data.recipes);
-
 	let noRecipe = data.recipes.length == 0;
 	let currentRecipeIndex: number = 0;
 	let currentRecipeID: string = '';
 	//currentRecipeID = noRecipe ? '' : data.recipes[0].id;
 
 	onMount(async () => {
-		cookbookID = data.cookbook_info.id;
+		cookbookID = data.cookbookInfo.id;
 		currentRecipeID = noRecipe ? '' : data.recipes[0].id;
 	});
 	// const refreshCookbook = async () => {
-	// 	cookbookID = data.cookbook_info.id;
+	// 	cookbookID = data.cookbookInfo.id;
 	// 	currentRecipeID = noRecipe ? '' : data.recipes[0].id;
 	// 	console.log("Recipe id",currentRecipeID);
 	// };
@@ -44,9 +42,9 @@
 		}
 	}
 
-	let cookbookName: string = data.cookbook_info.name as string;
+	let cookbookName: string = data.cookbookInfo.name as string;
 
-	let cookbookID: string = data.cookbook_info.id;
+	let cookbookID: string = data.cookbookInfo.id;
 
 	async function deleteRecipe() {
 		try {
