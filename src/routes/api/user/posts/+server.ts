@@ -1,5 +1,5 @@
 import { tursoClient } from '$lib/server/turso';
-import { json } from '@sveltejs/kit';
+import { json, error } from '@sveltejs/kit';
 
 export const GET = async ({ url }) => {
 	const pageNum = url.searchParams.get('page_num');
@@ -24,5 +24,6 @@ export const GET = async ({ url }) => {
 		});
 	} catch (e) {
 		console.error(e);
+		throw error(500, 'Failed to fetch posts');
 	}
 };

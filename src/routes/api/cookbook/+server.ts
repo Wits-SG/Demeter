@@ -23,6 +23,7 @@ export const GET = async ({ url }) => {
 
 		return json(returnedCookbooks);
 	} catch (e: any) {
+		console.error(e);
 		throw error(500, 'Failed to fetch cookbooks');
 	}
 };
@@ -75,6 +76,7 @@ export const DELETE = async (event: RequestEvent) => {
 		});
 		return new Response('Success');
 	} catch (e: any) {
+		console.error(e);
 		throw error(400, 'Error deleting cookbook');
 	}
 };

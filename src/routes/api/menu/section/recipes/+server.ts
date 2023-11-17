@@ -15,6 +15,7 @@ export const POST = async (event: RequestEvent) => {
 			args: [addedRecipe.menuID, addedRecipe.recipeID, addedRecipe.sectionID]
 		});
 	} catch (e: any) {
+		console.error(e);
 		throw error(500, 'Error inserting recipe into menu');
 	}
 
@@ -36,6 +37,7 @@ export const DELETE = async (event: RequestEvent) => {
 
 		return new Response('Successful');
 	} catch (e: any) {
+		console.error(e);
 		return error(500, 'Error removing recipe from section');
 	}
 };

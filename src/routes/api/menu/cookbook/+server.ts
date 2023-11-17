@@ -11,7 +11,8 @@ export const POST = async ({ request }) => {
 		});
 
 		return new Response('Succesful');
-	} catch {
+	} catch (e: any) {
+		console.error(e);
 		throw error(400, 'Something went wrong');
 	}
 };
@@ -26,7 +27,8 @@ export const DELETE = async ({ request }) => {
 		});
 
 		return new Response('Succesful');
-	} catch {
+	} catch (e: any) {
+		console.error(e);
 		throw error(400, 'Something went wrong');
 	}
 };

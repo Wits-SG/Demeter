@@ -62,7 +62,7 @@ export const load = (async ({ locals, params }) => {
 		const recipeSections = await tursoClient.execute({
 			sql: 'select recipes.* from menu_recipes join recipes on menu_recipes.recipe_id = recipes.id where menu_recipes.menu_id = ? AND menu_recipes.section_id =?',
 
-			args: [params.menu_id, i]
+			args: [params.menu_id, sectionIds[i]]
 		});
 
 		for (let row of recipeSections.rows) {
