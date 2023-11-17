@@ -8,7 +8,7 @@ export const GET = async ({ url }) => {
 		const userId = url.searchParams.get('user_id');
 
 		const result = await tursoClient.execute({
-			sql: 'SELECT * FROM users JOIN user_pronouns ON users.pronoun_id = user_pronouns.pronoun_id WHERE id = ?',
+			sql: 'SELECT * FROM users JOIN user_pronouns ON users.pronoun_id = user_pronouns.id WHERE users.id = ?',
 			args: [userId]
 		});
 
