@@ -36,7 +36,7 @@ export const load = (async ({ locals, params }) => {
 			user: {
 				userId: params.user_id,
 				pronouns: userResult.rows[0]['pronouns'],
-				pictureUrl: userResult.rows[0]['picture_url'],
+				pictureUrl: userResult.rows[0]['image_url'],
 				userName: userResult.rows[0]['username'],
 				displayName: userResult.rows[0]['display_name'],
 				biography: userResult.rows[0]['biography']

@@ -37,7 +37,7 @@ export const actions: Actions = {
 				attributes: {
 					username,
 					pronoun_id: 1,
-					picture_url: '',
+					image_url: '',
 					display_name: username,
 					biography: ''
 				}
