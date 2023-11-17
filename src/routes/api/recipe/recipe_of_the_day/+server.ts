@@ -11,7 +11,7 @@ async function selectRandomRecipe() {
 
 		if (recipeResult.rows.length == 0) {
 			tursoClient.execute(
-				"insert into recipe_of_the_day (recipe_id, date) values ((select recipe_id from recipes order by random() limit 1), unixepoch('now'))"
+				"insert into recipe_of_the_day (recipe_id, date) values ((select id from recipes order by random() limit 1), unixepoch('now'))"
 			);
 		}
 
@@ -25,7 +25,7 @@ async function selectRandomRecipe() {
 
 		if (recipeDate != currentDate) {
 			tursoClient.executeMultiple(
-				"delete from recipe_of_the_day; insert into recipe_of_the_day (recipe_id, date) values ((select recipe_id from recipes order by random() limit 1), unixepoch('now'))"
+				"delete from recipe_of_the_day; insert into recipe_of_the_day (recipe_id, date) values ((select id from recipes order by random() limit 1), unixepoch('now'))"
 			);
 			recipeResult = await tursoClient.execute(
 				'SELECT * FROM recipe_of_the_day ORDER BY date DESC LIMIT 1'
@@ -47,7 +47,7 @@ export const GET = async (event: RequestEvent) => {
 
 		// Query the database to fetch the selected recipe's details
 		const recipeDetailsResult = await tursoClient.execute({
-			sql: 'select name, description, image_url, post_id from recipes where recipe_id = ?',
+			sql: 'select title, description, image_url, post_id from recipes where id = ?',
 			args: [recipeID]
 		});
 
@@ -55,7 +55,7 @@ export const GET = async (event: RequestEvent) => {
 			const selectedRecipe = recipeDetailsResult.rows[0];
 
 			const postResult = await tursoClient.execute({
-				sql: 'SELECT user_id FROM posts WHERE post_id = ? LIMIT 1',
+				sql: 'SELECT user_id FROM posts WHERE id = ? LIMIT 1',
 				args: [selectedRecipe['post_id']]
 			});
 
@@ -67,7 +67,7 @@ export const GET = async (event: RequestEvent) => {
 			return json({
 				recipe: {
 					id: recipeID,
-					name: selectedRecipe.name,
+					name: selectedRecipe.title,
 					description: selectedRecipe.description,
 					imageUrl: selectedRecipe.image_url
 				},

@@ -12,23 +12,24 @@ export const POST = async (event: RequestEvent) => {
 
 	try {
 		await tursoClient.execute({
-			sql: 'insert into menus(menu_id, user_id, name, description) values (?, ?, ?, ?)',
+			sql: 'insert into menus(id, user_id, title, description) values (?, ?, ?, ?)',
 			args: [
 				menu.menuID,
 				menu.userID !== undefined ? menu.userID : '',
-				menu['name'],
+				menu['name'], //using name not title because of the menu type
 				menu['description']
 			]
 		});
 
 		for (let section of menu.sections) {
 			await tursoClient.execute({
-				sql: 'insert into menu_sections(section_id, menu_id, name) values(?,?,?)',
+				sql: 'insert into menu_sections(id, menu_id, name) values (?,?,?)',
 				args: [menu.sections.indexOf(section), menu.menuID, section]
 			});
 		}
 	} catch (e: any) {
-		return error(500, 'Failed to create a new menu');
+		console.error(e);
+		throw error(500, 'Failed to create a new menu');
 	}
 
 	return new Response('Successful');
@@ -40,7 +41,7 @@ export const DELETE = async (event: RequestEvent) => {
 
 		// Query to database to delete menu_id
 		const deleteMenu = await tursoClient.execute({
-			sql: 'delete from menus where menu_id = ?',
+			sql: 'delete from menus where id = ?',
 			args: [menuId]
 		});
 		return new Response('Success');
@@ -54,7 +55,7 @@ export const PUT = async ({ request }) => {
 		const { menuID, name, description } = await request.json();
 
 		await tursoClient.execute({
-			sql: 'UPDATE menus SET name = ?, description = ? WHERE menu_id = ?',
+			sql: 'UPDATE menus SET title = ?, description = ? WHERE id = ?',
 			args: [name, description, menuID]
 		});
 
@@ -72,15 +73,15 @@ export const GET = async ({ url }) => {
 		const cookbookId = url.searchParams.get('cookbook_id');
 
 		const recipeResult = await tursoClient.execute({
-			sql: 'SELECT recipes.recipe_id, recipes.name FROM recipes JOIN cookbook_recipes ON cookbook_recipes.recipe_id = recipes.recipe_id WHERE cookbook_recipes.cookbook_id = ?',
+			sql: 'SELECT recipes.id, recipes.title FROM recipes JOIN cookbook_recipes ON cookbook_recipes.recipe_id = recipes.id WHERE cookbook_recipes.cookbook_id = ?',
 			args: [cookbookId]
 		});
 		const returnedRecipes = [];
 
 		for (let row of recipeResult.rows) {
 			returnedRecipes.push({
-				recipe_id: row['recipe_id'],
-				name: row['name']
+				recipe_id: row['id'],
+				name: row['title']
 			});
 		}
 

@@ -15,8 +15,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 			const menus: Array<Menu> = [];
 			for (let row of menusRes.rows) {
 				menus.push({
-					menuID: row['menu_id'],
-					name: row['name'],
+					menuID: row['id'],
+					name: row['title'],
 					description: row['description'],
 					sections: [] as Array<String>
 				} as Menu);
@@ -24,8 +24,8 @@ export const load: PageServerLoad = async ({ locals }) => {
 
 				try {
 					const sectionsRes = await tursoClient.execute({
-						sql: 'SELECT section_id, name FROM menu_sections WHERE menu_id = ?',
-						args: [row['menu_id']]
+						sql: 'SELECT id, name FROM menu_sections WHERE menu_id = ?',
+						args: [row['id']]
 					});
 
 					for (let sectionRow of sectionsRes.rows) {
@@ -33,7 +33,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 							menus[idx].sections.push(sectionRow['name']);
 						}
 					}
-				} catch {
+				} catch (e: any) {
 					console.error(`Failed to find sections for ${row['menu_id']}`);
 				}
 			}

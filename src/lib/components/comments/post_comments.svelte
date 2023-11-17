@@ -18,7 +18,6 @@
 	const loadComments = async () => {
 		const result = await fetch(`/api/comments/post?post_id=${postId}`);
 		const data = await result.json();
-		console.log(data);
 		rootComments = data;
 	};
 </script>

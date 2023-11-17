@@ -4,9 +4,8 @@
 	import { Icon } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
+	import { redirect } from '@sveltejs/kit';
 	export let data: PageData;
-
-	console.log('Recipes', data.recipes);
 
 	let noRecipe = data.recipes.length == 0;
 	let currentRecipeIndex: number = 0;
@@ -14,14 +13,10 @@
 	//currentRecipeID = noRecipe ? '' : data.recipes[0].id;
 
 	onMount(async () => {
-		cookbookID = data.cookbook_info.id;
+		cookbookID = data.cookbookInfo.id;
 		currentRecipeID = noRecipe ? '' : data.recipes[0].id;
 	});
-	// const refreshCookbook = async () => {
-	// 	cookbookID = data.cookbook_info.id;
-	// 	currentRecipeID = noRecipe ? '' : data.recipes[0].id;
-	// 	console.log("Recipe id",currentRecipeID);
-	// };
+
 	$: cookbookID; //&& refreshCookbook();
 	function prevPress() {
 		if (data.recipes) currentRecipeIndex -= 1;
@@ -43,9 +38,9 @@
 		}
 	}
 
-	let cookbookName: string = data.cookbook_info.name as string;
+	let cookbookName: string = data.cookbookInfo.name as string;
 
-	let cookbookID: string = data.cookbook_info.id;
+	let cookbookID: string = data.cookbookInfo.id;
 
 	async function deleteRecipe() {
 		try {
@@ -74,16 +69,13 @@
 		try {
 			const response = await fetch('/api/cookbook', {
 				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ cookbook_id: cookbookID })
+				body: JSON.stringify({ cookbookId: cookbookID })
 			});
 
 			if (response.ok) {
 				// Recipe deleted successfully
 				// You can add additional logic here if needed
-				//invalidateAll();
+				invalidateAll();
 			} else {
 				const errorMessage = await response.text();
 				console.error(`Error deleting recipe: ${errorMessage}`);
@@ -108,7 +100,7 @@
 			{/each}
 
 			<a href="/collections/cookbooks">Back</a>
-			<button on:click={deleteCookbook}>Delete</button>
+			<!-- <button on:click={deleteCookbook}>Delete</button> -->
 		</div>
 	</div>
 	<!-- div for the small recipe box -->

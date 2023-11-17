@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Icon } from 'flowbite-svelte-icons';
 	import type { PageData } from './$types';
-	import { createSeparator, melt, type CreateSeparatorProps } from '@melt-ui/svelte';
+	import { createSeparator, melt } from '@melt-ui/svelte';
 	import { createAccordion } from '@melt-ui/svelte';
 	import { slide } from 'svelte/transition';
 	import SaveRecipe from '$lib/components/save_recipe.svelte';
@@ -85,7 +85,7 @@
 				use:melt={$horizontal}
 				class="items-center justify-center h-[3px] w-3/5 bg-teal-600 dark:bg-teal-400" />
 
-			<div class="w-3/5 pb-5">
+			<div class="w-full pb-5">
 				<PostComments postId={data.recipe.postId} />
 			</div>
 		</section>
@@ -93,10 +93,14 @@
 		<div class="flex flex-col items-start gap-10 w-1/2 pt-5">
 			<section class="flex flex-col items-center gap-14 w-4/5">
 				<h1 class="text-6xl font-serif">{data.recipe.name}</h1>
-				<a
-					href={`/profile/${data.user.userID}`}
-					class="text-lg font-thin italic underline underline-offset-1">
-					by {data.user.displayName}</a>
+				{#if data.user.error === undefined}
+					<a
+						href={`/profile/${data.user.userID}`}
+						class="text-lg font-thin italic underline underline-offset-1">
+						by {data.user.displayName}</a>
+				{:else}
+					<p class="text-lg font-thin italic">No User</p>
+				{/if}
 				<h3 class="text-3xl font-serif no-underline">Description</h3>
 				<p class="text-lg">{data.recipe.description}</p>
 			</section>
@@ -157,6 +161,3 @@
 		</div>
 	</div>
 </div>
-
-<style>
-</style>

@@ -7,13 +7,13 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 	if (session) {
 		try {
 			const result = await tursoClient.execute({
-				sql: 'SELECT picture_url FROM users WHERE id = ?',
+				sql: 'SELECT image_url FROM users WHERE id = ?',
 				args: [session.user.userId]
 			});
 
 			return {
 				userId: session.user.userId,
-				pictureUrl: result.rows[0]['picture_url'] as string,
+				pictureUrl: result.rows[0]['image_url'] as string,
 				userSignedIn: true
 			};
 		} catch (e: any) {

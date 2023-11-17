@@ -3,6 +3,7 @@
 	import type { PageData } from './$types';
 	//@ts-ignore
 	import { v4 as uuid } from 'uuid';
+	import DeleteCollection from '$lib/components/delete_collection.svelte';
 
 	export let data: PageData;
 
@@ -18,6 +19,7 @@
 
 	let editCookbook: boolean = false;
 	let uneditedCookbook: Cookbook = currentCookbook;
+	let newCookbook: boolean = false;
 </script>
 
 <div class="w-full h-fit max-h-[95vh] overflow-y-auto flex flex-col gap-4 p-5">
@@ -32,6 +34,7 @@
 				};
 				cookbooks.push(currentCookbook);
 				editCookbook = true;
+				newCookbook = true;
 
 				await fetch('/api/cookbook', {
 					method: 'POST',
@@ -76,7 +79,7 @@
 							on:click={async () => {
 								editCookbook = false;
 								cookbooks = cookbooks; // force a redraw of the table with the new title
-
+								newCookbook = false;
 								await fetch('/api/cookbook', {
 									method: 'PUT',
 									body: JSON.stringify(currentCookbook)
@@ -85,7 +88,15 @@
 							class="items-center justify-center flex flex-row rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-1 dark:hover:bg-emerald-800 hover:bg-emerald-300"
 							><Save /></button>
 						<button
-							on:click={() => {
+							on:click={async () => {
+								if (newCookbook) {
+									await fetch('/api/cookbook', {
+										method: 'DELETE',
+										body: JSON.stringify({ cookbookId: currentCookbook.id })
+									});
+									const index = cookbooks.indexOf(currentCookbook);
+									cookbooks.splice(index, 1);
+								}
 								currentCookbook = uneditedCookbook;
 								editCookbook = false;
 							}}
@@ -111,10 +122,12 @@
 							on:click={() => {
 								currentCookbook = c;
 								uneditedCookbook = c;
+								newCookbook = false;
 							}}>{c.name}</td>
 						<td class="w-10 p-1">
-							<button
-								on:click={async () => {
+							<DeleteCollection
+								collection="Cookbook"
+								handleDelete={async () => {
 									cookbooks.splice(i, 1);
 									cookbooks = cookbooks;
 
@@ -122,15 +135,13 @@
 										method: 'DELETE',
 										body: JSON.stringify({ cookbookId: c.id })
 									});
-								}}
-								class="w-full p-1 rounded-md flex flex-row justify-center items-center hover: dark:text-white text-black hover:bg-red-300 bg-red-400 border-2 border-red-600">
-								<Trash />
-							</button>
+								}} />
 						</td>
 						<td class="w-10 p-1">
 							<button
 								on:click={() => {
 									editCookbook = true;
+									currentCookbook = c;
 									uneditedCookbook = currentCookbook;
 								}}
 								class="w-full items-center justify-center flex flex-row rounded-lg border-2 border-emerald-500 dark:bg-emerald-700 bg-emerald-100 p-1 dark:hover:bg-emerald-800 hover:bg-emerald-300">

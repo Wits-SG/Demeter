@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PostPreview from '$lib/components/posts/post_preview.svelte';
+	import PostPreview from '$lib/components/previews/post_preview.svelte';
 	//@ts-ignore
 	import Masonry from 'svelte-bricks';
 	import { Search } from 'lucide-svelte';
