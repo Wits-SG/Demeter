@@ -87,6 +87,7 @@ export const GET = async ({ url }) => {
 
 		return json(returnedRecipes);
 	} catch (e: any) {
+		console.error(e);
 		throw error(500, 'Failed to fetch cookbooks');
 	}
 };

@@ -305,7 +305,7 @@
 											body: JSON.stringify({
 												recipeID: addedRecipe.recipe_id,
 												menuID: menuID,
-												sectionID: i
+												sectionID: data.menuInfo.section_id[i]
 											})
 										});
 									}
