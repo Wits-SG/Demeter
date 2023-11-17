@@ -48,7 +48,7 @@ export const GET = async ({ url }) => {
 
 	try {
 		const recipeRes = await tursoClient.execute({
-			sql: 'select recipe_id from cookbook_recipe where cookbook_id=?',
+			sql: 'select recipe_id from cookbook_recipes where cookbook_id=?',
 			args: [cookbookID]
 		});
 
