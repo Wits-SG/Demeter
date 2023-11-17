@@ -71,17 +71,79 @@ test('Fetch User Profile', async ({ request }) => {
 	const userJson = await userRes.json();
 	expect(userJson).not.toBeNull();
 
-	expect(userJson).toHaveProperty('user.userId');
-	expect(userJson).toHaveProperty('user.userName');
-	expect(userJson).toHaveProperty('user.displayname');
-	expect(userJson).toHaveProperty('user.pictureURL');
-	expect(userJson).toHaveProperty('user.biography');
-	expect(userJson).toHaveProperty('user.pronounId');
+	expect(userJson).toHaveProperty('userId');
+	expect(userJson).toHaveProperty('userName');
+	expect(userJson).toHaveProperty('displayName');
+	expect(userJson).toHaveProperty('pronounId');
 
-	expect(userJson['user']['userId']).toEqual('user_id_1');
-	expect(userJson['user']['displayName']).toEqual('User 1');
-	expect(userJson['user']['username']).toEqual('username1');
-	expect(userJson['user']['pictureURL']).toEqual('');
-	expect(userJson['user']['biography']).toEqual('');
-	expect(userJson['user']['pronounId']).toEqual(1);
+	expect(userJson['userId']).toEqual('user_id_1');
+	expect(userJson['displayName']).toEqual('User 1');
+	expect(userJson['userName']).toEqual('username1');
+	expect(userJson['pronounId']).toEqual(1);
+});
+
+test('Fetch User Profile Posts', async ({ request }) => {
+	const userPostsRes = await request.get(`/api/user/posts?user_id=user_id_1&page_num=1`);
+	expect(userPostsRes.ok()).toBeTruthy();
+
+	const userPostsJson = await userPostsRes.json();
+	expect(userPostsJson).not.toBeNull();
+
+	expect(userPostsJson).toHaveProperty('posts');
+
+	expect(userPostsJson['posts']).toBeInstanceOf(Array);
+});
+
+test('Fetch Cookbook', async ({ request }) => {
+	const userPostsRes = await request.get(`/api/cookbook?user_id=user_id_1`);
+	expect(userPostsRes.ok()).toBeTruthy();
+
+	const userPostsJson = await userPostsRes.json();
+	expect(userPostsJson).not.toBeNull();
+
+	expect(userPostsJson).toBeInstanceOf(Array);
+	expect(userPostsJson.length).toEqual(3);
+});
+
+test('Fetch Cookbook Recipes', async ({ request }) => {
+	const userPostsRes = await request.get(`/api/cookbook/recipe?cookbook_id=cookbook_id_1`);
+	expect(userPostsRes.ok()).toBeTruthy();
+
+	const userPostsJson = await userPostsRes.json();
+	expect(userPostsJson).not.toBeNull();
+
+	expect(userPostsJson).toHaveProperty('recipeIDs');
+
+	expect(userPostsJson['recipeIDs']).toBeInstanceOf(Array);
+	expect(userPostsJson['recipeIDs'].length).toEqual(2);
+});
+
+test('Fetch Comments', async ({ request }) => {
+	const commentsRes = await request.get(`/api/comments?comment_id=1`);
+	expect(commentsRes.ok()).toBeTruthy();
+
+	const commentsJson = await commentsRes.json();
+	expect(commentsJson).not.toBeNull;
+
+	expect(commentsJson).toHaveProperty('userId');
+	expect(commentsJson).toHaveProperty('displayName');
+	expect(commentsJson).toHaveProperty('content');
+	expect(commentsJson).toHaveProperty('children');
+
+	expect(commentsJson['userId']).toEqual('user_id_1');
+	expect(commentsJson['displayName']).toEqual('User 1');
+	expect(commentsJson['content']).toEqual('Example Root Comment');
+	expect(commentsJson['children']).toBeInstanceOf(Array);
+	expect(commentsJson['children'].length).toEqual(2);
+});
+
+test('Fetch Comments Post', async ({ request }) => {
+	const userPostsRes = await request.get(`/api/comments/post?post_id=post_recipe_id_1`);
+	expect(userPostsRes.ok()).toBeTruthy();
+
+	const userPostsJson = await userPostsRes.json();
+	expect(userPostsJson).not.toBeNull();
+
+	expect(userPostsJson).toBeInstanceOf(Array);
+	expect(userPostsJson.length).toEqual(2);
 });
