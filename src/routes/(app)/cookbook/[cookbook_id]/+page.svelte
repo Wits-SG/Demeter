@@ -13,7 +13,7 @@
 	//currentRecipeID = noRecipe ? '' : data.recipes[0].id;
 
 	onMount(async () => {
-		cookbookID = data.cookbook_info.id;
+		cookbookID = data.cookbookInfo.id;
 		currentRecipeID = noRecipe ? '' : data.recipes[0].id;
 	});
 
@@ -38,9 +38,9 @@
 		}
 	}
 
-	let cookbookName: string = data.cookbook_info.name as string;
+	let cookbookName: string = data.cookbookInfo.name as string;
 
-	let cookbookID: string = data.cookbook_info.id;
+	let cookbookID: string = data.cookbookInfo.id;
 
 	async function deleteRecipe() {
 		try {

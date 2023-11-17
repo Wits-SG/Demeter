@@ -26,7 +26,7 @@
 	});
 	export let data: PageData;
 
-	let menuID: string = data.menu_info.id;
+	let menuID: string = data.menuInfo.id;
 
 	const deleteMenu = async () => {
 		try {
@@ -73,10 +73,10 @@
 		}
 	}
 
-	const lastSectionIndex: number = data.menu_info.section_id.length - 1;
+	const lastSectionIndex: number = data.menuInfo.section_id.length - 1;
 	//need a refresh of data
 
-	let menuSections = data.menu_info.section;
+	let menuSections = data.menuInfo.section;
 	let menuRecipes = data.recipe;
 	let addedRecipe: { name: string; recipe_id: string }; // This is a binding for the recipe selected by the dropdown
 
@@ -211,7 +211,7 @@
 		class="w-full h-fit overflow-y-auto col-start-2 flex flex-col items-center justify-evenly border-emerald-500 dark:border-emerald-300 border-4 p-2 gap-8 max-w-[70vw] place-self-center">
 		<h1
 			class="flex flex-col py-2 text-emerald-700 dark:text-emerald-300 text-6xl w-10/12 text-center font-serif italic font-bold border-dashed border-4 border-emerald-500">
-			{data.menu_info.name}
+			{data.menuInfo.name}
 		</h1>
 
 		<!-- This will contain all sections and recipes -->

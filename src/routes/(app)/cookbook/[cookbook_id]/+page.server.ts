@@ -2,16 +2,16 @@ import { tursoClient } from '$lib/server/turso';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params }) => {
-	const recipe_res = await tursoClient.execute({
+	const recipeRes = await tursoClient.execute({
 		sql: 'select recipe_id from cookbook_recipes where cookbook_id = ?',
 		args: [params.cookbook_id]
 	});
 	const recipesIDs: Array<string> = [];
-	for (let row of recipe_res.rows) {
+	for (let row of recipeRes.rows) {
 		recipesIDs.push(row['recipe_id'] as string);
 	}
 
-	const recipe_name = await tursoClient.execute({
+	const recipeName = await tursoClient.execute({
 		sql: 'select recipes.* from cookbook_recipes join recipes on cookbook_recipes.recipe_id = recipes.id where cookbook_recipes.cookbook_id = ?',
 		args: [params.cookbook_id]
 	});
@@ -22,7 +22,7 @@ export const load = (async ({ params }) => {
 	});
 
 	const recipes: Array<Recipe> = [];
-	for (let row of recipe_name.rows) {
+	for (let row of recipeName.rows) {
 		recipes.push({
 			id: row['id'],
 			name: row['title']
@@ -30,7 +30,7 @@ export const load = (async ({ params }) => {
 	}
 
 	return {
-		cookbook_info: {
+		cookbookInfo: {
 			id: params.cookbook_id,
 			name: cookbookRes.rows[0]['title']
 		},

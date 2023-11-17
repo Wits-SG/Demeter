@@ -46,13 +46,13 @@ export const GET = async ({ url }) => {
 	const cookbookID = url.searchParams.get('cookbook_id');
 
 	try {
-		const recipe_res = await tursoClient.execute({
+		const recipeRes = await tursoClient.execute({
 			sql: 'select recipe_id from cookbook_recipe where cookbook_id=?',
 			args: [cookbookID]
 		});
 
 		const recipeIDs = [];
-		for (let row of recipe_res.rows) {
+		for (let row of recipeRes.rows) {
 			recipeIDs.push(row['recipe_id']);
 		}
 		return json({

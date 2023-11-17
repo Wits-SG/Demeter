@@ -5,7 +5,7 @@ export const GET = async ({ url }) => {
 	const postID = url.searchParams.get('post_id');
 
 	try {
-		const picture_res = await tursoClient.execute({
+		const pictureRes = await tursoClient.execute({
 			sql: 'select id, title, description, image_url from pictures where post_id = ? LIMIT 1',
 			args: [postID]
 		});
@@ -22,10 +22,10 @@ export const GET = async ({ url }) => {
 
 		return json({
 			picture: {
-				pictureID: picture_res.rows[0]['id'],
-				name: picture_res.rows[0]['title'],
-				description: picture_res.rows[0]['description'],
-				imageURL: picture_res.rows[0]['url']
+				pictureID: pictureRes.rows[0]['id'],
+				name: pictureRes.rows[0]['title'],
+				description: pictureRes.rows[0]['description'],
+				imageURL: pictureRes.rows[0]['url']
 			},
 			user: {
 				id: postRes.rows[0]['user_id'],
